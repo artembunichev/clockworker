@@ -1,10 +1,13 @@
-import { BrowserWindow, app, ipcMain } from 'electron'
+import { BrowserWindow, app, ipcMain as electronIpcMain } from 'electron'
 import { autoUpdater } from 'electron-updater'
 import * as fs from 'fs'
-import { DownloadProgressInfo, UpdateInfo } from 'main-renderer-shared/index'
+import { TypedBrowserWindow, TypedIpcMain } from 'main-renderer-shared/typed-electron-api'
+import { DownloadProgressInfo, IpcEventName, UpdateInfo } from 'main-renderer-shared/types'
 import * as path from 'path'
 
-var mainWindow: Electron.BrowserWindow | null
+const ipcMain = electronIpcMain as TypedIpcMain<IpcEventName>
+
+var mainWindow: TypedBrowserWindow<IpcEventName> | null
 
 const createWindow = (): void => {
   mainWindow = new BrowserWindow({
@@ -59,7 +62,9 @@ ipcMain.on('updateGame', () => {
 
 autoUpdater.on('download-progress', ({ percent }) => {
   if (mainWindow) {
-    mainWindow.webContents.send<DownloadProgressInfo>('downloadProgress', { percentage: percent })
+    return mainWindow.webContents.send<DownloadProgressInfo>('downloadProgress', {
+      percentage: percent,
+    })
   }
 })
 
@@ -74,13 +79,13 @@ ipcMain.on('checkIfAppSettingsFileExists', (event) => {
   event.returnValue = fileExists
 })
 
-ipcMain.handle('setAppSettingsToFileAsync', async (_, settings: Record<any, string>) => {
+ipcMain.handle<Record<any, string>>('setAppSettingsToFileAsync', async (_, settings) => {
   return fs.promises.writeFile(`${userData}/app-settings.json`, JSON.stringify(settings), {
     encoding: 'utf-8',
   })
 })
 
-ipcMain.on('setAppSettingsToFileSync', (_, settings: Record<any, string>) => {
+ipcMain.on<Record<any, string>>('setAppSettingsToFileSync', (_, settings: Record<any, string>) => {
   fs.writeFileSync(`${userData}/app-settings.json`, JSON.stringify(settings), {
     encoding: 'utf-8',
   })

@@ -28,7 +28,9 @@ export class AppSettingsStore {
   private initialize = (): void => {
     var settingsFromFile = initialSettingsJSON
     if (isElectron()) {
-      const isSettingsFileExists = window.ipcRenderer.sendSync('checkIfAppSettingsFileExists')
+      const isSettingsFileExists = window.ipcRenderer.sendSync<undefined, boolean>(
+        'checkIfAppSettingsFileExists',
+      )
       if (!isSettingsFileExists) {
         this.createSettingsFile()
       }
@@ -41,7 +43,7 @@ export class AppSettingsStore {
     window.ipcRenderer.sendSync('setAppSettingsToFileSync', settings)
   }
   setSettingsToFileAsync = (settings: AppSettingsValues): Promise<void> => {
-    return window.ipcRenderer.invoke('setAppSettingsToFileAsync', settings)
+    return window.ipcRenderer.invoke<AppSettingsValues, void>('setAppSettingsToFileAsync', settings)
   }
 
   private createSettingsFile = (): void => {
@@ -49,7 +51,7 @@ export class AppSettingsStore {
   }
 
   private getSettingsFromFile = (): AppSettingsValues => {
-    return window.ipcRenderer.sendSync('getAppSettings') as AppSettingsValues
+    return window.ipcRenderer.sendSync<undefined, AppSettingsValues>('getAppSettings')
   }
 
   saveSettingsToFile = (): Promise<void> => {

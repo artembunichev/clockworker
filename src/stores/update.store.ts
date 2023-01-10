@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 
-import { DownloadProgressInfo, UpdateInfo } from 'main-renderer-shared/index'
+import { DownloadProgressInfo, UpdateInfo } from 'main-renderer-shared/types'
 
 import { AppSettingsStore } from './settings/settings.store'
 
