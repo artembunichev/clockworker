@@ -6,8 +6,7 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prefer-type-alias/recommended"
+    "plugin:@typescript-eslint/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -23,7 +22,6 @@
     "@typescript-eslint/explicit-function-return-type": ["warn", { "allowExpressions": true }],
     "@typescript-eslint/no-explicit-any": "off",
     "no-console": ["warn", { "allow": ["warn", "error"] }],
-    "prefer-type-alias/prefer-type-alias": "warn",
     "@typescript-eslint/no-non-null-assertion": "off",
     "no-var": "off",
     "mobx/missing-observer": "warn",
