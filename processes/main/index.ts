@@ -5,6 +5,7 @@ import * as path from 'path'
 
 import { TypedBrowserWindow, TypedIpcMain } from '../shared/types/typed-electron-api'
 import { DownloadProgressInfo, IpcEventName, UpdateInfo } from '../shared/types/types'
+import { appSettingsFilename } from './filenames'
 
 const ipcMain = _ipcMain as TypedIpcMain<IpcEventName>
 
@@ -72,26 +73,27 @@ autoUpdater.on('update-downloaded', () => {
   autoUpdater.quitAndInstall()
 })
 
-const userData = app.getPath('userData')
+const userDataPath = app.getPath('userData')
+const pathToAppSettings = `${userDataPath}/${appSettingsFilename}`
 
 ipcMain.on('checkIfAppSettingsFileExists', (event) => {
-  const fileExists = fs.existsSync(`${userData}/app-settings.json`)
+  const fileExists = fs.existsSync(pathToAppSettings)
   event.returnValue = fileExists
 })
 
 ipcMain.handle<Record<any, string>>('setAppSettingsToFileAsync', async (_, settings) => {
-  return fs.promises.writeFile(`${userData}/app-settings.json`, JSON.stringify(settings), {
+  return fs.promises.writeFile(pathToAppSettings, JSON.stringify(settings), {
     encoding: 'utf-8',
   })
 })
 
 ipcMain.on<Record<any, string>>('setAppSettingsToFileSync', (_, settings: Record<any, string>) => {
-  fs.writeFileSync(`${userData}/app-settings.json`, JSON.stringify(settings), {
+  fs.writeFileSync(pathToAppSettings, JSON.stringify(settings), {
     encoding: 'utf-8',
   })
 })
 
 ipcMain.on('getAppSettings', (event) => {
-  const content = fs.readFileSync(`${userData}/app-settings.json`, { encoding: 'utf-8' })
+  const content = fs.readFileSync(pathToAppSettings, { encoding: 'utf-8' })
   event.returnValue = JSON.parse(content)
 })
