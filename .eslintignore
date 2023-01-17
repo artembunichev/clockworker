@@ -1,1 +1,3 @@
 /processes/renderer/src/content/scenes/**
+/dist/**
+/build/**
