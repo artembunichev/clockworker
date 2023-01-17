@@ -11,7 +11,6 @@ import { getConvertedEditableSettings } from 'stores/lib/settings'
 import { areEquivalent } from 'lib/are-equivalent'
 
 import { EditableAppSettings } from './editable'
-import initialSettingsJSON from './initial-settings.json'
 
 export type AppSettingsValues = {
   isGetUpdateNotifications: boolean
@@ -26,17 +25,16 @@ export class AppSettingsStore {
   editable = new EditableAppSettings()
 
   private initialize = (): void => {
-    var settingsFromFile = initialSettingsJSON
     if (isElectron()) {
       const isSettingsFileExists = window.ipcRenderer.sendSync<undefined, boolean>(
         'checkIfAppSettingsFileExists',
       )
       if (!isSettingsFileExists) {
-        this.createSettingsFile()
+        this.createSettingsFile(this.values)
+      } else {
+        this.syncSettingsWithFile()
       }
-      settingsFromFile = this.getSettingsFromFile()
     }
-    this.syncEditableWithFile(settingsFromFile)
   }
 
   setSettingsToFileSync = (settings: AppSettingsValues): void => {
@@ -46,8 +44,8 @@ export class AppSettingsStore {
     return window.ipcRenderer.invoke<AppSettingsValues, void>('setAppSettingsToFileAsync', settings)
   }
 
-  private createSettingsFile = (): void => {
-    return this.setSettingsToFileSync(initialSettingsJSON)
+  private createSettingsFile = (settings: AppSettingsValues): void => {
+    return this.setSettingsToFileSync(settings)
   }
 
   private getSettingsFromFile = (): AppSettingsValues => {
@@ -58,7 +56,10 @@ export class AppSettingsStore {
     return this.setSettingsToFileAsync(this.values)
   }
 
-  private syncEditableWithFile = (values: AppSettingsValues): void => {
+  // читаем значения из файла и устанавливаем их в editable
+  private syncSettingsWithFile = (): void => {
+    const values = this.getSettingsFromFile()
+
     return (Object.entries(values) as Entries<AppSettingsValues>).forEach(([name, value]) => {
       const thisEditableSetting = this.editable[name]
 
