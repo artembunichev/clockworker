@@ -1,11 +1,11 @@
-import { BrowserWindow, app, ipcMain as electronIpcMain } from 'electron'
+import { BrowserWindow, ipcMain as _ipcMain, app } from 'electron'
 import { autoUpdater } from 'electron-updater'
 import * as fs from 'fs'
 import * as path from 'path'
 import { TypedBrowserWindow, TypedIpcMain } from 'process-shared/types/typed-electron-api'
 import { DownloadProgressInfo, IpcEventName, UpdateInfo } from 'process-shared/types/types'
 
-const ipcMain = electronIpcMain as TypedIpcMain<IpcEventName>
+const ipcMain = _ipcMain as TypedIpcMain<IpcEventName>
 
 var mainWindow: TypedBrowserWindow<IpcEventName> | null
 const createWindow = (): void => {
