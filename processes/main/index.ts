@@ -2,8 +2,9 @@ import { BrowserWindow, ipcMain as _ipcMain, app } from 'electron'
 import { autoUpdater } from 'electron-updater'
 import * as fs from 'fs'
 import * as path from 'path'
-import { TypedBrowserWindow, TypedIpcMain } from 'process-shared/types/typed-electron-api'
-import { DownloadProgressInfo, IpcEventName, UpdateInfo } from 'process-shared/types/types'
+
+import { TypedBrowserWindow, TypedIpcMain } from '../shared/types/typed-electron-api'
+import { DownloadProgressInfo, IpcEventName, UpdateInfo } from '../shared/types/types'
 
 const ipcMain = _ipcMain as TypedIpcMain<IpcEventName>
 

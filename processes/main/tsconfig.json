@@ -3,10 +3,6 @@
   "compilerOptions": {
     "module": "commonjs",
     "outDir": "../../dist",
-    "baseUrl": ".",
-    "paths": {
-      "process-shared/*": ["../shared/*"]
-    },
     "typeRoots": ["../../@types"]
   },
   "include": ["."]
