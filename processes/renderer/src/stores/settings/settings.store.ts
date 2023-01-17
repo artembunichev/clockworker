@@ -63,7 +63,7 @@ export class AppSettingsStore {
       const thisEditableSetting = this.editable[name]
 
       if (thisEditableSetting instanceof SingleValueSetting) {
-        thisEditableSetting.set(value)
+        thisEditableSetting.setValue(value)
       }
 
       if (thisEditableSetting instanceof CheckboxSetting) {

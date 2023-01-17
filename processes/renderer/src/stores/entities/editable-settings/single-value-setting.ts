@@ -7,12 +7,12 @@ export class SingleValueSetting<Value> {
 
   constructor(id: string, initialValue: Value) {
     this.id = id
-    this.set(initialValue)
+    this.setValue(initialValue)
 
     makeAutoObservable(this)
   }
 
-  set = (value: Value): void => {
+  setValue = (value: Value): void => {
     this.value = value
   }
 }

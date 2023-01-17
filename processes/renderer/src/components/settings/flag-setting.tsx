@@ -16,11 +16,11 @@ type Props = {
 
 export const FlagSetting: FC<Props> = observer(({ setting, checkboxSize }) => {
   const onSelect = (): void => {
-    setting.set(true)
+    setting.setValue(true)
   }
 
   const onUnselect = (): void => {
-    setting.set(false)
+    setting.setValue(false)
   }
 
   return (
