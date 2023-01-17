@@ -4,10 +4,12 @@
   "version": "0.4.1",
   "author": "spleekz",
   "scripts": {
-    "start:web": "vite",
-    "start:desktop": "electron ./dist/electron.js",
-    "build": "tsc && vite build --base=./ && tsc -p ./electron/tsconfig.json",
-    "package": "npm run build && electron-builder build --win -c.extraMetadata.main=dist/electron.js",
+    "start:web": "vite serve ./processes/renderer",
+    "start:desktop": "electron ./dist/main/index.js",
+    "build:renderer": "tsc -p processes/renderer/tsconfig.json && vite build ./processes/renderer --config ./processes/renderer/vite.config.ts --base=./",
+    "build:main": "tsc -p processes/main/tsconfig.json",
+    "build": "npm run build:renderer && npm run build:main",
+    "package": "npm run build && electron-builder build --win -c.extraMetadata.main=dist/main/index.js",
     "release": "npm run package -- -p always"
   },
   "build": {
@@ -72,6 +74,6 @@
     "typescript": "^4.6.4",
     "vite": "^3.0.0",
     "vite-plugin-checker": "^0.4.9",
-    "vite-tsconfig-paths": "^3.5.0"
+    "vite-tsconfig-paths": "^4.0.3"
   }
 }

@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "module": "ESNext",
+    "noEmit": true,
+    "strictPropertyInitialization": false,
+    "jsx": "react-jsx",
+    "baseUrl": "src",
+    "paths": {
+      "process-shared/*": ["../../shared/*"]
+    },
+    "typeRoots": ["../../node_modules/@types", "../../@types"]
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
