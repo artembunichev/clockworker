@@ -13,7 +13,8 @@ type Props = {
   isPrintSkipped?: boolean
 }
 
-type TextSymbols = Array<{ id: string; value: string; isVisible: boolean }>
+type TextSymbol = { id: string; value: string; isVisible: boolean }
+type TextSymbols = Array<TextSymbol>
 
 export const AutoPrintedText: FC<Props> = observer(
   ({ text, interval = 50, onPrintEnd, isPrintSkipped = false }) => {
