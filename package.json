@@ -2,6 +2,7 @@
   "name": "clockworker",
   "private": true,
   "version": "0.4.1",
+  "description": "2D pixel game",
   "author": "spleekz",
   "scripts": {
     "start:web": "vite serve ./processes/renderer",
