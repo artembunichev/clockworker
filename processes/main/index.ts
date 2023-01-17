@@ -3,6 +3,7 @@ import { autoUpdater } from 'electron-updater'
 import * as fs from 'fs'
 import * as path from 'path'
 
+import { AnyObject } from '../shared/types/basic-utility-types'
 import { TypedBrowserWindow, TypedIpcMain } from '../shared/types/typed-electron-api'
 import { DownloadProgressInfo, IpcEventName, UpdateInfo } from '../shared/types/types'
 import { appSettingsFilename } from './filenames'
@@ -81,13 +82,13 @@ ipcMain.on('checkIfAppSettingsFileExists', (event) => {
   event.returnValue = fileExists
 })
 
-ipcMain.handle<Record<any, string>>('setAppSettingsToFileAsync', async (_, settings) => {
+ipcMain.handle<AnyObject>('setAppSettingsToFileAsync', async (_, settings) => {
   return fs.promises.writeFile(pathToAppSettings, JSON.stringify(settings), {
     encoding: 'utf-8',
   })
 })
 
-ipcMain.on<Record<any, string>>('setAppSettingsToFileSync', (_, settings: Record<any, string>) => {
+ipcMain.on<AnyObject>('setAppSettingsToFileSync', (_, settings) => {
   fs.writeFileSync(pathToAppSettings, JSON.stringify(settings), {
     encoding: 'utf-8',
   })
