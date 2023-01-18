@@ -1,19 +1,17 @@
-import { AnimationConfigs } from '../../entities/animation-controller'
 import {
   CharacterMovementAnimationName,
   GetCharacterMovementAnimationConfig,
   getCharacterMovementAnimationConfigs,
-} from '../animation'
+} from 'stores/game/play/characters/animation'
+import { AnimationConfigs } from 'stores/game/play/entities/animation-controller'
 
 export type PlayerCharacterAnimationName = CharacterMovementAnimationName
-
-const playerCharacterWalkFramesPerSprite = 11
 
 const playerCharacterMovementAnimationConfig: Pick<
   GetCharacterMovementAnimationConfig,
   'framesPerSprite' | 'regulators'
 > = {
-  framesPerSprite: playerCharacterWalkFramesPerSprite,
+  framesPerSprite: 11,
   regulators: {
     sprint: {
       framesPerSpriteMultiplier: 0.55,

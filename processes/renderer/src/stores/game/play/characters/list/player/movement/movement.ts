@@ -1,15 +1,15 @@
-import { CharacterMovementStateConfig } from 'stores/game/play/characters/movement/state'
-import { getSingleMovementDirection } from 'stores/game/play/lib/movement'
-import { GameSettings } from 'stores/game/play/settings/settings'
-import { KeyboardStore } from 'stores/keyboard.store'
-
 import {
   AutomoveDeltaX,
   AutomoveDeltaY,
   AutomoveFromTo,
   CharacterMovement,
   ConfigForCharacterMovement,
-} from '../../movement/movement'
+} from 'stores/game/play/characters/movement/movement'
+import { CharacterMovementStateConfig } from 'stores/game/play/characters/movement/state'
+import { getSingleMovementDirection } from 'stores/game/play/lib/movement'
+import { GameSettings } from 'stores/game/play/settings/settings'
+import { KeyboardStore } from 'stores/keyboard.store'
+
 import { PlayerCharacterMovementKeys } from './keys'
 
 export const playerCharacterMovementStateConfig: CharacterMovementStateConfig = { baseStepSize: 1.8 }

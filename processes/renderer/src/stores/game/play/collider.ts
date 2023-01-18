@@ -1,11 +1,12 @@
 import { ExpandedDirection, PointPair, Side, XY } from 'project-utility-types/plane'
 
+import { PlayerCharacter } from 'stores/game/play/characters/list/player/character'
+
 import { areEquivalent } from 'lib/are-equivalent'
 import { checkIntersection, getDistanceBetweenPoints } from 'lib/plane'
 
 import { Body } from './body'
 import { AnyCharacter } from './characters/character'
-import { PlayerCharacter } from './characters/player/character'
 import { getMovementDirection } from './lib/movement'
 import { GameScreen } from './screen'
 

@@ -1,7 +1,8 @@
+import { AnyCharacterConfig, Character } from 'stores/game/play/characters/character'
+import { GameSettings } from 'stores/game/play/settings/settings'
+
 import playerCharacterSpriteSheetSrc from 'content/sprites/characters/Player.png'
 
-import { GameSettings } from '../../settings/settings'
-import { AnyCharacterConfig, Character } from '../character'
 import { PlayerCharacterAnimationName, getPlayerCharacterAnimationConfigs } from './animation'
 import { PlayerCharacterMovement, playerCharacterMovementStateConfig } from './movement/movement'
 
