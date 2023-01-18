@@ -1,34 +1,19 @@
 import { ExpandedDirection, XY } from 'project-utility-types/plane'
 
+import { CharacterMovementRegulators } from 'stores/game/play/characters/movement/regulators'
+import {
+  CharacterMovementState,
+  CharacterMovementStateConfig,
+} from 'stores/game/play/characters/movement/state'
+
 import { areEquivalent } from 'lib/are-equivalent'
 import { capitalizeFirstSymbol } from 'lib/strings'
 
-import { AnimationController } from '../entities/animation-controller'
-import { Position } from '../entities/position'
-import { ProhibitorsController } from '../entities/prohibitors-controller'
-import { convertExpandedDirectionToPrimitiveDirection, getMovementDirection } from '../lib/movement'
-import { CharacterMovementAnimationName } from './animation'
-
-type MovementConfig = {
-  step: number
-  framesPerStep: number
-}
-type MovementRegulator = {
-  stepMultiplier: number
-  framesPerStepMultiplier: number
-}
-
-type MovementConfigParametersNames<MovementTypeName extends string, RegulatorName extends string> = {
-  type: MovementTypeName
-  regulator: RegulatorName | null
-}
-type MovementConfigParameters = {
-  type: MovementConfig
-  regulator: MovementRegulator | null
-}
-
-export type MovementTypes<MovementTypeName extends string> = Record<MovementTypeName, MovementConfig>
-export type MovementRegulators<RegulatorName extends string> = Record<RegulatorName, MovementRegulator>
+import { AnimationController } from '../../entities/animation-controller'
+import { Position } from '../../entities/position'
+import { ProhibitorsController } from '../../entities/prohibitors-controller'
+import { convertExpandedDirectionToPrimitiveDirection, getMovementDirection } from '../../lib/movement'
+import { CharacterMovementAnimationName } from '../animation'
 
 type MoveConfig = { direction: ExpandedDirection }
 
@@ -46,65 +31,58 @@ const isAutomoveDeltaYConfig = (config: any): config is AutomoveDeltaY => {
   return (config as AutomoveDeltaY).deltaY !== undefined
 }
 
-export type CharacterMovementConfig<MovementTypeName extends string, RegulatorName extends string> = {
+export type ConfigForCharacterMovement = {
   position: Position
   animationController: AnimationController<any>
-  movementTypes: MovementTypes<MovementTypeName>
-  regulators: MovementRegulators<RegulatorName>
-  initialMovementType: MovementTypeName
+  movementStateConfig: CharacterMovementStateConfig
 }
 
-export class CharacterMovement<MovementTypeName extends string, RegulatorName extends string> {
+export class CharacterMovement {
   private position: Position
   protected animationController: AnimationController<any>
 
-  movementTypes: MovementTypes<MovementTypeName>
-  regulators: MovementRegulators<RegulatorName>
+  currentMovementState: CharacterMovementState
+  regulators: CharacterMovementRegulators
 
-  currentMovementConfigParametersNames: MovementConfigParametersNames<MovementTypeName, RegulatorName>
-
-  constructor(config: CharacterMovementConfig<MovementTypeName, RegulatorName>) {
-    const { position, animationController, movementTypes, regulators, initialMovementType } = config
+  constructor(config: ConfigForCharacterMovement) {
+    const { position, animationController, movementStateConfig } = config
 
     this.position = position
     this.animationController = animationController
 
-    this.movementTypes = movementTypes
-    this.regulators = regulators
-
-    this.currentMovementConfigParametersNames = {
-      type: initialMovementType,
-      regulator: null,
-    }
+    this.currentMovementState = new CharacterMovementState(movementStateConfig)
+    this.regulators = new CharacterMovementRegulators({
+      currentMovementState: this.currentMovementState,
+    })
   }
 
   //@ позиция
   //! позиция на следующий шаг
   getPositionOnNextStep = (): XY => {
-    const { step } = this.currentMovementConfig
+    const { stepSize } = this.currentMovementState
 
     // длина шага по диагонали должна быть равна длине шага по прямой
-    const diagonalStep = Math.sqrt(Math.pow(step, 2) / 2)
+    const diagonalStepSize = Math.sqrt(Math.pow(stepSize, 2) / 2)
 
     const { x, y } = this.position
 
     if (this.direction === 'down') {
-      return { x, y: y + step }
+      return { x, y: y + stepSize }
     } else if (this.direction === 'downright') {
-      return { x: x + diagonalStep, y: y + diagonalStep }
+      return { x: x + diagonalStepSize, y: y + diagonalStepSize }
     } else if (this.direction === 'right') {
-      return { x: x + step, y }
+      return { x: x + stepSize, y }
     } else if (this.direction === 'upright') {
-      return { x: x + diagonalStep, y: y - diagonalStep }
+      return { x: x + diagonalStepSize, y: y - diagonalStepSize }
     } else if (this.direction === 'up') {
-      return { x, y: y - step }
+      return { x, y: y - stepSize }
     } else if (this.direction === 'upleft') {
-      return { x: x - diagonalStep, y: y - diagonalStep }
+      return { x: x - diagonalStepSize, y: y - diagonalStepSize }
     } else if (this.direction === 'left') {
-      return { x: x - step, y }
+      return { x: x - stepSize, y }
     } else {
       // downleft
-      return { x: x - diagonalStep, y: y + diagonalStep }
+      return { x: x - diagonalStepSize, y: y + diagonalStepSize }
     }
   }
 
@@ -114,37 +92,9 @@ export class CharacterMovement<MovementTypeName extends string, RegulatorName ex
   setDirection = (direction: ExpandedDirection | null): void => {
     this.direction = direction
   }
-  //^@Позиция
+  //^@ позиция
 
-  //@Обработка движения
-  //!Конфиг движения
-  setCurrentMovementType = (typeName: MovementTypeName): void => {
-    this.currentMovementConfigParametersNames.type = typeName
-  }
-  setCurrentMovementRegulator = (regulatorName: RegulatorName | null): void => {
-    this.currentMovementConfigParametersNames.regulator = regulatorName
-  }
-  get currentMovementConfigParameters(): MovementConfigParameters {
-    const type: MovementConfig = this.movementTypes[this.currentMovementConfigParametersNames.type]
-
-    const regulator: MovementRegulator | null = this.currentMovementConfigParametersNames.regulator
-      ? this.regulators[this.currentMovementConfigParametersNames.regulator]
-      : null
-
-    return { type, regulator }
-  }
-
-  get currentMovementConfig(): MovementConfig {
-    const { type, regulator } = this.currentMovementConfigParameters
-    const stepMultiplier = regulator ? regulator.stepMultiplier : 1
-    const framesPerStepMultiplier = regulator ? regulator.framesPerStepMultiplier : 1
-
-    const step = type.step * stepMultiplier
-    const framesPerStep = Math.round(type.framesPerStep * framesPerStepMultiplier)
-
-    return { step, framesPerStep }
-  }
-
+  //@ обработка движения
   //! движение
   // препятствия не запрещают движение, т.к. за ними следит коллайдер
   movementProhibitorsController = new ProhibitorsController()
@@ -165,7 +115,7 @@ export class CharacterMovement<MovementTypeName extends string, RegulatorName ex
   move = ({ direction }: MoveConfig): void => {
     this.setDirection(direction)
 
-    if (this.currentMovementConfig) {
+    if (this.currentMovementState) {
       const positionOnNextStep = this.getPositionOnNextStep()
       this.position.setXY(positionOnNextStep.x, positionOnNextStep.y)
     }
@@ -180,16 +130,7 @@ export class CharacterMovement<MovementTypeName extends string, RegulatorName ex
           convertExpandedDirectionToPrimitiveDirection(this.direction),
         )) as CharacterMovementAnimationName
 
-      // обновляем скорость анимации в соответствие с текущим конфигом движения
-      if (
-        this.currentMovementConfig.framesPerStep !== this.animationController.current.framesPerSprite
-      ) {
-        this.animationController.current.setFramesPerSprite(this.currentMovementConfig.framesPerStep)
-      }
-
-      this.animationController.run(animationName, {
-        framesPerSprite: this.currentMovementConfig.framesPerStep,
-      })
+      this.animationController.run(animationName)
     }
   }
 

@@ -11,9 +11,14 @@ export const playerCharacterWalkFramesPerSprite = 11
 
 const playerCharacterMovementAnimationConfig: Pick<
   GetCharacterMovementAnimationConfig,
-  'framesPerSprite'
+  'framesPerSprite' | 'regulators'
 > = {
   framesPerSprite: playerCharacterWalkFramesPerSprite,
+  regulators: {
+    sprint: {
+      framesPerSpriteMultiplier: 0.55,
+    },
+  },
 }
 
 export const getPlayerCharacterAnimationConfigs = (

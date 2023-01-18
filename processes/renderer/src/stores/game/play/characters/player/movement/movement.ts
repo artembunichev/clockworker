@@ -1,3 +1,4 @@
+import { CharacterMovementStateConfig } from 'stores/game/play/characters/movement/state'
 import { getSingleMovementDirection } from 'stores/game/play/lib/movement'
 import { GameSettings } from 'stores/game/play/settings/settings'
 import { KeyboardStore } from 'stores/keyboard.store'
@@ -7,56 +8,41 @@ import {
   AutomoveDeltaY,
   AutomoveFromTo,
   CharacterMovement,
-  CharacterMovementConfig,
-  MovementRegulators,
-  MovementTypes,
-} from '../../movement'
+  ConfigForCharacterMovement,
+} from '../../movement/movement'
 import { PlayerCharacterMovementKeys } from './keys'
 
-export type PlayerCharacterMovementTypeName = 'walk'
-export const playerCharacterMovementTypes: MovementTypes<PlayerCharacterMovementTypeName> = {
-  walk: {
-    step: 1.8,
-    framesPerStep: 11,
-  },
-}
+export const playerCharacterMovementStateConfig: CharacterMovementStateConfig = { baseStepSize: 1.8 }
 
-export type PlayerCharacterMovementRegulatorName = 'sprint'
-export const playerCharacterMovementRegulators: MovementRegulators<PlayerCharacterMovementRegulatorName> =
-  {
-    sprint: { stepMultiplier: 1.88, framesPerStepMultiplier: 0.72 },
-  }
+type PlayerCharacterMovementConfig = ConfigForCharacterMovement & { settings: GameSettings }
 
-export const playerCharacterInitialMovementType: PlayerCharacterMovementTypeName = 'walk'
-
-type PlayerCharacterMovementConfig = CharacterMovementConfig<
-  PlayerCharacterMovementTypeName,
-  PlayerCharacterMovementRegulatorName
-> & { settings: GameSettings }
-
-export class PlayerCharacterMovement extends CharacterMovement<
-  PlayerCharacterMovementTypeName,
-  PlayerCharacterMovementRegulatorName
-> {
+export class PlayerCharacterMovement extends CharacterMovement {
   private settings: GameSettings
 
   keys: PlayerCharacterMovementKeys
 
   constructor(config: PlayerCharacterMovementConfig) {
-    const { position, animationController, movementTypes, regulators, initialMovementType, settings } =
-      config
+    const { position, animationController, movementStateConfig, settings } = config
 
     super({
       position,
       animationController,
-      movementTypes,
-      regulators,
-      initialMovementType,
+      movementStateConfig,
     })
+
     this.settings = settings
 
     // клавиши управления
     this.keys = new PlayerCharacterMovementKeys({ settings: this.settings })
+  }
+
+  startSprint = (): void => {
+    this.regulators.apply('sprint')
+    this.animationController.applyRegulator('sprint')
+  }
+  endSprint = (): void => {
+    this.regulators.remove('sprint')
+    this.animationController.removeRegulator('sprint')
   }
 
   //! обработка клавиш управления
@@ -74,10 +60,10 @@ export class PlayerCharacterMovement extends CharacterMovement<
           // проверка на нажатие регуляторов
           if (this.keys.isRegulatorKeysPressed) {
             if (this.keys.isSprintKeyPressed) {
-              this.setCurrentMovementRegulator('sprint')
+              this.startSprint()
             }
           } else {
-            this.setCurrentMovementRegulator(null)
+            this.endSprint()
           }
 
           const movementDirection = getSingleMovementDirection(this.keys.pressedDirections)

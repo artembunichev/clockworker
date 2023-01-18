@@ -3,14 +3,7 @@ import playerCharacterSpriteSheetSrc from 'content/sprites/characters/Player.png
 import { GameSettings } from '../../settings/settings'
 import { AnyCharacterConfig, Character } from '../character'
 import { PlayerCharacterAnimationName, getPlayerCharacterAnimationConfigs } from './animation'
-import {
-  PlayerCharacterMovement,
-  PlayerCharacterMovementRegulatorName,
-  PlayerCharacterMovementTypeName,
-  playerCharacterInitialMovementType,
-  playerCharacterMovementRegulators,
-  playerCharacterMovementTypes,
-} from './movement/movement'
+import { PlayerCharacterMovement, playerCharacterMovementStateConfig } from './movement/movement'
 
 type ImageSrcs = { spriteSheet: typeof playerCharacterSpriteSheetSrc }
 
@@ -20,12 +13,7 @@ export type PlayerCharacterConfig = Pick<AnyCharacterConfig, 'name' | 'screen'> 
   settings: GameSettings
 }
 
-export class PlayerCharacter extends Character<
-  ImageSrcs,
-  PlayerCharacterAnimationName,
-  PlayerCharacterMovementTypeName,
-  PlayerCharacterMovementRegulatorName
-> {
+export class PlayerCharacter extends Character<ImageSrcs, PlayerCharacterAnimationName> {
   private settings: GameSettings
 
   movement: PlayerCharacterMovement
@@ -56,9 +44,7 @@ export class PlayerCharacter extends Character<
       initialSpriteScale,
       screen,
       animationConfigs: getPlayerCharacterAnimationConfigs({ initialScale: initialSpriteScale }),
-      movementTypes: playerCharacterMovementTypes,
-      regulators: playerCharacterMovementRegulators,
-      initialMovementType: playerCharacterInitialMovementType,
+      movementStateConfig: playerCharacterMovementStateConfig,
     })
 
     this.settings = settings
@@ -68,9 +54,7 @@ export class PlayerCharacter extends Character<
       position: this.position,
       settings: this.settings,
       animationController: this.animationController,
-      movementTypes: playerCharacterMovementTypes,
-      regulators: playerCharacterMovementRegulators,
-      initialMovementType: playerCharacterInitialMovementType,
+      movementStateConfig: playerCharacterMovementStateConfig,
     })
   }
 }

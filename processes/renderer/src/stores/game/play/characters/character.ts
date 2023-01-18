@@ -6,10 +6,10 @@ import { Sprite } from '../entities/sprite'
 import { SpriteSheet, SpriteSheetConfig } from '../entities/sprite-sheet'
 import { GameScreen } from '../screen'
 import { CharacterMovementAnimationName } from './animation'
-import { CharacterMovement, CharacterMovementConfig } from './movement'
+import { CharacterMovement, ConfigForCharacterMovement } from './movement/movement'
 
-export type AnyCharacter = Character<any, any, any, any>
-export type AnyCharacterConfig = CharacterConfig<any, any, any, any>
+export type AnyCharacter = Character<any, any>
+export type AnyCharacterConfig = CharacterConfig<any, any>
 
 type CharacterImageSrcs = ImageSrcs & { spriteSheet: string }
 
@@ -25,25 +25,16 @@ type ConfigForCharacter<ImageSrcs extends CharacterImageSrcs, AnimationName exte
   animationConfigs: AnimationConfigs<AnimationName>
 }
 
-type ConfigForMovement<MovementTypeName extends string, MovementRegulatorName extends string> = Omit<
-  CharacterMovementConfig<MovementTypeName, MovementRegulatorName>,
-  'position' | 'animationController'
->
+type ConfigForMovement = Omit<ConfigForCharacterMovement, 'position' | 'animationController'>
 
 export type CharacterConfig<
   ImageSrcs extends CharacterImageSrcs,
   AnimationName extends CharacterMovementAnimationName,
-  MovementTypeName extends string,
-  MovementRegulatorName extends string,
-> = BodyConfig &
-  ConfigForCharacter<ImageSrcs, AnimationName> &
-  ConfigForMovement<MovementTypeName, MovementRegulatorName>
+> = BodyConfig & ConfigForCharacter<ImageSrcs, AnimationName> & ConfigForMovement
 
 export class Character<
   ImageSrcs extends CharacterImageSrcs,
   AnimationName extends CharacterMovementAnimationName,
-  MovementTypeName extends string,
-  MovementRegulatorName extends string,
 > extends Body {
   name: string
   imageContainer: ImageContainer<ImageSrcs>
@@ -51,11 +42,9 @@ export class Character<
   screen: GameScreen
 
   animationController: AnimationController<AnimationName>
-  movement: CharacterMovement<MovementTypeName, MovementRegulatorName>
+  movement: CharacterMovement
 
-  constructor(
-    config: CharacterConfig<ImageSrcs, AnimationName, MovementTypeName, MovementRegulatorName>,
-  ) {
+  constructor(config: CharacterConfig<ImageSrcs, AnimationName>) {
     const {
       is,
       name,
@@ -64,9 +53,7 @@ export class Character<
       spriteSheetConfig,
       initialSpriteScale,
       animationConfigs,
-      movementTypes,
-      regulators,
-      initialMovementType,
+      movementStateConfig,
     } = config
 
     super({ is: is })
@@ -95,9 +82,7 @@ export class Character<
     this.movement = new CharacterMovement({
       position: this.position,
       animationController: this.animationController,
-      movementTypes,
-      regulators,
-      initialMovementType,
+      movementStateConfig,
     })
   }
 
