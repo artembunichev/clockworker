@@ -7,7 +7,7 @@ import {
 
 export type PlayerCharacterAnimationName = CharacterMovementAnimationName
 
-export const playerCharacterWalkFramesPerSprite = 11
+const playerCharacterWalkFramesPerSprite = 11
 
 const playerCharacterMovementAnimationConfig: Pick<
   GetCharacterMovementAnimationConfig,

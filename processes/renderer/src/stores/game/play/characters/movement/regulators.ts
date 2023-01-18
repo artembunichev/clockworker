@@ -27,7 +27,7 @@ export class CharacterMovementRegulators {
   activeRegulatorNames: Array<RegulatorName> = []
 
   private applyActiveRegulators = (): void => {
-    const { baseStepSize } = this.currentMovementState
+    const { baseStepSize } = this.currentMovementState.value
 
     const newStepSize = this.activeRegulatorNames.reduce((acc, regulatorName) => {
       const regulator = this.list[regulatorName]

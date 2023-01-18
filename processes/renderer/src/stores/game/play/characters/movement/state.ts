@@ -1,6 +1,9 @@
-export type CharacterMovementStateConfig = {
+export type CharacterMovementStateValue = {
+  stepSize: number
   baseStepSize: number
 }
+
+export type CharacterMovementStateConfig = Pick<CharacterMovementStateValue, 'baseStepSize'>
 
 export class CharacterMovementState {
   baseStepSize: number
@@ -16,5 +19,12 @@ export class CharacterMovementState {
   }
   setStepSize = (stepSize: number): void => {
     this.stepSize = stepSize
+  }
+
+  get value(): CharacterMovementStateValue {
+    return {
+      stepSize: this.stepSize,
+      baseStepSize: this.baseStepSize,
+    }
   }
 }

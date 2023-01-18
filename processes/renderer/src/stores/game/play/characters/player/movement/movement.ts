@@ -71,7 +71,10 @@ export class PlayerCharacterMovement extends CharacterMovement {
           if (movementDirection) {
             if (!this.isMovementProhibited) {
               this.animationController.resume()
-              this.moveWithAnimation({ direction: movementDirection })
+              this.moveWithAnimation({
+                direction: movementDirection,
+                state: this.currentMovementState.value,
+              })
             }
           } else {
             this.stopMove()
