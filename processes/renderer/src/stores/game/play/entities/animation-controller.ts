@@ -93,6 +93,9 @@ export class AnimationController<AnimationName extends string> {
   removeRegulator = (regulatorName: string): void => {
     this.current.removeRegulator(regulatorName)
   }
+  clearRegulator = (): void => {
+    this.current.clearRegulator()
+  }
 
   viewDirection: ViewDirections = ViewDirections.DOWN
   setViewDirection = (direction: ViewDirections): void => {

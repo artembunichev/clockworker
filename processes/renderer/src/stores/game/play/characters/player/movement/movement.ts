@@ -36,15 +36,6 @@ export class PlayerCharacterMovement extends CharacterMovement {
     this.keys = new PlayerCharacterMovementKeys({ settings: this.settings })
   }
 
-  startSprint = (): void => {
-    this.regulators.apply('sprint')
-    this.animationController.applyRegulator('sprint')
-  }
-  endSprint = (): void => {
-    this.regulators.remove('sprint')
-    this.animationController.removeRegulator('sprint')
-  }
-
   //! обработка клавиш управления
   handleMovementKeys = (keyboard: KeyboardStore): void => {
     if (!this.keys.prohibitorsController.isProhibited) {

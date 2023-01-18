@@ -128,10 +128,13 @@ export class Animation {
       }
     }
   }
+  clearRegulator = (): void => {
+    this.currentRegulatorName = null
+    this.applyCurrentRegulator()
+  }
   removeRegulator = (regulatorName: string): void => {
     if (this.currentRegulatorName === regulatorName) {
-      this.currentRegulatorName = null
-      this.applyCurrentRegulator()
+      this.clearRegulator()
     }
   }
 

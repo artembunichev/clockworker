@@ -152,6 +152,15 @@ export class CharacterMovement {
     }
   }
 
+  startSprint = (): void => {
+    this.regulators.apply('sprint')
+    this.animationController.applyRegulator('sprint')
+  }
+  endSprint = (): void => {
+    this.regulators.remove('sprint')
+    this.animationController.removeRegulator('sprint')
+  }
+
   //! остановка
   stopMove = (): void => {
     this.setIsMoving(false)
@@ -176,6 +185,8 @@ export class CharacterMovement {
         isAutomoveDeltaXConfig(config) ||
         isAutomoveDeltaYConfig(config)
       ) {
+        this.animationController.clearRegulator()
+
         const { state } = config
         const fullMovementState = this.getFullMovementState(state)
 
