@@ -79,7 +79,7 @@ export class PlayerCharacterMovement extends CharacterMovement {
         )
       ) {
         // когда клавиши заблокированы автомувом - анимация продолжается
-        // всё, кроме паузы и открытого текстбокса полностью останавливает анимацию
+        // всё, кроме паузы и текстбокса полностью прекращает анимацию
         this.animationController.stop()
       } else if (this.keys.prohibitorsController.list.some((p) => p === 'pause' || p === 'textbox')) {
         // когда игра на паузе или открыт текстбокс - анимация замирает
