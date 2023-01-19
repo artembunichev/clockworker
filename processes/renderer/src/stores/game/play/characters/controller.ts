@@ -4,6 +4,8 @@ import { Properties } from 'process-shared/types/basic-utility-types'
 
 import { PlayerCharacter } from 'stores/game/play/characters/list/player/character'
 
+import { remove } from 'lib/arrays'
+
 type This = InstanceType<typeof CharacterController>
 
 export type CharacterName = keyof This['refList']
@@ -50,7 +52,7 @@ export class CharacterController {
   }
 
   removeActiveCharacter = (characterName: CharacterName): void => {
-    this.activeCharactersNames = this.activeCharactersNames.filter((name) => name !== characterName)
+    this.activeCharactersNames = remove(this.activeCharactersNames, characterName)
   }
   removeActiveCharacters = (characterNames: Array<CharacterName>): void => {
     this.activeCharactersNames = this.activeCharactersNames.filter((name) =>

@@ -2,6 +2,8 @@ import { Modifier } from 'project-utility-types/abstract'
 
 import { CharacterMovementState } from 'stores/game/play/characters/movement/state'
 
+import { remove } from 'lib/arrays'
+
 type Regulator = {
   stepSize: Modifier<number>
 }
@@ -56,7 +58,7 @@ export class CharacterMovementRegulators {
     }
   }
   remove = (regulatorName: RegulatorName): void => {
-    this.activeRegulatorNames = this.activeRegulatorNames.filter((n) => n !== regulatorName)
+    this.activeRegulatorNames = remove(this.activeRegulatorNames, regulatorName)
     this.applyActiveRegulators()
   }
 }

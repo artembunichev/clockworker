@@ -3,6 +3,7 @@ import { ExpandedDirection, PointPair, Side, XY } from 'project-utility-types/pl
 import { PlayerCharacter } from 'stores/game/play/characters/list/player/character'
 
 import { areEquivalent } from 'lib/are-equivalent'
+import { remove } from 'lib/arrays'
 import { checkIntersection, getDistanceBetweenPoints } from 'lib/plane'
 
 import { Body } from './body'
@@ -45,7 +46,7 @@ export class Collider {
     bodies.forEach(this.addBody)
   }
   removeBody = (bodyId: string): void => {
-    this.bodies = this.bodies.filter(({ id }) => id !== bodyId)
+    this.bodies = remove(this.bodies, ({ id }) => id === bodyId)
   }
   clearBodies = (): void => {
     this.bodies = []
@@ -72,7 +73,7 @@ export class Collider {
     obstacleHitboxes.forEach(this.addStaticObstacle)
   }
   removeStaticObstacle = (obstacleId: string): void => {
-    this.staticObstacles = this.staticObstacles.filter(({ id }) => id !== obstacleId)
+    this.staticObstacles = remove(this.staticObstacles, ({ id }) => id === obstacleId)
   }
   clearStaticObstacles = (): void => {
     this.staticObstacles = []
