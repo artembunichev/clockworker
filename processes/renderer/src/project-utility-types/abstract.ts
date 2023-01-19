@@ -5,4 +5,6 @@ export type Size = {
 
 export type Indexes = [number, number]
 
-export type Modifier<T> = ((prevValue: T) => T) | T
+export type Reducer<T> = (prevValue: T) => T
+
+export type Modifier<T> = Reducer<T> | T
