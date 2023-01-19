@@ -1,11 +1,11 @@
 import { Callback } from 'process-shared/types/basic-utility-types'
-import { Indexes } from 'project-utility-types/abstract'
+import { Indexes, Modifier } from 'project-utility-types/abstract'
 
 import { Sprite } from 'stores/game/play/entities/sprite'
 import { SpriteSheet } from 'stores/game/play/entities/sprite-sheet'
 
 type Regulator = {
-  framesPerSpriteMultiplier: number
+  framesPerSprite: Modifier<number>
 }
 
 type Regulators = Record<string, Regulator>
@@ -111,9 +111,12 @@ export class Animation {
 
   private applyCurrentRegulator = (): void => {
     if (this.currentRegulator) {
-      const newFramesPerSprite = Math.round(
-        this.framesPerSprite * this.currentRegulator.framesPerSpriteMultiplier,
-      )
+      var newFramesPerSprite: number
+      if (this.currentRegulator.framesPerSprite instanceof Function) {
+        newFramesPerSprite = Math.round(this.currentRegulator.framesPerSprite(this.framesPerSprite))
+      } else {
+        newFramesPerSprite = Math.round(this.currentRegulator.framesPerSprite)
+      }
       this.setFramesPerSprite(newFramesPerSprite)
     } else {
       this.setFramesPerSprite(this.prevFramesPerSprite)

@@ -1,8 +1,11 @@
+import { Modifier } from 'project-utility-types/abstract'
+
 import { CharacterMovementState } from 'stores/game/play/characters/movement/state'
 
 type Regulator = {
-  stepSizeMultiplier: number
+  stepSize: Modifier<number>
 }
+
 type RegulatorName = 'sprint'
 type Regulators = Record<RegulatorName, Regulator>
 
@@ -20,7 +23,7 @@ export class CharacterMovementRegulators {
 
   list: Regulators = {
     sprint: {
-      stepSizeMultiplier: 1.88,
+      stepSize: (prev) => prev * 1.88,
     },
   }
 
@@ -31,7 +34,12 @@ export class CharacterMovementRegulators {
 
     const newStepSize = this.activeRegulatorNames.reduce((acc, regulatorName) => {
       const regulator = this.list[regulatorName]
-      return acc * regulator.stepSizeMultiplier
+
+      if (regulator.stepSize instanceof Function) {
+        return regulator.stepSize(this.currentMovementState.stepSize)
+      } else {
+        return regulator.stepSize
+      }
     }, baseStepSize)
 
     this.currentMovementState.setStepSize(newStepSize)

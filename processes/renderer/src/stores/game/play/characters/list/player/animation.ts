@@ -14,7 +14,7 @@ const playerCharacterMovementAnimationConfig: Pick<
   framesPerSprite: 11,
   regulators: {
     sprint: {
-      framesPerSpriteMultiplier: 0.55,
+      framesPerSprite: (prev) => prev * 0.55,
     },
   },
 }
