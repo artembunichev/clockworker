@@ -1,11 +1,8 @@
-import { PartialBy } from 'process-shared/types/basic-utility-types'
 import { ExpandedDirection, XY } from 'project-utility-types/plane'
 
-import { CharacterMovementRegulators } from 'stores/game/play/characters/movement/regulators'
 import {
   CharacterMovementState,
   CharacterMovementStateConfig,
-  CharacterMovementStateValue,
 } from 'stores/game/play/characters/movement/state'
 
 import { areEquivalent } from 'lib/are-equivalent'
@@ -19,10 +16,10 @@ import { CharacterMovementAnimationName } from '../animation'
 
 type MoveConfig = {
   direction: ExpandedDirection
-  state: PartialBy<CharacterMovementStateValue, 'baseStepSize'>
+  stateConfig: CharacterMovementStateConfig
 }
 
-type BaseAutomoveConfig = Pick<MoveConfig, 'state'>
+type BaseAutomoveConfig = Pick<MoveConfig, 'stateConfig'>
 
 export type AutomoveFromTo = BaseAutomoveConfig & { from?: XY; to: XY }
 export type AutomoveDeltaX = BaseAutomoveConfig & { deltaX: number }
@@ -41,32 +38,28 @@ const isAutomoveDeltaYConfig = (config: any): config is AutomoveDeltaY => {
 export type ConfigForCharacterMovement = {
   position: Position
   animationController: AnimationController<any>
-  movementStateConfig: CharacterMovementStateConfig
+  initialMovementStateConfig: CharacterMovementStateConfig
 }
 
 export class CharacterMovement {
   private position: Position
   protected animationController: AnimationController<any>
 
-  currentMovementState: CharacterMovementState
-  regulators: CharacterMovementRegulators
+  movementState: CharacterMovementState
 
   constructor(config: ConfigForCharacterMovement) {
-    const { position, animationController, movementStateConfig } = config
+    const { position, animationController, initialMovementStateConfig } = config
 
     this.position = position
     this.animationController = animationController
 
-    this.currentMovementState = new CharacterMovementState(movementStateConfig)
-    this.regulators = new CharacterMovementRegulators({
-      currentMovementState: this.currentMovementState,
-    })
+    this.movementState = new CharacterMovementState(initialMovementStateConfig)
   }
 
   //@ позиция
   //! позиция на следующий шаг
-  getPositionOnNextStep = (movementState: CharacterMovementStateValue): XY => {
-    const { stepSize } = movementState
+  getPositionOnNextStep = (): XY => {
+    const { stepSize } = this.movementState.currentValue
 
     // длина шага по диагонали должна быть равна длине шага по прямой
     const diagonalStepSize = Math.sqrt(Math.pow(stepSize, 2) / 2)
@@ -119,22 +112,13 @@ export class CharacterMovement {
     this.isStuck = value
   }
 
-  private getFullMovementState = (
-    state: PartialBy<CharacterMovementStateValue, 'baseStepSize'>,
-  ): CharacterMovementStateValue => {
-    return {
-      stepSize: state.stepSize,
-      baseStepSize: state.baseStepSize ?? state.stepSize,
-    }
-  }
-
-  move = ({ direction, state }: MoveConfig): void => {
+  move = ({ direction, stateConfig }: MoveConfig): void => {
     this.setDirection(direction)
 
-    const fullMovementState = this.getFullMovementState(state)
+    this.movementState.setConfig(stateConfig)
 
-    if (this.currentMovementState.value) {
-      const positionOnNextStep = this.getPositionOnNextStep(fullMovementState)
+    if (this.movementState.currentValue) {
+      const positionOnNextStep = this.getPositionOnNextStep()
       this.position.setXY(positionOnNextStep.x, positionOnNextStep.y)
     }
   }
@@ -153,11 +137,11 @@ export class CharacterMovement {
   }
 
   startSprint = (): void => {
-    this.regulators.apply('sprint')
+    this.movementState.applyRegulator('sprint')
     this.animationController.applyRegulator('sprint')
   }
   endSprint = (): void => {
-    this.regulators.remove('sprint')
+    this.movementState.removeRegulator('sprint')
     this.animationController.removeRegulator('sprint')
   }
 
@@ -186,9 +170,9 @@ export class CharacterMovement {
         isAutomoveDeltaYConfig(config)
       ) {
         this.animationController.clearRegulator()
+        const { stateConfig } = config
 
-        const { state } = config
-        const fullMovementState = this.getFullMovementState(state)
+        this.movementState.setConfig(stateConfig)
 
         const start: XY = { x: this.position.x, y: this.position.y }
         const end: XY = { x: this.position.x, y: this.position.y }
@@ -245,7 +229,7 @@ export class CharacterMovement {
               shouldMove = false
             }
 
-            const positionOnNextStep = this.getPositionOnNextStep(fullMovementState)
+            const positionOnNextStep = this.getPositionOnNextStep()
 
             if (direction === 'down') {
               if (positionOnNextStep.y > end.y) {
@@ -268,7 +252,7 @@ export class CharacterMovement {
             if (shouldMove) {
               if (!this.isMovementProhibited) {
                 this.animationController.resume()
-                this.moveWithAnimation({ direction, state })
+                this.moveWithAnimation({ direction, stateConfig })
               } else {
                 if (
                   this.movementProhibitorsController.list.every(

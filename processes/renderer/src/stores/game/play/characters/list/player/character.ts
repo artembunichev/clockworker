@@ -4,7 +4,10 @@ import { GameSettings } from 'stores/game/play/settings/settings'
 import playerCharacterSpriteSheetSrc from 'content/sprites/characters/Player.png'
 
 import { PlayerCharacterAnimationName, getPlayerCharacterAnimationConfigs } from './animation'
-import { PlayerCharacterMovement, playerCharacterMovementStateConfig } from './movement/movement'
+import {
+  PlayerCharacterMovement,
+  initialPlayerCharacterMovementStateConfig,
+} from './movement/movement'
 
 type ImageSrcs = { spriteSheet: typeof playerCharacterSpriteSheetSrc }
 
@@ -45,7 +48,7 @@ export class PlayerCharacter extends Character<ImageSrcs, PlayerCharacterAnimati
       initialSpriteScale,
       screen,
       animationConfigs: getPlayerCharacterAnimationConfigs({ initialScale: initialSpriteScale }),
-      movementStateConfig: playerCharacterMovementStateConfig,
+      initialMovementStateConfig: initialPlayerCharacterMovementStateConfig,
     })
 
     this.settings = settings
@@ -55,7 +58,7 @@ export class PlayerCharacter extends Character<ImageSrcs, PlayerCharacterAnimati
       position: this.position,
       settings: this.settings,
       animationController: this.animationController,
-      movementStateConfig: playerCharacterMovementStateConfig,
+      initialMovementStateConfig: initialPlayerCharacterMovementStateConfig,
     })
   }
 }

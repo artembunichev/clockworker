@@ -53,7 +53,7 @@ export class Character<
       spriteSheetConfig,
       initialSpriteScale,
       animationConfigs,
-      movementStateConfig,
+      initialMovementStateConfig,
     } = config
 
     super({ is: is })
@@ -82,7 +82,7 @@ export class Character<
     this.movement = new CharacterMovement({
       position: this.position,
       animationController: this.animationController,
-      movementStateConfig,
+      initialMovementStateConfig,
     })
   }
 

@@ -12,7 +12,9 @@ import { KeyboardStore } from 'stores/keyboard.store'
 
 import { PlayerCharacterMovementKeys } from './keys'
 
-export const playerCharacterMovementStateConfig: CharacterMovementStateConfig = { baseStepSize: 1.8 }
+export const initialPlayerCharacterMovementStateConfig: CharacterMovementStateConfig = {
+  baseStepSize: 1.8,
+}
 
 type PlayerCharacterMovementConfig = ConfigForCharacterMovement & { settings: GameSettings }
 
@@ -22,12 +24,12 @@ export class PlayerCharacterMovement extends CharacterMovement {
   keys: PlayerCharacterMovementKeys
 
   constructor(config: PlayerCharacterMovementConfig) {
-    const { position, animationController, movementStateConfig, settings } = config
+    const { position, animationController, initialMovementStateConfig, settings } = config
 
     super({
       position,
       animationController,
-      movementStateConfig,
+      initialMovementStateConfig,
     })
 
     this.settings = settings
@@ -64,7 +66,7 @@ export class PlayerCharacterMovement extends CharacterMovement {
               this.animationController.resume()
               this.moveWithAnimation({
                 direction: movementDirection,
-                state: this.currentMovementState.value,
+                stateConfig: initialPlayerCharacterMovementStateConfig,
               })
             }
           } else {
