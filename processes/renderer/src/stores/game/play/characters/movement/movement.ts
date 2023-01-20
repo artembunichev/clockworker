@@ -16,7 +16,7 @@ import { CharacterMovementAnimationName } from '../animation'
 
 type MoveConfig = {
   direction: ExpandedDirection
-  stateConfig: CharacterMovementStateConfig
+  stateConfig?: CharacterMovementStateConfig
 }
 
 type BaseAutomoveConfig = Pick<MoveConfig, 'stateConfig'>
@@ -115,7 +115,9 @@ export class CharacterMovement {
   move = ({ direction, stateConfig }: MoveConfig): void => {
     this.setDirection(direction)
 
-    this.movementState.setConfig(stateConfig)
+    if (stateConfig) {
+      this.movementState.setConfig(stateConfig)
+    }
 
     if (this.movementState.currentValue) {
       const positionOnNextStep = this.getPositionOnNextStep()
@@ -172,7 +174,9 @@ export class CharacterMovement {
         this.animationController.clearRegulator()
         const { stateConfig } = config
 
-        this.movementState.setConfig(stateConfig)
+        if (stateConfig) {
+          this.movementState.setConfig(stateConfig)
+        }
 
         const start: XY = { x: this.position.x, y: this.position.y }
         const end: XY = { x: this.position.x, y: this.position.y }
