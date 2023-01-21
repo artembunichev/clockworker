@@ -2,19 +2,19 @@ import { makeAutoObservable } from 'mobx'
 
 import { DownloadProgressInfo, UpdateInfo } from 'process-shared/types/types'
 
-import { AppSettingsStore } from './settings/settings.store'
+type Settings = { isGetUpdateNotifications: boolean }
 
 type Config = {
-  appSettings: AppSettingsStore
+  settings: Settings
 }
 
 export class UpdateStore {
-  private appSettings: AppSettingsStore
+  private settings: Settings
 
   constructor(config: Config) {
-    const { appSettings } = config
+    const { settings } = config
 
-    this.appSettings = appSettings
+    this.settings = settings
 
     window.ipcRenderer.on<UpdateInfo>('updateAvailable', (_, updateInfo) => {
       this.setUpdateInfo(updateInfo)
@@ -27,7 +27,7 @@ export class UpdateStore {
   }
 
   get isShowingNotificationAllowed(): boolean {
-    return this.appSettings.values.isGetUpdateNotifications
+    return this.settings.isGetUpdateNotifications
   }
 
   version: string | null = null
