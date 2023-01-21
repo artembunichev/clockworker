@@ -16,7 +16,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "import", "mobx", "eslint-plugin-local-rules"],
+  "plugins": ["react", "@typescript-eslint", "import", "eslint-plugin-local-rules"],
   "rules": {
     "import/no-default-export": "error",
     "@typescript-eslint/explicit-function-return-type": ["warn", { "allowExpressions": true }],
@@ -24,8 +24,8 @@
     "no-console": ["warn", { "allow": ["warn", "error"] }],
     "@typescript-eslint/no-non-null-assertion": "off",
     "no-var": "off",
-    "mobx/missing-observer": "warn",
-    "local-rules/detect-test-mode": "warn"
+    "local-rules/detect-test-mode": "warn",
+    "react/prop-types": "off"
   },
   "settings": {
     "react": {

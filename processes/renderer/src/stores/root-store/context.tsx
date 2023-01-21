@@ -1,4 +1,3 @@
-import { observer } from 'mobx-react-lite'
 import React, { createContext, useContext } from 'react'
 
 import { FC } from 'basic-utility-types'
@@ -7,10 +6,10 @@ import { RootStore } from './store'
 
 const RootStoreContext = createContext<RootStore | null>(null)
 
-export const RootStoreProvider: FC = observer(({ children }) => {
+export const RootStoreProvider: FC = ({ children }) => {
   const rootStore = new RootStore()
   return <RootStoreContext.Provider value={rootStore}>{children}</RootStoreContext.Provider>
-})
+}
 
 export const useStore = (): RootStore => {
   const rootStore = useContext(RootStoreContext)
