@@ -139,11 +139,11 @@ export class CharacterMovement {
   }
 
   startSprint = (): void => {
-    this.movementState.applyRegulator('sprint')
+    this.movementState.regulators.applyRegulator('sprint')
     this.animationController.applyRegulator('sprint')
   }
   endSprint = (): void => {
-    this.movementState.removeRegulator('sprint')
+    this.movementState.regulators.removeRegulator('sprint')
     this.animationController.removeRegulator('sprint')
   }
 
@@ -171,7 +171,7 @@ export class CharacterMovement {
         isAutomoveDeltaXConfig(config) ||
         isAutomoveDeltaYConfig(config)
       ) {
-        this.animationController.clearRegulator()
+        this.animationController.clearRegulators()
         const { stateConfig } = config
 
         if (stateConfig) {

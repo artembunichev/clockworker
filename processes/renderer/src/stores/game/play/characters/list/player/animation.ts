@@ -1,3 +1,5 @@
+import { Modifier } from 'project-utility-types/abstract'
+
 import {
   CharacterMovementAnimationName,
   GetCharacterMovementAnimationConfig,
@@ -14,7 +16,7 @@ const playerCharacterMovementAnimationConfig: Pick<
   framesPerSprite: 11,
   regulators: {
     sprint: {
-      framesPerSprite: (prev) => prev * 0.55,
+      framesPerSprite: ((prev) => Math.round(prev * 0.55)) as Modifier<number>,
     },
   },
 }

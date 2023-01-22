@@ -1,14 +1,14 @@
-import { Callback } from 'process-shared/types/basic-utility-types'
-import { Indexes, Modifier } from 'project-utility-types/abstract'
+import { AnyObject, Callback } from 'process-shared/types/basic-utility-types'
+import { Indexes } from 'project-utility-types/abstract'
 
+import {
+  RegulatorInitialValues,
+  RegulatorList,
+  RegulatorTarget as RegulatorTargetType,
+  Regulators,
+} from 'stores/game/play/entities/regulators'
 import { Sprite } from 'stores/game/play/entities/sprite'
 import { SpriteSheet } from 'stores/game/play/entities/sprite-sheet'
-
-type Regulator = {
-  framesPerSprite: Modifier<number>
-}
-
-type Regulators = Record<string, Regulator>
 
 export type AnimationSequence = Array<Indexes>
 
@@ -17,47 +17,65 @@ export type AnimationControls = {
   stop: Callback
 }
 
-export type RunAnimationOptions = Partial<Pick<AnimationConfig, 'framesPerSprite'>>
+const regulatorTargets = ['framesPerSprite'] as const
+type RegulatorTarget = typeof regulatorTargets[number]
 
-export type AnimationConfig = {
+type RLType = RegulatorList<string, RegulatorTarget>
+
+const initialValues: RegulatorInitialValues<RegulatorTarget> = {
+  framesPerSprite: 'baseFramesPerSprite',
+}
+
+export type RunAnimationOptions<RL extends RLType = AnyObject> = Partial<
+  Pick<AnimationConfig<RL>, 'framesPerSprite'>
+>
+
+export type AnimationConfig<RL extends RLType = AnyObject> = {
   name: string
   spriteSheet: SpriteSheet
   sequence: AnimationSequence
   framesPerSprite: number
   initialScale: number
   startFrom?: number
-  regulators?: Regulators
+  regulators?: RL
 }
 
-export class Animation {
+export class Animation<RL extends RLType = AnyObject> {
   name: string
   private spriteSheet: SpriteSheet
   sequence: AnimationSequence
+  baseFramesPerSprite: number
   framesPerSprite: number
-  prevFramesPerSprite: number
   scale: number
   private startFrom: number
 
   currentSpriteIndex: number
 
-  regulators: Regulators | null
+  regulators: Regulators<RL> | null
 
-  constructor(config: AnimationConfig) {
+  constructor(config: AnimationConfig<RL>) {
     const { name, spriteSheet, sequence, framesPerSprite, initialScale, startFrom, regulators } =
       config
 
     this.name = name
     this.spriteSheet = spriteSheet
     this.sequence = sequence
-    this.framesPerSprite = framesPerSprite
-    this.prevFramesPerSprite = this.framesPerSprite
+    this.setBaseFramesPerSprite(framesPerSprite)
     this.setScale(initialScale)
 
     this.startFrom = startFrom ?? 0
 
-    this.currentSpriteIndex = this.startFrom
+    if (regulators) {
+      this.regulators = new Regulators({
+        list: regulators,
+        sourceObject: this,
+        initialValues: initialValues as RegulatorInitialValues<RegulatorTargetType<RL>>,
+      })
+    } else {
+      this.regulators = null
+    }
 
-    this.regulators = regulators ?? null
+    this.currentSpriteIndex = this.startFrom
   }
 
   setScale = (scale: number): void => {
@@ -92,53 +110,12 @@ export class Animation {
     this.setCurrentSpriteIndex(0)
   }
 
-  setFramesPerSprite = (value: number): void => {
-    this.setPrevFramesPerSprite(this.framesPerSprite)
-    this.framesPerSprite = value
-  }
-  setPrevFramesPerSprite = (value: number): void => {
-    this.prevFramesPerSprite = value
-  }
-
-  currentRegulatorName: string | null = null
-
-  get currentRegulator(): Regulator | null {
-    if (this.currentRegulatorName && this.regulators) {
-      return this.regulators[this.currentRegulatorName as keyof Regulators]
+  setBaseFramesPerSprite = (value: number): void => {
+    this.baseFramesPerSprite = value
+    if (!this.framesPerSprite) {
+      this.framesPerSprite = this.baseFramesPerSprite
     }
-    return null
-  }
-
-  private applyCurrentRegulator = (): void => {
-    if (this.currentRegulator) {
-      var newFramesPerSprite: number
-      if (this.currentRegulator.framesPerSprite instanceof Function) {
-        newFramesPerSprite = Math.round(this.currentRegulator.framesPerSprite(this.framesPerSprite))
-      } else {
-        newFramesPerSprite = Math.round(this.currentRegulator.framesPerSprite)
-      }
-      this.setFramesPerSprite(newFramesPerSprite)
-    } else {
-      this.setFramesPerSprite(this.prevFramesPerSprite)
-    }
-  }
-
-  applyRegulator = (regulatorName: string): void => {
-    if (this.regulators) {
-      if (this.currentRegulatorName !== regulatorName) {
-        this.currentRegulatorName = regulatorName
-        this.applyCurrentRegulator()
-      }
-    }
-  }
-  clearRegulator = (): void => {
-    this.currentRegulatorName = null
-    this.applyCurrentRegulator()
-  }
-  removeRegulator = (regulatorName: string): void => {
-    if (this.currentRegulatorName === regulatorName) {
-      this.clearRegulator()
-    }
+    this.regulators?.modifyAllRegulatorTargets()
   }
 
   isPlaying = false
@@ -160,11 +137,11 @@ export class Animation {
     }
   }
 
-  run = (options?: RunAnimationOptions): void => {
+  run = (options?: RunAnimationOptions<RL>): void => {
     const { framesPerSprite } = options ?? {}
 
     if (framesPerSprite) {
-      this.setFramesPerSprite(framesPerSprite)
+      this.setBaseFramesPerSprite(framesPerSprite)
     }
 
     this.isPlaying = true
