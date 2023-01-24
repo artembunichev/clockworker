@@ -10,15 +10,24 @@ import { getSingleMovementDirection } from 'stores/game/play/lib/movement'
 import { GameSettings } from 'stores/game/play/settings/settings'
 import { KeyboardStore } from 'stores/keyboard.store'
 
+import { PlayerCharacterAnimationName, PlayerCharacterAnimationRegulatorList } from '../animation'
 import { PlayerCharacterMovementKeys } from './keys'
 
 export const initialPlayerCharacterMovementStateConfig: CharacterMovementStateConfig = {
   baseStepSize: 1.8,
 }
 
-type PlayerCharacterMovementConfig = ConfigForCharacterMovement & { settings: GameSettings }
+type PlayerCharacterMovementConfig = ConfigForCharacterMovement<
+  PlayerCharacterAnimationName,
+  PlayerCharacterAnimationRegulatorList
+> & {
+  settings: GameSettings
+}
 
-export class PlayerCharacterMovement extends CharacterMovement {
+export class PlayerCharacterMovement extends CharacterMovement<
+  PlayerCharacterAnimationName,
+  PlayerCharacterAnimationRegulatorList
+> {
   private settings: GameSettings
 
   keys: PlayerCharacterMovementKeys

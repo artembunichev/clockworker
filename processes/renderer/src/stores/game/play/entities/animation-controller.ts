@@ -1,4 +1,9 @@
-import { Animation, AnimationConfig, RunAnimationOptions } from 'stores/game/play/entities/animation'
+import {
+  Animation,
+  AnimationConfig,
+  AnimationRLType,
+  RunAnimationOptions,
+} from 'stores/game/play/entities/animation'
 import { Sprite } from 'stores/game/play/entities/sprite'
 import { SpriteSheet } from 'stores/game/play/entities/sprite-sheet'
 
@@ -9,33 +14,44 @@ export enum ViewDirections {
   LEFT = 3,
 }
 
-export type AnimationConfigNoNameNoSpriteSheet = Omit<AnimationConfig, 'name' | 'spriteSheet'>
+export type AnimationConfigForController = Omit<AnimationConfig, 'name' | 'spriteSheet' | 'regulators'>
 
-export type AnimationConfigs<AnimationName extends string> = Record<
+export type AnimationConfigsForController<AnimationName extends string> = Record<
   AnimationName,
-  AnimationConfigNoNameNoSpriteSheet
+  AnimationConfigForController
 >
 
-type AnimationList<AnimationName extends string> = Record<AnimationName, Animation>
+type AnimationList<AnimationName extends string, RL extends AnimationRLType> = Record<
+  AnimationName,
+  Animation<RL>
+>
 
-export type AnimationControllerConfig<AnimationName extends string> = {
+export type AnimationControllerConfig<
+  AnimationName extends string,
+  RL extends AnimationRLType = never,
+> = {
   spriteSheet: SpriteSheet
-  configs: AnimationConfigs<AnimationName>
+  configs: AnimationConfigsForController<AnimationName>
   initialValue: AnimationName
+  regulators?: RL
 }
 
-export class AnimationController<AnimationName extends string> {
+export class AnimationController<AnimationName extends string, RL extends AnimationRLType> {
   private spriteSheet: SpriteSheet
-  private configs: AnimationConfigs<AnimationName>
-  private list: AnimationList<AnimationName> = {} as AnimationList<AnimationName>
+  private configs: AnimationConfigsForController<AnimationName>
+  private list: AnimationList<AnimationName, RL> = {} as AnimationList<AnimationName, RL>
+  private regulators: RL | null = null
 
-  current: Animation
+  current: Animation<RL>
 
-  constructor(config: AnimationControllerConfig<AnimationName>) {
-    const { spriteSheet, configs, initialValue } = config
+  constructor(config: AnimationControllerConfig<AnimationName, RL>) {
+    const { spriteSheet, configs, initialValue, regulators } = config
 
     this.spriteSheet = spriteSheet
     this.configs = configs
+    if (regulators) {
+      this.regulators = regulators
+    }
 
     this.createAnimations()
 
@@ -43,11 +59,12 @@ export class AnimationController<AnimationName extends string> {
   }
 
   private createAnimations = (): void => {
-    Object.entries<AnimationConfigNoNameNoSpriteSheet>(this.configs).forEach(
+    Object.entries<AnimationConfigForController>(this.configs).forEach(
       ([animationName, animationConfig]) => {
-        this.list[animationName as AnimationName] = new Animation({
+        this.list[animationName as AnimationName] = new Animation<RL>({
           name: animationName,
           spriteSheet: this.spriteSheet,
+          regulators: this.regulators ? this.regulators : undefined,
           ...animationConfig,
         })
       },
@@ -55,7 +72,7 @@ export class AnimationController<AnimationName extends string> {
   }
 
   setScale = (scale: number): void => {
-    Object.values<Animation>(this.list).forEach((animation) => {
+    Object.values<Animation<RL>>(this.list).forEach((animation) => {
       animation.setScale(scale)
     })
   }
@@ -85,16 +102,6 @@ export class AnimationController<AnimationName extends string> {
   }
   resume = (): void => {
     this.current.resume()
-  }
-
-  applyRegulator = (regulatorName: string): void => {
-    this.current.regulators?.applyRegulator(regulatorName)
-  }
-  removeRegulator = (regulatorName: string): void => {
-    this.current.regulators?.removeRegulator(regulatorName)
-  }
-  clearRegulators = (): void => {
-    this.current.regulators?.clearRegulators()
   }
 
   viewDirection: ViewDirections = ViewDirections.DOWN

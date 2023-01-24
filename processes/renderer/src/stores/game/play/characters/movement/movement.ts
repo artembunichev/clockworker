@@ -8,11 +8,11 @@ import {
 import { areEquivalent } from 'lib/are-equivalent'
 import { capitalizeFirstSymbol } from 'lib/strings'
 
-import { AnimationController } from '../../entities/animation-controller'
+import { AnimationRLType } from '../../entities/animation'
 import { Position } from '../../entities/position'
 import { ProhibitorsController } from '../../entities/prohibitors-controller'
 import { convertExpandedDirectionToPrimitiveDirection, getMovementDirection } from '../../lib/movement'
-import { CharacterMovementAnimationName } from '../animation'
+import { CharacterAnimationController, CharacterMovementAnimationName } from '../animation'
 
 type MoveConfig = {
   direction: ExpandedDirection
@@ -35,19 +35,19 @@ const isAutomoveDeltaYConfig = (config: any): config is AutomoveDeltaY => {
   return (config as AutomoveDeltaY).deltaY !== undefined
 }
 
-export type ConfigForCharacterMovement = {
+export type ConfigForCharacterMovement<AnimationName extends string, RL extends AnimationRLType> = {
   position: Position
-  animationController: AnimationController<any>
+  animationController: CharacterAnimationController<AnimationName, RL>
   initialMovementStateConfig: CharacterMovementStateConfig
 }
 
-export class CharacterMovement {
+export class CharacterMovement<AnimationName extends string, AnimationRL extends AnimationRLType> {
   private position: Position
-  protected animationController: AnimationController<any>
+  protected animationController: CharacterAnimationController<AnimationName, AnimationRL>
 
   movementState: CharacterMovementState
 
-  constructor(config: ConfigForCharacterMovement) {
+  constructor(config: ConfigForCharacterMovement<AnimationName, AnimationRL>) {
     const { position, animationController, initialMovementStateConfig } = config
 
     this.position = position
@@ -140,11 +140,11 @@ export class CharacterMovement {
 
   startSprint = (): void => {
     this.movementState.regulators.applyRegulator('sprint')
-    this.animationController.applyRegulator('sprint')
+    this.animationController.current.regulators?.applyRegulator('sprint')
   }
   endSprint = (): void => {
     this.movementState.regulators.removeRegulator('sprint')
-    this.animationController.removeRegulator('sprint')
+    this.animationController.current.regulators?.removeRegulator('sprint')
   }
 
   //! остановка
@@ -171,7 +171,7 @@ export class CharacterMovement {
         isAutomoveDeltaXConfig(config) ||
         isAutomoveDeltaYConfig(config)
       ) {
-        this.animationController.clearRegulators()
+        this.animationController.current.regulators?.clearRegulators()
         const { stateConfig } = config
 
         if (stateConfig) {

@@ -1,4 +1,4 @@
-import { AnyObject, Callback } from 'process-shared/types/basic-utility-types'
+import { Callback } from 'process-shared/types/basic-utility-types'
 import { Indexes } from 'project-utility-types/abstract'
 
 import {
@@ -20,17 +20,22 @@ export type AnimationControls = {
 const regulatorTargets = ['framesPerSprite'] as const
 type RegulatorTarget = typeof regulatorTargets[number]
 
-type RLType = RegulatorList<string, RegulatorTarget>
+export type AnimationRLType = RegulatorList<string, RegulatorTarget> | never
+
+export type AnimationRegulatorList<RegulatorName extends string> = RegulatorList<
+  RegulatorName,
+  RegulatorTarget
+>
 
 const initialValues: RegulatorInitialValues<RegulatorTarget> = {
   framesPerSprite: 'baseFramesPerSprite',
 }
 
-export type RunAnimationOptions<RL extends RLType = AnyObject> = Partial<
+export type RunAnimationOptions<RL extends AnimationRLType = never> = Partial<
   Pick<AnimationConfig<RL>, 'framesPerSprite'>
 >
 
-export type AnimationConfig<RL extends RLType = AnyObject> = {
+export type AnimationConfig<RL extends AnimationRLType = never> = {
   name: string
   spriteSheet: SpriteSheet
   sequence: AnimationSequence
@@ -40,7 +45,7 @@ export type AnimationConfig<RL extends RLType = AnyObject> = {
   regulators?: RL
 }
 
-export class Animation<RL extends RLType = AnyObject> {
+export class Animation<RL extends AnimationRLType = never> {
   name: string
   private spriteSheet: SpriteSheet
   sequence: AnimationSequence

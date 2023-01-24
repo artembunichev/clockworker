@@ -1,15 +1,36 @@
-import { AnimationSequence } from '../entities/animation'
+import { Modifier } from 'project-utility-types/abstract'
+
+import { AnimationRLType, AnimationRegulatorList, AnimationSequence } from '../entities/animation'
 import {
-  AnimationConfigNoNameNoSpriteSheet,
-  AnimationConfigs,
+  AnimationConfigForController,
+  AnimationConfigsForController,
+  AnimationController,
   ViewDirections,
 } from '../entities/animation-controller'
 import { getRowSequence } from '../lib/animation'
 
 export type CharacterMovementAnimationName = 'walkDown' | 'walkRight' | 'walkUp' | 'walkLeft'
 
-export type GetCharacterMovementAnimationConfig = Omit<
-  AnimationConfigNoNameNoSpriteSheet,
+export type CharacterAnimationName<AnimationName extends string> =
+  | CharacterMovementAnimationName
+  | AnimationName
+
+type CharacterMovementAnimationRegulatorName = 'sprint'
+
+export type DefaultCharacterAnimationRL =
+  AnimationRegulatorList<CharacterMovementAnimationRegulatorName>
+
+export const defaultCharacterAnimationRegulatorList: DefaultCharacterAnimationRL = {
+  sprint: {
+    framesPerSprite: ((prev) => Math.round(prev * 0.55)) as Modifier<number>,
+  },
+}
+
+export type CharacterAnimationRegulatorList<RL extends AnimationRLType> = DefaultCharacterAnimationRL &
+  RL
+
+export type ShortCharacterMovementAnimationConfig = Omit<
+  AnimationConfigForController,
   'sequence' | 'startFrom'
 >
 
@@ -17,24 +38,41 @@ const getCharacterMovementAnimationSequence = (direction: ViewDirections): Anima
   return getRowSequence(direction, 4)
 }
 
-const getCharacterMovementAnimationConfig = (
+const getCharacterMovementAnimationConfigForController = (
   direction: ViewDirections,
-  template: GetCharacterMovementAnimationConfig,
-): AnimationConfigNoNameNoSpriteSheet => {
+  shortConfig: ShortCharacterMovementAnimationConfig,
+): AnimationConfigForController => {
   const sequence: AnimationSequence = getCharacterMovementAnimationSequence(direction)
 
-  // начинаем со 2-го спрайта, чтобы сразу после начала движения была анимация шага
-  return { ...template, sequence, startFrom: 1 }
+  const configForController: AnimationConfigForController = {
+    ...shortConfig,
+    sequence,
+    // начинаем со 2-го спрайта, чтобы сразу после начала движения была анимация шага
+    startFrom: 1,
+  }
+
+  return configForController
 }
 
+export type CharacterAnimationConfigsForController =
+  AnimationConfigsForController<CharacterMovementAnimationName>
+
 // возвращает список с анимациями движения, одинаковыми для всех персонажей
-export const getCharacterMovementAnimationConfigs = (
-  config: GetCharacterMovementAnimationConfig,
-): AnimationConfigs<CharacterMovementAnimationName> => {
+export const getCharacterMovementAnimationConfigsForController = (
+  config: ShortCharacterMovementAnimationConfig,
+): CharacterAnimationConfigsForController => {
   return {
-    walkDown: getCharacterMovementAnimationConfig(ViewDirections.DOWN, config),
-    walkRight: getCharacterMovementAnimationConfig(ViewDirections.RIGHT, config),
-    walkUp: getCharacterMovementAnimationConfig(ViewDirections.UP, config),
-    walkLeft: getCharacterMovementAnimationConfig(ViewDirections.LEFT, config),
+    walkDown: getCharacterMovementAnimationConfigForController(ViewDirections.DOWN, config),
+    walkRight: getCharacterMovementAnimationConfigForController(ViewDirections.RIGHT, config),
+    walkUp: getCharacterMovementAnimationConfigForController(ViewDirections.UP, config),
+    walkLeft: getCharacterMovementAnimationConfigForController(ViewDirections.LEFT, config),
   }
 }
+
+export type CharacterAnimationController<
+  AnimationName extends string,
+  AnimationRL extends AnimationRLType = never,
+> = AnimationController<
+  CharacterAnimationName<AnimationName>,
+  CharacterAnimationRegulatorList<AnimationRL>
+>
