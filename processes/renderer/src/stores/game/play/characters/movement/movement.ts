@@ -1,6 +1,7 @@
 import { ExpandedDirection, XY } from 'project-utility-types/plane'
 
 import {
+  CharacterMovementRegulatorName,
   CharacterMovementState,
   CharacterMovementStateConfig,
 } from 'stores/game/play/characters/movement/state'
@@ -12,7 +13,11 @@ import { AnimationRLType } from '../../entities/animation'
 import { Position } from '../../entities/position'
 import { ProhibitorsController } from '../../entities/prohibitors-controller'
 import { convertExpandedDirectionToPrimitiveDirection, getMovementDirection } from '../../lib/movement'
-import { CharacterAnimationController, CharacterMovementAnimationName } from '../animation'
+import {
+  CharacterAnimationController,
+  CharacterAnimationRegulatorName,
+  CharacterMovementAnimationName,
+} from '../animation'
 
 type MoveConfig = {
   direction: ExpandedDirection
@@ -35,6 +40,11 @@ const isAutomoveDeltaYConfig = (config: any): config is AutomoveDeltaY => {
   return (config as AutomoveDeltaY).deltaY !== undefined
 }
 
+type AnimationBinds<
+  MovementRegulatorName extends string,
+  AnimationRegulatorName extends string,
+> = Partial<Record<MovementRegulatorName, AnimationRegulatorName>>
+
 export type ConfigForCharacterMovement<AnimationName extends string, RL extends AnimationRLType> = {
   position: Position
   animationController: CharacterAnimationController<AnimationName, RL>
@@ -54,6 +64,10 @@ export class CharacterMovement<AnimationName extends string, AnimationRL extends
     this.animationController = animationController
 
     this.movementState = new CharacterMovementState(initialMovementStateConfig)
+  }
+
+  animationBinds: AnimationBinds<CharacterMovementRegulatorName, CharacterAnimationRegulatorName> = {
+    sprint: 'sprint',
   }
 
   //@ позиция
@@ -138,13 +152,39 @@ export class CharacterMovement<AnimationName extends string, AnimationRL extends
     }
   }
 
+  private makeActionWithRegulator = (
+    movementRegulatorName: CharacterMovementRegulatorName,
+    action: 'apply' | 'remove',
+  ): void => {
+    const movementFn =
+      action === 'apply'
+        ? this.movementState.regulators.applyRegulator
+        : this.movementState.regulators.removeRegulator
+    const animationFn =
+      action === 'apply'
+        ? this.animationController.currentAnimation.regulators?.applyRegulator
+        : this.animationController.currentAnimation.regulators?.removeRegulator
+
+    Object.entries(this.animationBinds).forEach(([mrName, arName]) => {
+      if (mrName === movementRegulatorName) {
+        movementFn(mrName as keyof typeof this.animationBinds)
+        animationFn?.(arName)
+      }
+    })
+  }
+
+  applyRegulator = (regulatorName: CharacterMovementRegulatorName): void => {
+    this.makeActionWithRegulator(regulatorName, 'apply')
+  }
+  removeRegulator = (regulatorName: CharacterMovementRegulatorName): void => {
+    this.makeActionWithRegulator(regulatorName, 'remove')
+  }
+
   startSprint = (): void => {
-    this.movementState.regulators.applyRegulator('sprint')
-    this.animationController.currentAnimation.regulators?.applyRegulator('sprint')
+    this.applyRegulator('sprint')
   }
   endSprint = (): void => {
-    this.movementState.regulators.removeRegulator('sprint')
-    this.animationController.currentAnimation.regulators?.removeRegulator('sprint')
+    this.removeRegulator('sprint')
   }
 
   //! остановка

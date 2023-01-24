@@ -15,10 +15,10 @@ export type CharacterAnimationName<AnimationName extends string> =
   | CharacterMovementAnimationName
   | AnimationName
 
-type CharacterMovementAnimationRegulatorName = 'sprint'
+export type CharacterAnimationRegulatorName = 'sprint'
 
 export type DefaultCharacterAnimationRL =
-  AnimationRegulatorList<CharacterMovementAnimationRegulatorName>
+  AnimationRegulatorList<CharacterAnimationRegulatorName>
 
 export const defaultCharacterAnimationRegulatorList: DefaultCharacterAnimationRL = {
   sprint: {

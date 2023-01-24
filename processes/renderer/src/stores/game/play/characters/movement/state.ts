@@ -8,7 +8,7 @@ import {
 
 import { areEquivalent } from 'lib/are-equivalent'
 
-type RegulatorName = 'sprint'
+export type CharacterMovementRegulatorName = 'sprint'
 
 const regulatorTargets = ['currentStepSize'] as const
 type RegulatorTarget = typeof regulatorTargets[number]
@@ -17,11 +17,12 @@ const initialValues: RegulatorInitialValues<RegulatorTarget> = {
   currentStepSize: 'baseStepSize',
 }
 
-const characterMovementRegulatorList: RegulatorList<RegulatorName, RegulatorTarget> = {
-  sprint: {
-    currentStepSize: ((prev) => prev * 1.88) as Modifier<number>,
-  },
-}
+const characterMovementRegulatorList: RegulatorList<CharacterMovementRegulatorName, RegulatorTarget> =
+  {
+    sprint: {
+      currentStepSize: ((prev) => prev * 1.88) as Modifier<number>,
+    },
+  }
 
 export type CharacterMovementStateValue = {
   stepSize: number
