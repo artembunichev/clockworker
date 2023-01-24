@@ -6,7 +6,7 @@ import { Callback } from 'process-shared/types/basic-utility-types'
 
 import { Popup as PopupStore } from 'stores/entities/popup'
 
-import { Popup, PopupProps } from '../popup-template'
+import { Popup, PopupProps } from 'components/popup/popup-template'
 
 export const closeGamePopup = (popup: PopupStore): void => {
   popup.close()

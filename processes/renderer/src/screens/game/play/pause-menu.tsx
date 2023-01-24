@@ -9,7 +9,7 @@ import { useStore } from 'stores/root-store/context'
 import { colors } from 'lib/theme'
 
 import { PixelatedButton } from 'components/pixelated/pixelated-components'
-import { GamePopup } from 'components/popup/game-popups/game-popup-template'
+import { GamePopup } from 'screens/shared/popups/game-popup-template'
 
 import { useGamePlayStore } from '../screen'
 

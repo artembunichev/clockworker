@@ -3,8 +3,8 @@ import React from 'react'
 
 import { FC } from 'basic-utility-types'
 
-import { QuitGameConfirm } from 'components/popup/game-popups/confirms/quit-game-confirm'
-import { QuitInMainMenuConfirm } from 'components/popup/game-popups/confirms/quit-in-main-menu-confirm'
+import { QuitGameConfirm } from 'screens/shared/popups/confirms/quit-game-confirm'
+import { QuitInMainMenuConfirm } from 'screens/shared/popups/confirms/quit-in-main-menu-confirm'
 
 import { GameOpening } from '../opening'
 import { useGameStore } from '../screen'

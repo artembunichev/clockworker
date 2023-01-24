@@ -5,7 +5,8 @@ import { FC } from 'basic-utility-types'
 
 import { useStore } from 'stores/root-store/context'
 
-import { SettingsMenuTemplate } from '../settings-menu-template'
+import { SettingsMenuTemplate } from 'components/settings/settings-menu-template'
+
 import { GeneralAppSettings } from './general'
 
 export const AppSettingsMenu: FC = observer(() => {

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { useStore } from 'stores/root-store/context'
 
-import { FlagSetting } from '../flag-setting'
+import { FlagSetting } from 'components/settings/flag-setting'
 
 export const GeneralAppSettings = observer(() => {
   const { appSettingsStore } = useStore()

@@ -7,11 +7,7 @@ import { FC } from 'basic-utility-types'
 import { colors } from 'lib/theme'
 
 import { PixelatedButton } from 'components/pixelated/pixelated-components'
-import {
-  GamePopup,
-  GamePopupProps,
-  closeGamePopup,
-} from 'components/popup/game-popups/game-popup-template'
+import { GamePopup, GamePopupProps, closeGamePopup } from 'screens/shared/popups/game-popup-template'
 
 export type SettingsMenuTemplateProps = Omit<
   GamePopupProps,

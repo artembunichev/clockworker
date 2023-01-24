@@ -9,7 +9,7 @@ import { useStore } from 'stores/root-store/context'
 import { colors } from 'lib/theme'
 
 import { PixelatedButton } from 'components/pixelated/pixelated-components'
-import { AppSettingsMenu } from 'components/settings/app-settings/menu'
+import { AppSettingsMenu } from 'screens/shared/app-settings/menu'
 
 export const MainMenu: FC = observer(() => {
   const { appStore } = useStore()
