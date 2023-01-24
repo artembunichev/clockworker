@@ -1,12 +1,13 @@
 import { Modifier } from 'project-utility-types/abstract'
 
-import { AnimationRLType, AnimationRegulatorList, AnimationSequence } from '../entities/animation'
 import {
   AnimationConfigForController,
   AnimationConfigsForController,
   AnimationController,
   ViewDirections,
 } from '../entities/animation-controller'
+import { AnimationSequence } from '../entities/animation/animation'
+import { AnimationRLType, AnimationRegulatorList } from '../entities/animation/regulators'
 import { getRowSequence } from '../lib/animation'
 
 export type CharacterMovementAnimationName = 'walkDown' | 'walkRight' | 'walkUp' | 'walkLeft'

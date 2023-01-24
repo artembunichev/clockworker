@@ -8,7 +8,7 @@ import {
 import { areEquivalent } from 'lib/are-equivalent'
 import { capitalizeFirstSymbol } from 'lib/strings'
 
-import { AnimationRLType } from '../../entities/animation'
+import { AnimationRLType } from '../../entities/animation/regulators'
 import { Position } from '../../entities/position'
 import { ProhibitorsController } from '../../entities/prohibitors-controller'
 import { convertExpandedDirectionToPrimitiveDirection, getMovementDirection } from '../../lib/movement'

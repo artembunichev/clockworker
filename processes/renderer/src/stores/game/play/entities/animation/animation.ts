@@ -2,7 +2,6 @@ import { Callback } from 'process-shared/types/basic-utility-types'
 import { Indexes } from 'project-utility-types/abstract'
 
 import {
-  RegulatorList,
   RegulatorTarget as RegulatorTargetType,
   RegulatorTargetsInitialValues,
   Regulators,
@@ -10,25 +9,13 @@ import {
 import { Sprite } from 'stores/game/play/entities/sprite'
 import { SpriteSheet } from 'stores/game/play/entities/sprite-sheet'
 
+import { AnimationRLType, regulatorTargetsInitialValues } from './regulators'
+
 export type AnimationSequence = Array<Indexes>
 
 export type AnimationControls = {
   run: Callback
   stop: Callback
-}
-
-const regulatorTargets = ['framesPerSprite'] as const
-type RegulatorTarget = typeof regulatorTargets[number]
-
-export type AnimationRLType = RegulatorList<string, RegulatorTarget> | never
-
-export type AnimationRegulatorList<RegulatorName extends string> = RegulatorList<
-  RegulatorName,
-  RegulatorTarget
->
-
-const regulatorTargetsInitialValues: RegulatorTargetsInitialValues<RegulatorTarget> = {
-  framesPerSprite: 'baseFramesPerSprite',
 }
 
 export type RunAnimationOptions<RL extends AnimationRLType = never> = Partial<

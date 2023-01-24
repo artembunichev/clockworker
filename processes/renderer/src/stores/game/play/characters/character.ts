@@ -3,8 +3,8 @@ import { ImageContainer, ImageContainerOptions, ImageSrcs } from 'stores/entitie
 import { merge } from 'lib/objects'
 
 import { Body, BodyConfig } from '../body'
-import { AnimationRLType } from '../entities/animation'
 import { AnimationConfigsForController, AnimationController } from '../entities/animation-controller'
+import { AnimationRLType } from '../entities/animation/regulators'
 import { Sprite } from '../entities/sprite'
 import { SpriteSheet, SpriteSheetConfig } from '../entities/sprite-sheet'
 import { GameScreen } from '../screen'
