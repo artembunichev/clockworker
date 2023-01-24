@@ -179,6 +179,10 @@ export class CharacterMovement<AnimationName extends string, AnimationRL extends
   removeRegulator = (regulatorName: CharacterMovementRegulatorName): void => {
     this.makeActionWithRegulator(regulatorName, 'remove')
   }
+  clearRegulators = (): void => {
+    this.movementState.regulators.clearRegulators()
+    this.animationController.currentAnimation.regulators?.clearRegulators()
+  }
 
   startSprint = (): void => {
     this.applyRegulator('sprint')
@@ -211,7 +215,8 @@ export class CharacterMovement<AnimationName extends string, AnimationRL extends
         isAutomoveDeltaXConfig(config) ||
         isAutomoveDeltaYConfig(config)
       ) {
-        this.animationController.currentAnimation.regulators?.clearRegulators()
+        this.clearRegulators()
+
         const { stateConfig } = config
 
         if (stateConfig) {
