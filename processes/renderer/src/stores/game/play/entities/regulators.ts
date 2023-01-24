@@ -11,11 +11,11 @@ type AnyRegulatorList = RegulatorList<string, string>
 export type RegulatorName<RL extends AnyRegulatorList> = keyof RL
 export type RegulatorTarget<RL extends AnyRegulatorList> = Extract<keyof RL[keyof RL], string>
 
-export type RegulatorInitialValues<Target extends string> = Record<Target, string>
+export type RegulatorTargetsInitialValues<Target extends string> = Record<Target, string>
 
 type RegulatorsConfig<RL extends AnyRegulatorList> = {
   sourceObject: AnyObject
-  initialValues: RegulatorInitialValues<RegulatorTarget<RL>>
+  targetsInitialValues: RegulatorTargetsInitialValues<RegulatorTarget<RL>>
 }
 
 type Config<RL extends AnyRegulatorList> = {
@@ -28,10 +28,10 @@ export class Regulators<RL extends AnyRegulatorList> {
   private config: RegulatorsConfig<RL>
 
   constructor(config: Config<RL>) {
-    const { list, sourceObject, initialValues } = config
+    const { list, sourceObject, targetsInitialValues } = config
 
     this.list = list
-    this.setConfig({ sourceObject, initialValues })
+    this.setConfig({ sourceObject, targetsInitialValues })
   }
 
   private setConfig = (config: RegulatorsConfig<RL>): void => {
@@ -58,13 +58,13 @@ export class Regulators<RL extends AnyRegulatorList> {
   }
 
   private modifyRegulatorTarget = (regulatorName: RegulatorName<RL>): void => {
-    const { sourceObject, initialValues } = this.config
+    const { sourceObject, targetsInitialValues } = this.config
 
     const targets = Object.keys(this.list[regulatorName]) as Array<RegulatorTarget<RL>>
     targets.forEach((target) => {
       const prevValue = sourceObject[target as keyof typeof sourceObject]
       const targetInitialValue = sourceObject[
-        initialValues[target] as keyof typeof sourceObject
+        targetsInitialValues[target] as keyof typeof sourceObject
       ] as typeof prevValue
 
       sourceObject[target as keyof typeof sourceObject] = this.modifyTarget(

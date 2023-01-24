@@ -1,8 +1,8 @@
 import { Modifier } from 'project-utility-types/abstract'
 
 import {
-  RegulatorInitialValues,
   RegulatorList,
+  RegulatorTargetsInitialValues,
   Regulators,
 } from 'stores/game/play/entities/regulators'
 
@@ -13,7 +13,7 @@ export type CharacterMovementRegulatorName = 'sprint'
 const regulatorTargets = ['currentStepSize'] as const
 type RegulatorTarget = typeof regulatorTargets[number]
 
-const initialValues: RegulatorInitialValues<RegulatorTarget> = {
+const regulatorTargetsInitialValues: RegulatorTargetsInitialValues<RegulatorTarget> = {
   currentStepSize: 'baseStepSize',
 }
 
@@ -59,7 +59,7 @@ export class CharacterMovementState {
   regulators = new Regulators({
     list: characterMovementRegulatorList,
     sourceObject: this,
-    initialValues,
+    targetsInitialValues: regulatorTargetsInitialValues,
   })
 
   get currentValue(): CharacterMovementStateValue {

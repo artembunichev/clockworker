@@ -2,9 +2,9 @@ import { Callback } from 'process-shared/types/basic-utility-types'
 import { Indexes } from 'project-utility-types/abstract'
 
 import {
-  RegulatorInitialValues,
   RegulatorList,
   RegulatorTarget as RegulatorTargetType,
+  RegulatorTargetsInitialValues,
   Regulators,
 } from 'stores/game/play/entities/regulators'
 import { Sprite } from 'stores/game/play/entities/sprite'
@@ -27,7 +27,7 @@ export type AnimationRegulatorList<RegulatorName extends string> = RegulatorList
   RegulatorTarget
 >
 
-const initialValues: RegulatorInitialValues<RegulatorTarget> = {
+const regulatorTargetsInitialValues: RegulatorTargetsInitialValues<RegulatorTarget> = {
   framesPerSprite: 'baseFramesPerSprite',
 }
 
@@ -74,7 +74,9 @@ export class Animation<RL extends AnimationRLType = never> {
       this.regulators = new Regulators({
         list: regulators,
         sourceObject: this,
-        initialValues: initialValues as RegulatorInitialValues<RegulatorTargetType<RL>>,
+        targetsInitialValues: regulatorTargetsInitialValues as RegulatorTargetsInitialValues<
+          RegulatorTargetType<RL>
+        >,
       })
     } else {
       this.regulators = null

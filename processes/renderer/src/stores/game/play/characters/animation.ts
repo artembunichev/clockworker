@@ -17,8 +17,7 @@ export type CharacterAnimationName<AnimationName extends string> =
 
 export type CharacterAnimationRegulatorName = 'sprint'
 
-export type DefaultCharacterAnimationRL =
-  AnimationRegulatorList<CharacterAnimationRegulatorName>
+export type DefaultCharacterAnimationRL = AnimationRegulatorList<CharacterAnimationRegulatorName>
 
 export const defaultCharacterAnimationRegulatorList: DefaultCharacterAnimationRL = {
   sprint: {
