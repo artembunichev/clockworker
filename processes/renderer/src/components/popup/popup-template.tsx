@@ -86,6 +86,7 @@ const Block = styled.div<{ width: string; height: string; color?: string }>`
   height: ${(props) => props.height};
   position: relative;
   padding: 20px;
+  margin: 30px;
   box-shadow: 0px 0px 25px 8px ${colors.shadow};
   ${doubleBorderStyle}
 `
