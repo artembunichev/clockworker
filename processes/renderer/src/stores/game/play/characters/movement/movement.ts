@@ -1,7 +1,6 @@
 import { ExpandedDirection, XY } from 'project-utility-types/plane'
 
 import {
-  CharacterMovementRegulatorName,
   CharacterMovementState,
   CharacterMovementStateConfig,
 } from 'stores/game/play/characters/movement/state'
@@ -18,6 +17,7 @@ import {
   CharacterAnimationRegulatorName,
   CharacterMovementAnimationName,
 } from '../animation'
+import { CharacterMovementRegulatorName } from './regulators'
 
 type MoveConfig = {
   direction: ExpandedDirection
