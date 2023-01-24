@@ -9,9 +9,9 @@ export type RegulatorList<Name extends string, Target extends string> = Record<N
 type AnyRegulatorList = RegulatorList<string, string>
 
 export type RegulatorName<RL extends AnyRegulatorList> = keyof RL
-export type RegulatorTarget<RL extends AnyRegulatorList> = keyof RL[keyof RL]
+export type RegulatorTarget<RL extends AnyRegulatorList> = Extract<keyof RL[keyof RL], string>
 
-export type RegulatorInitialValues<Target extends string | number | symbol> = Record<Target, string>
+export type RegulatorInitialValues<Target extends string> = Record<Target, string>
 
 type RegulatorsConfig<RL extends AnyRegulatorList> = {
   sourceObject: AnyObject
