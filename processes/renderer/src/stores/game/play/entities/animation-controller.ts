@@ -42,7 +42,7 @@ export class AnimationController<AnimationName extends string, RL extends Animat
   private list: AnimationList<AnimationName, RL> = {} as AnimationList<AnimationName, RL>
   private regulators: RL | null = null
 
-  current: Animation<RL>
+  currentAnimation: Animation<RL>
 
   constructor(config: AnimationControllerConfig<AnimationName, RL>) {
     const { spriteSheet, configs, initialValue, regulators } = config
@@ -55,7 +55,7 @@ export class AnimationController<AnimationName extends string, RL extends Animat
 
     this.createAnimations()
 
-    this.current = this.list[initialValue]
+    this.currentAnimation = this.list[initialValue]
   }
 
   private createAnimations = (): void => {
@@ -78,30 +78,30 @@ export class AnimationController<AnimationName extends string, RL extends Animat
   }
 
   setAnimation = (animationName: AnimationName): void => {
-    this.current = this.list[animationName]
+    this.currentAnimation = this.list[animationName]
   }
 
   start = (options?: RunAnimationOptions): void => {
-    this.current.run(options)
+    this.currentAnimation.run(options)
   }
   stop = (): void => {
-    this.current.stop()
+    this.currentAnimation.stop()
   }
 
   run = (animationName: AnimationName, options?: RunAnimationOptions): void => {
-    if (this.current.name !== animationName) {
+    if (this.currentAnimation.name !== animationName) {
       this.setAnimation(animationName)
     }
-    if (!this.current.isPlaying) {
+    if (!this.currentAnimation.isPlaying) {
       this.start(options)
     }
   }
 
   pause = (): void => {
-    this.current.pause()
+    this.currentAnimation.pause()
   }
   resume = (): void => {
-    this.current.resume()
+    this.currentAnimation.resume()
   }
 
   viewDirection: ViewDirections = ViewDirections.DOWN
@@ -110,6 +110,6 @@ export class AnimationController<AnimationName extends string, RL extends Animat
   }
 
   get currentSprite(): Sprite {
-    return this.current.currentSprite
+    return this.currentAnimation.currentSprite
   }
 }

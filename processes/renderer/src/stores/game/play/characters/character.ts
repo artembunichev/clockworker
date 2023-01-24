@@ -128,7 +128,7 @@ export class Character<
   }
 
   update = (): void => {
-    this.animationController.current.update()
+    this.animationController.currentAnimation.update()
     this.screen.drawSprite(this.currentSprite, this.position)
   }
 }
