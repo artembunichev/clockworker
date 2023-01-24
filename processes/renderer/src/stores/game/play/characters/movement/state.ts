@@ -20,7 +20,7 @@ const initialValues: RegulatorInitialValues<RegulatorTarget> = {
 const characterMovementRegulatorList: RegulatorList<CharacterMovementRegulatorName, RegulatorTarget> =
   {
     sprint: {
-      currentStepSize: ((prev) => prev * 1.88) as Modifier<number>,
+      currentStepSize: ((prev) => prev * 2.1) as Modifier<number>,
     },
   }
 
