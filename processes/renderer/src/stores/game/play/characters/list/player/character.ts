@@ -32,27 +32,29 @@ export class PlayerCharacter extends Character<
     const { name, screen, settings } = config
 
     super({
-      name,
       is: 'player',
-      imageContainerConfig: {
-        imageSrcs: {
+      name,
+      screen,
+      images: {
+        srcs: {
           spriteSheet: playerCharacterSpriteSheetSrc,
         },
         options: {
           loadImmediately: true,
         },
       },
-      spriteSheetConfig: {
-        spriteWidth: 14,
-        spriteHeight: 27,
-        firstSkipX: 1,
-        firstSkipY: 5,
-        skipX: 2,
-        skipY: 5,
+      animation: {
+        spriteSheetConfig: {
+          spriteWidth: 14,
+          spriteHeight: 27,
+          firstSkipX: 1,
+          firstSkipY: 5,
+          skipX: 2,
+          skipY: 5,
+        },
+        configs: playerCharacterAnimationConfigs,
       },
-      screen,
-      animationConfigs: playerCharacterAnimationConfigs,
-      initialMovementStateConfig: initialPlayerCharacterMovementStateConfig,
+      movement: { initialMovementStateConfig: initialPlayerCharacterMovementStateConfig },
     })
 
     this.settings = settings

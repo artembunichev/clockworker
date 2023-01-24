@@ -19,25 +19,21 @@ import { CharacterMovement, ConfigForCharacterMovement } from './movement/moveme
 export type AnyCharacter = Character<any, any, any>
 export type AnyCharacterConfig = CharacterConfig<any, any, any>
 
-type CharacterImageSrcs = ImageSrcs & { spriteSheet: string }
+type BaseCharacterConfig = BodyConfig & { name: string; screen: GameScreen }
 
-type ConfigForCharacter<
-  ImageSrcs extends CharacterImageSrcs,
-  AnimationName extends string,
-  RL extends AnimationRLType,
-> = {
-  name: string
-  imageContainerConfig: {
-    imageSrcs: ImageSrcs
-    options?: ImageContainerOptions
-  }
-  spriteSheetConfig: Omit<SpriteSheetConfig, 'image'>
-  animationConfigs: AnimationConfigsForController<AnimationName>
-  animationRegulators?: RL
-  screen: GameScreen
+type CharacterImageSrcs = ImageSrcs & { spriteSheet: string }
+type ImageContainerCharacterConfig<Srcs extends CharacterImageSrcs> = {
+  srcs: Srcs
+  options?: ImageContainerOptions
 }
 
-type ConfigForMovement<AnimationName extends string, AnimationRL extends AnimationRLType> = Omit<
+type AnimationCharacterConfig<AnimationName extends string, AnimationRL extends AnimationRLType> = {
+  spriteSheetConfig: Omit<SpriteSheetConfig, 'image'>
+  configs: AnimationConfigsForController<AnimationName>
+  regulators?: AnimationRL
+}
+
+type MovementCharacterConfig<AnimationName extends string, AnimationRL extends AnimationRLType> = Omit<
   ConfigForCharacterMovement<AnimationName, AnimationRL>,
   'position' | 'animationController'
 >
@@ -46,9 +42,11 @@ export type CharacterConfig<
   ImageSrcs extends CharacterImageSrcs,
   AnimationName extends string,
   AnimationRL extends AnimationRLType,
-> = BodyConfig &
-  ConfigForCharacter<ImageSrcs, AnimationName, AnimationRL> &
-  ConfigForMovement<AnimationName, AnimationRL>
+> = BaseCharacterConfig & {
+  images: ImageContainerCharacterConfig<ImageSrcs>
+  animation: AnimationCharacterConfig<AnimationName, AnimationRL>
+  movement: MovementCharacterConfig<AnimationName, AnimationRL>
+}
 
 export class Character<
   ImageSrcs extends CharacterImageSrcs,
@@ -70,29 +68,17 @@ export class Character<
       CharacterAnimationRegulatorList<AnimationRL>
     >,
   ) {
-    const {
-      is,
-      name,
-      screen,
-      imageContainerConfig,
-      spriteSheetConfig,
-      animationConfigs,
-      animationRegulators,
-      initialMovementStateConfig,
-    } = config
+    const { is, name, screen, images, animation, movement } = config
 
     super({ is: is })
 
     this.name = name
     this.screen = screen
 
-    this.imageContainer = new ImageContainer(
-      imageContainerConfig.imageSrcs,
-      imageContainerConfig.options,
-    )
+    this.imageContainer = new ImageContainer(images.srcs, images.options)
 
     this.spriteSheet = new SpriteSheet({
-      ...spriteSheetConfig,
+      ...animation.spriteSheetConfig,
       image: this.imageContainer.list.spriteSheet.imageElement,
     })
 
@@ -101,11 +87,11 @@ export class Character<
       CharacterAnimationRegulatorList<AnimationRL>
     >({
       spriteSheet: this.spriteSheet,
-      configs: animationConfigs,
+      configs: animation.configs,
       initialValue: 'walkDown',
       regulators: merge(
         defaultCharacterAnimationRegulatorList,
-        animationRegulators ?? {},
+        animation.regulators ?? {},
       ) as CharacterAnimationRegulatorList<AnimationRL>,
     })
 
@@ -114,7 +100,7 @@ export class Character<
     this.movement = new CharacterMovement({
       position: this.position,
       animationController: this.animationController,
-      initialMovementStateConfig,
+      initialMovementStateConfig: movement.initialMovementStateConfig,
     })
   }
 
