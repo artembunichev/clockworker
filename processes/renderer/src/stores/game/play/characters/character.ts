@@ -12,6 +12,7 @@ import {
   CharacterAnimationController,
   CharacterAnimationName,
   CharacterAnimationRegulatorList,
+  DefaultCharacterAnimationController,
   defaultCharacterAnimationRegulatorList,
 } from './animation'
 import { CharacterMovement, ConfigForCharacterMovement } from './movement/movement'
@@ -33,10 +34,7 @@ type AnimationCharacterConfig<AnimationName extends string, AnimationRL extends 
   regulators?: AnimationRL
 }
 
-type MovementCharacterConfig<AnimationName extends string, AnimationRL extends AnimationRLType> = Omit<
-  ConfigForCharacterMovement<AnimationName, AnimationRL>,
-  'position' | 'animationController'
->
+type MovementCharacterConfig = Omit<ConfigForCharacterMovement, 'position' | 'animationController'>
 
 export type CharacterConfig<
   ImageSrcs extends CharacterImageSrcs,
@@ -45,7 +43,7 @@ export type CharacterConfig<
 > = BaseCharacterConfig & {
   images: ImageContainerCharacterConfig<ImageSrcs>
   animation: AnimationCharacterConfig<AnimationName, AnimationRL>
-  movement: MovementCharacterConfig<AnimationName, AnimationRL>
+  movement: MovementCharacterConfig
 }
 
 export class Character<
@@ -59,7 +57,7 @@ export class Character<
   screen: GameScreen
 
   animationController: CharacterAnimationController<AnimationName, AnimationRL>
-  movement: CharacterMovement<AnimationName, AnimationRL>
+  movement: CharacterMovement
 
   constructor(
     config: CharacterConfig<
@@ -99,7 +97,7 @@ export class Character<
 
     this.movement = new CharacterMovement({
       position: this.position,
-      animationController: this.animationController,
+      animationController: this.animationController as DefaultCharacterAnimationController,
       initialMovementStateConfig: movement.initialMovementStateConfig,
     })
   }

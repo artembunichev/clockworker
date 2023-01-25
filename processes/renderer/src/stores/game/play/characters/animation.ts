@@ -12,13 +12,16 @@ import { getRowSequence } from '../lib/animation'
 
 export type CharacterMovementAnimationName = 'walkDown' | 'walkRight' | 'walkUp' | 'walkLeft'
 
+export type DefaultCharacterAnimationName = CharacterMovementAnimationName
+
 export type CharacterAnimationName<AnimationName extends string> =
-  | CharacterMovementAnimationName
+  | DefaultCharacterAnimationName
   | AnimationName
 
-export type CharacterAnimationRegulatorName = 'sprint'
+export type DefaultCharacterAnimationRegulatorName = 'sprint'
 
-export type DefaultCharacterAnimationRL = AnimationRegulatorList<CharacterAnimationRegulatorName>
+export type DefaultCharacterAnimationRL =
+  AnimationRegulatorList<DefaultCharacterAnimationRegulatorName>
 
 export const defaultCharacterAnimationRegulatorList: DefaultCharacterAnimationRL = {
   sprint: {
@@ -26,8 +29,9 @@ export const defaultCharacterAnimationRegulatorList: DefaultCharacterAnimationRL
   },
 }
 
-export type CharacterAnimationRegulatorList<RL extends AnimationRLType> = DefaultCharacterAnimationRL &
-  RL
+export type CharacterAnimationRegulatorList<RL extends AnimationRLType> = RL extends never
+  ? DefaultCharacterAnimationRL
+  : DefaultCharacterAnimationRL & RL
 
 export type ShortCharacterMovementAnimationConfig = Omit<
   AnimationConfigForController,
@@ -75,4 +79,9 @@ export type CharacterAnimationController<
 > = AnimationController<
   CharacterAnimationName<AnimationName>,
   CharacterAnimationRegulatorList<AnimationRL>
+>
+
+export type DefaultCharacterAnimationController = AnimationController<
+  DefaultCharacterAnimationName,
+  DefaultCharacterAnimationRL
 >

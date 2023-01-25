@@ -1,7 +1,4 @@
 import {
-  AutomoveDeltaX,
-  AutomoveDeltaY,
-  AutomoveFromTo,
   CharacterMovement,
   ConfigForCharacterMovement,
 } from 'stores/game/play/characters/movement/movement'
@@ -10,24 +7,18 @@ import { getSingleMovementDirection } from 'stores/game/play/lib/movement'
 import { GameSettings } from 'stores/game/play/settings/settings'
 import { KeyboardStore } from 'stores/keyboard.store'
 
-import { PlayerCharacterAnimationName, PlayerCharacterAnimationRegulatorList } from '../animation'
+import { RunAutomove } from '../../../movement/automove'
 import { PlayerCharacterMovementKeys } from './keys'
 
 export const initialPlayerCharacterMovementStateConfig: CharacterMovementStateConfig = {
   baseStepSize: 1.8,
 }
 
-type PlayerCharacterMovementConfig = ConfigForCharacterMovement<
-  PlayerCharacterAnimationName,
-  PlayerCharacterAnimationRegulatorList
-> & {
+type PlayerCharacterMovementConfig = ConfigForCharacterMovement & {
   settings: GameSettings
 }
 
-export class PlayerCharacterMovement extends CharacterMovement<
-  PlayerCharacterAnimationName,
-  PlayerCharacterAnimationRegulatorList
-> {
+export class PlayerCharacterMovement extends CharacterMovement {
   private settings: GameSettings
 
   keys: PlayerCharacterMovementKeys
@@ -45,6 +36,19 @@ export class PlayerCharacterMovement extends CharacterMovement<
 
     // клавиши управления
     this.keys = new PlayerCharacterMovementKeys({ settings: this.settings })
+
+    // автомув
+    const superAutomoveRun = this.automove.run
+
+    const runAutomove: RunAutomove = (config: any) => {
+      this.keys.prohibitorsController.add('automove')
+      return superAutomoveRun(config).then((response) => {
+        this.keys.prohibitorsController.remove('automove')
+        return response
+      })
+    }
+
+    this.automove.run = runAutomove
   }
 
   //! обработка клавиш управления
@@ -97,17 +101,5 @@ export class PlayerCharacterMovement extends CharacterMovement<
         this.animationController.pause()
       }
     }
-  }
-
-  //! автомув
-  automove(config: AutomoveFromTo): Promise<boolean>
-  automove(config: AutomoveDeltaX): Promise<boolean>
-  automove(config: AutomoveDeltaY): Promise<boolean>
-  override automove(config: any): Promise<boolean> {
-    this.keys.prohibitorsController.add('automove')
-    return super.automove(config).then((response) => {
-      this.keys.prohibitorsController.remove('automove')
-      return response
-    })
   }
 }
