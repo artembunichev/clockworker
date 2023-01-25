@@ -3,7 +3,7 @@ import React from 'react'
 
 import { FC } from 'basic-utility-types'
 
-import { GameTextbox } from 'components/textbox/game-textbox'
+import { GameTextbox } from 'screens/game/game-textbox'
 
 export const PlayCanvasOverlay: FC = observer(() => {
   return <GameTextbox />
