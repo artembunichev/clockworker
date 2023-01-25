@@ -64,7 +64,7 @@ export class CharacterMovement {
   }
 
   animationBinds: AnimationBinds = {
-    sprint: 'sprint',
+    sprint: 'speedup',
   }
 
   //@ позиция

@@ -18,13 +18,13 @@ export type CharacterAnimationName<AnimationName extends string> =
   | DefaultCharacterAnimationName
   | AnimationName
 
-export type DefaultCharacterAnimationRegulatorName = 'sprint'
+export type DefaultCharacterAnimationRegulatorName = 'speedup'
 
 export type DefaultCharacterAnimationRL =
   AnimationRegulatorList<DefaultCharacterAnimationRegulatorName>
 
 export const defaultCharacterAnimationRegulatorList: DefaultCharacterAnimationRL = {
-  sprint: {
+  speedup: {
     framesPerSprite: ((prev) => Math.round(prev * 0.55)) as Modifier<number>,
   },
 }
