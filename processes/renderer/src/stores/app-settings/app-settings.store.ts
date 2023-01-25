@@ -10,7 +10,7 @@ import { getConvertedEditableSettings } from 'stores/lib/settings'
 
 import { areEquivalent } from 'lib/are-equivalent'
 
-import { EditableAppSettings } from './editable'
+import { EditableAppSettings } from './editable-settings'
 
 export type AppSettingsValues = {
   isGetUpdateNotifications: boolean
