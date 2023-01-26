@@ -102,7 +102,7 @@ export class Collider {
   }
 
   private isBodyStucked = (bodyId: string): boolean => {
-    return this.stucks[bodyId].length > 0
+    return this.stucks[bodyId]?.length > 0
   }
 
   private getMovementDirectionByHitbox = (
@@ -666,22 +666,28 @@ export class Collider {
 
   private handleBodiesCollision = (): void => {
     this.bodies.forEach((body) => {
-      const bodyCollisionStuckPlaces = this.handleBodyCollision(body)
-      const bodyMapStuckPlaces = this.keepBodyInMap(body)
+      const prevBodyHitbox = this.bodiesPrevHitboxes[body.id]
 
-      const bodyStuckPlaces = [...bodyCollisionStuckPlaces, ...bodyMapStuckPlaces]
+      const bodyMovementDirection = this.getMovementDirectionByHitbox(prevBodyHitbox, body.hitbox)
 
-      if (bodyStuckPlaces.length > 0) {
-        bodyStuckPlaces.forEach((stuckPlace) => {
-          this.addStuck(body.id, stuckPlace)
-        })
-      } else {
-        this.removeStucks(body.id)
-      }
+      if (bodyMovementDirection !== null) {
+        const bodyCollisionStuckPlaces = this.handleBodyCollision(body)
+        const bodyMapStuckPlaces = this.keepBodyInMap(body)
 
-      if (isCharacter(body)) {
-        const isBodyStucked = this.isBodyStucked(body.id)
-        body.movement.setIsStuck(isBodyStucked)
+        const bodyStuckPlaces = [...bodyCollisionStuckPlaces, ...bodyMapStuckPlaces]
+
+        if (bodyStuckPlaces.length > 0) {
+          bodyStuckPlaces.forEach((stuckPlace) => {
+            this.addStuck(body.id, stuckPlace)
+          })
+        } else {
+          this.removeStucks(body.id)
+        }
+
+        if (isCharacter(body)) {
+          const isBodyStucked = this.isBodyStucked(body.id)
+          body.movement.setIsStuck(isBodyStucked)
+        }
       }
     })
   }
