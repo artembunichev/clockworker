@@ -124,6 +124,11 @@ export class CharacterMovement {
     this.automove.setIsStuck(value)
   }
 
+  isSliding = false
+  setIsSliding = (value: boolean): void => {
+    this.isSliding = value
+  }
+
   move: MoveFn = ({ direction, stateConfig }): void => {
     this.setDirection(direction)
 
@@ -139,6 +144,12 @@ export class CharacterMovement {
 
   moveWithAnimation: MoveFn = (moveConfig): void => {
     this.move(moveConfig)
+
+    if (this.isSliding) {
+      this.applyAnimationRegulator('slowdown')
+    } else {
+      this.removeAnimationRegulator('slowdown')
+    }
 
     if (this.direction) {
       const animationName: CharacterMovementAnimationName = ('walk' +
@@ -169,6 +180,13 @@ export class CharacterMovement {
         animationFn?.(arName)
       }
     })
+  }
+
+  applyAnimationRegulator = (regulatorName: DefaultCharacterAnimationRegulatorName): void => {
+    this.animationController.currentAnimation.regulators?.applyRegulator(regulatorName)
+  }
+  removeAnimationRegulator = (regulatorName: DefaultCharacterAnimationRegulatorName): void => {
+    this.animationController.currentAnimation.regulators?.removeRegulator(regulatorName)
   }
 
   applyRegulator = (regulatorName: CharacterMovementRegulatorName): void => {

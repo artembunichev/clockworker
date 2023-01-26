@@ -40,45 +40,53 @@ export class Regulators<RL extends AnyRegulatorList> {
 
   activeRegulatorNames: Array<RegulatorName<RL>> = []
 
+  private getInitialTargetValue = (target: RegulatorTarget<RL>): any => {
+    const { sourceObject, targetsInitialValues } = this.config
+    return sourceObject[targetsInitialValues[target]]
+  }
+
+  private modifyTarget = (target: RegulatorTarget<RL>, value: any): void => {
+    const { sourceObject } = this.config
+    sourceObject[target] = value
+  }
+
   isRegulatorActive = (regulatorName: RegulatorName<RL>): boolean => {
     return this.activeRegulatorNames.includes(regulatorName)
   }
 
-  private modifyTarget = <T>(target: RegulatorTarget<RL>, prevValue: T, initialValue: T): T => {
-    const newValue = this.activeRegulatorNames.reduce((_: T, regulatorName) => {
+  private getNewTargetValue = <T>(target: RegulatorTarget<RL>): T => {
+    const initialTargetValue = this.getInitialTargetValue(target)
+    const newValue = this.activeRegulatorNames.reduce((acc: T, regulatorName) => {
       const regulator = this.list[regulatorName]
       const targetModifier = regulator[target] as Modifier<T>
       if (targetModifier instanceof Function) {
-        return targetModifier(prevValue)
+        return targetModifier(acc)
       } else {
         return targetModifier
       }
-    }, initialValue)
+    }, initialTargetValue)
     return newValue
   }
 
-  private modifyRegulatorTarget = (regulatorName: RegulatorName<RL>): void => {
-    const { sourceObject, targetsInitialValues } = this.config
-
+  private modifyRegulatorTargets = (
+    regulatorName: RegulatorName<RL>,
+    modifiedTargets: Array<RegulatorTarget<RL>>,
+  ): void => {
     const targets = Object.keys(this.list[regulatorName]) as Array<RegulatorTarget<RL>>
     targets.forEach((target) => {
-      const prevValue = sourceObject[target as keyof typeof sourceObject]
-      const targetInitialValue = sourceObject[
-        targetsInitialValues[target] as keyof typeof sourceObject
-      ] as typeof prevValue
-
-      sourceObject[target as keyof typeof sourceObject] = this.modifyTarget(
-        target,
-        prevValue,
-        targetInitialValue,
-      )
+      if (!modifiedTargets.includes(target)) {
+        const newTargetValue = this.getNewTargetValue(target)
+        this.modifyTarget(target, newTargetValue)
+        modifiedTargets.push(target)
+      }
     })
   }
 
   modifyAllRegulatorTargets = (): void => {
-    Object.keys(this.list).forEach((regulatorName) => {
-      this.modifyRegulatorTarget(regulatorName)
-    })
+    const modifiedTargets: Array<RegulatorTarget<RL>> = []
+    Object.keys(this.list).forEach((regulatorName) =>
+      this.modifyRegulatorTargets(regulatorName, modifiedTargets),
+    )
   }
 
   private makeRegulatorAction = (action: Callback): void => {

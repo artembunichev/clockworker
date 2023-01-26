@@ -85,6 +85,13 @@ export class Collider {
   }
 
   //! вспомогательные функции
+  private isXChanged = (prevHitbox: PointPair, currentHitbox: PointPair): boolean => {
+    return prevHitbox.x1 !== currentHitbox.x1 || prevHitbox.x2 !== currentHitbox.x2
+  }
+  private isYChanged = (prevHitbox: PointPair, currentHitbox: PointPair): boolean => {
+    return prevHitbox.y1 !== currentHitbox.y1 || prevHitbox.y2 !== currentHitbox.y2
+  }
+
   private getStaticObstacleById = (obstacleId: string): HitboxWithId => {
     return this.staticObstacles.find(({ id }) => id === obstacleId)!
   }
@@ -92,6 +99,10 @@ export class Collider {
   private bodiesPrevHitboxes: Record<string, PointPair> = {}
   private saveBodyHitboxToPrev = (body: ColliderBody): void => {
     this.bodiesPrevHitboxes[body.id] = body.hitbox
+  }
+
+  private isBodyStucked = (bodyId: string): boolean => {
+    return this.stucks[bodyId].length > 0
   }
 
   private getMovementDirectionByHitbox = (
@@ -574,10 +585,6 @@ export class Collider {
 
   // возвращает список препятствий, в которые упёрлось тело
   private handleBodyCollision = (body: ColliderBody): Array<string> => {
-    if (!this.bodiesPrevHitboxes[body.id]) {
-      this.saveBodyHitboxToPrev(body)
-    }
-
     const prevBodyHitbox = this.bodiesPrevHitboxes[body.id]
 
     var bodyStuckPlaces: Array<string> = []
@@ -589,8 +596,6 @@ export class Collider {
         bodyStuckPlaces = bodyStuckPoints.map(({ obstacleId }) => obstacleId)
       }
     }
-
-    this.saveBodyHitboxToPrev(body)
 
     return bodyStuckPlaces
   }
@@ -635,7 +640,27 @@ export class Collider {
     return bodyStuckPlaces
   }
 
-  update = (): void => {
+  private checkBodyForSliding = (body: ColliderBody): void => {
+    if (isCharacter(body)) {
+      const prevBodyHitbox = this.bodiesPrevHitboxes[body.id]
+
+      const isXChanged = this.isXChanged(prevBodyHitbox, body.hitbox)
+      const isYChanged = this.isYChanged(prevBodyHitbox, body.hitbox)
+
+      const bodyIsStucked = this.isBodyStucked(body.id)
+      const onlyOneCoordinateChanged = (isXChanged && !isYChanged) || (!isXChanged && isYChanged)
+
+      const bodyIsSliding = bodyIsStucked && onlyOneCoordinateChanged
+
+      body.movement.setIsSliding(bodyIsSliding)
+    }
+  }
+
+  private checkBodiesForSliding = (): void => {
+    this.bodies.forEach(this.checkBodyForSliding)
+  }
+
+  private handleBodiesCollision = (): void => {
     this.bodies.forEach((body) => {
       const bodyCollisionStuckPlaces = this.handleBodyCollision(body)
       const bodyMapStuckPlaces = this.keepBodyInMap(body)
@@ -651,12 +676,28 @@ export class Collider {
       }
 
       if (isCharacter(body)) {
-        if (this.stucks[body.id].length > 0) {
-          body.movement.setIsStuck(true)
-        } else {
-          body.movement.setIsStuck(false)
-        }
+        const isBodyStucked = this.isBodyStucked(body.id)
+        body.movement.setIsStuck(isBodyStucked)
       }
     })
+  }
+
+  private savePrevBodiesHitboxesIfNoPrevHitboxes = (): void => {
+    this.bodies.forEach((body) => {
+      if (this.bodiesPrevHitboxes[body.id] === undefined) {
+        this.saveBodyHitboxToPrev(body)
+      }
+    })
+  }
+
+  private savePrevBodiesHitboxes = (): void => {
+    this.bodies.forEach(this.saveBodyHitboxToPrev)
+  }
+
+  update = (): void => {
+    this.savePrevBodiesHitboxesIfNoPrevHitboxes()
+    this.handleBodiesCollision()
+    this.checkBodiesForSliding()
+    this.savePrevBodiesHitboxes()
   }
 }
