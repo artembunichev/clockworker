@@ -1,8 +1,14 @@
 import { ExpandedDirection, PrimitiveDirection, XY } from 'project-utility-types/plane'
 
+import { areEquivalent } from 'lib/are-equivalent'
+
 import { ViewDirections } from '../entities/animation-controller'
 
-export const getMovementDirection = (start: XY, end: XY): ExpandedDirection => {
+export const getMovementDirection = (start: XY, end: XY): ExpandedDirection | null => {
+  if (areEquivalent(start, end)) {
+    return null
+  }
+
   var direction: ExpandedDirection = '' as ExpandedDirection
   if (start.y < end.y) {
     direction += 'down'

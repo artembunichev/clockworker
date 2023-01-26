@@ -108,7 +108,7 @@ export class Collider {
   private getMovementDirectionByHitbox = (
     prevHitbox: PointPair,
     currentHitbox: PointPair,
-  ): ExpandedDirection => {
+  ): ExpandedDirection | null => {
     const start: XY = { x: prevHitbox.x1, y: prevHitbox.y1 }
     const end: XY = { x: currentHitbox.x1, y: currentHitbox.y1 }
 
@@ -329,8 +329,12 @@ export class Collider {
     bodyMovementDirection,
   }: {
     intersectionPoints: Array<IntersectionPoint>
-    bodyMovementDirection: ExpandedDirection
+    bodyMovementDirection: ExpandedDirection | null
   }): Array<IntersectionPoint> | null => {
+    if (!bodyMovementDirection) {
+      return null
+    }
+
     const closestPoints: Array<IntersectionPoint> = []
 
     if (!intersectionPoints.length) {

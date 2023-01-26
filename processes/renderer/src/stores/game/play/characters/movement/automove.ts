@@ -138,7 +138,8 @@ export class CharacterAutomove {
         // перемещаем героя в стартовую позицию
         this.position.setXY(start.x, start.y)
 
-        const direction = getMovementDirection(start, end)
+        // условие выше гарантирует, стартовая и конечная позиции не совпадают
+        const direction = getMovementDirection(start, end)!
 
         // нужна, чтобы не вызывать move(), после того, как встали на конечную позицию
         var shouldMove = true
