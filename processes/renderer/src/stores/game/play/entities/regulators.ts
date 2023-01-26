@@ -8,7 +8,7 @@ type Regulator<Target extends string> = Record<Target, Modifier<any>>
 export type RegulatorList<Name extends string, Target extends string> = Record<Name, Regulator<Target>>
 type AnyRegulatorList = RegulatorList<string, string>
 
-export type RegulatorName<RL extends AnyRegulatorList> = keyof RL
+export type RegulatorName<RL extends AnyRegulatorList> = Extract<keyof RL, string>
 export type RegulatorTarget<RL extends AnyRegulatorList> = Extract<keyof Properties<RL>, string>
 
 export type RegulatorTargetsInitialValues<Target extends string> = Record<Target, string>
@@ -85,7 +85,7 @@ export class Regulators<RL extends AnyRegulatorList> {
   modifyAllRegulatorTargets = (): void => {
     const modifiedTargets: Array<RegulatorTarget<RL>> = []
     Object.keys(this.list).forEach((regulatorName) =>
-      this.modifyRegulatorTargets(regulatorName, modifiedTargets),
+      this.modifyRegulatorTargets(regulatorName as RegulatorName<RL>, modifiedTargets),
     )
   }
 
