@@ -1,11 +1,13 @@
 export const last = <T>(array: Array<T>): T => {
   return array[array.length - 1]
 }
-export const remove = <T>(array: Array<T>, value: T | ((value: T) => boolean)): Array<T> => {
-  if (value instanceof Function) {
-    return array.filter((el) => !value(el))
+
+export type Remover<T> = (value: T) => boolean
+export const remove = <T>(array: Array<T>, remover: T | Remover<T>): Array<T> => {
+  if (remover instanceof Function) {
+    return array.filter((el) => !remover(el))
   } else {
-    return array.filter((el) => el !== value)
+    return array.filter((el) => el !== remover)
   }
 }
 

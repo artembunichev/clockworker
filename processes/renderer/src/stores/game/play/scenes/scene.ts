@@ -7,7 +7,7 @@ import { TiledMap } from 'tiled-types'
 import { ImageContainer } from 'stores/entities/image-container'
 
 import { Characters } from '../characters/controller'
-import { HitboxWithId } from '../collider'
+import { HitboxWithId } from '../collider/collision'
 import { Sprite } from '../entities/sprite'
 import { SpriteSheet } from '../entities/sprite-sheet'
 import { GameScreen } from '../screen'

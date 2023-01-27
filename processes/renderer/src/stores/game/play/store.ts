@@ -97,11 +97,11 @@ export class GamePlayStore {
   addActiveCharacter = (characterName: CharacterName): void => {
     this.characterController.addActiveCharacter(characterName)
     const character = this.characterController.characters[characterName]
-    this.collider.addBody(character)
+    this.collider.collision.bodyList.addOne(character)
   }
   removeActiveCharacter = (characterName: CharacterName): void => {
     const character = this.characterController.characters[characterName]
-    this.collider.removeBody(character.id)
+    this.collider.collision.bodyList.removeOne(character.id)
     this.characterController.removeActiveCharacter(characterName)
   }
 
@@ -120,7 +120,9 @@ export class GamePlayStore {
     return this.sceneController.setScene(sceneName).then(() => {
       this.characterController.clearActiveCharacters()
       this.collider.clear()
-      this.collider.addStaticObstacles(this.sceneController.currentScene.map.hitboxes)
+      this.collider.collision.staticObstacleList.addMany(
+        this.sceneController.currentScene.map.hitboxes,
+      )
     })
   }
 
