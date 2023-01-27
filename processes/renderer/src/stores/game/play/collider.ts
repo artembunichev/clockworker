@@ -26,6 +26,20 @@ type IntersectionPointWithDeltaLineLength = IntersectionPoint & { deltaLineLengt
 
 type SetBodyToObstacleFn = (body: ColliderBody, obstacle: PointPair) => void
 
+type BodyExtremeCoords = {
+  bottomY: number
+  rightX: number
+  topY: number
+  leftX: number
+}
+
+type BodyOutOfMapState = {
+  outOfBottomMapBorder: boolean
+  outOfRightMapBorder: boolean
+  outOfTopMapBorder: boolean
+  outOfLeftMapBorder: boolean
+}
+
 type ColliderConfig = {
   screen: GameScreen
 }
@@ -85,6 +99,26 @@ export class Collider {
   }
 
   //! вспомогательные функции
+  private getBodyExtremeCoords = (body: ColliderBody): BodyExtremeCoords => {
+    return {
+      bottomY: this.screen.height - body.size.height,
+      rightX: this.screen.width - body.size.width,
+      topY: 0,
+      leftX: 0,
+    }
+  }
+
+  private getBodyOutOfMapState = (body: ColliderBody): BodyOutOfMapState => {
+    const { bottomY, rightX, topY, leftX } = this.getBodyExtremeCoords(body)
+
+    const outOfBottomMapBorder = body.position.y > bottomY
+    const outOfRightMapBorder = body.position.x > rightX
+    const outOfTopMapBorder = body.position.y < topY
+    const outOfLeftMapBorder = body.position.x < leftX
+
+    return { outOfBottomMapBorder, outOfRightMapBorder, outOfTopMapBorder, outOfLeftMapBorder }
+  }
+
   private isXChanged = (prevHitbox: PointPair, currentHitbox: PointPair): boolean => {
     return prevHitbox.x1 !== currentHitbox.x1 || prevHitbox.x2 !== currentHitbox.x2
   }
@@ -568,7 +602,7 @@ export class Collider {
   }
 
   //! работа коллайдера
-  private handleBodyAndStaticObstaclesCollision = (
+  private handleBodyCollisionWithStaticObstacles = (
     body: ColliderBody,
   ): Array<IntersectionPoint> | null => {
     const bodyPrevToCurrentIntersectionPointsWithObstacles =
@@ -587,14 +621,13 @@ export class Collider {
     return bodyPrevToCurrentIntersectionPointsWithObstacles
   }
 
-  // возвращает список препятствий, в которые упёрлось тело
-  private handleBodyCollision = (body: ColliderBody): Array<string> => {
+  private handleBodyStuckPlacesWithStaticObstacles = (body: ColliderBody): Array<string> => {
     const prevBodyHitbox = this.bodiesPrevHitboxes[body.id]
 
     var bodyStuckPlaces: Array<string> = []
     if (prevBodyHitbox) {
       const bodyStuckPoints: Array<IntersectionPoint> | null =
-        this.handleBodyAndStaticObstaclesCollision(body)
+        this.handleBodyCollisionWithStaticObstacles(body)
 
       if (bodyStuckPoints) {
         bodyStuckPlaces = bodyStuckPoints.map(({ obstacleId }) => obstacleId)
@@ -604,44 +637,63 @@ export class Collider {
     return bodyStuckPlaces
   }
 
-  //? пока что не разрешаем выходить персонажам за ЭКРАН
-  // возвращает список препятствий, в которые упёрлось тело
-  private keepBodyInMap = (body: ColliderBody): Array<string> => {
-    const bodyMinX = 0
-    const bodyMinY = 0
-    const bodyMaxX = this.screen.width - body.size.width
-    const bodyMaxY = this.screen.height - body.size.height
-
-    const isOutOfDownMapBorder = body.position.y > bodyMaxY
-    const isOutOfRightMapBorder = body.position.x > bodyMaxX
-    const isOutOfTopMapBorder = body.position.y < bodyMinY
-    const isOutOfLeftMapBorder = body.position.x < bodyMinX
-
-    const isOutOfMap =
-      isOutOfDownMapBorder || isOutOfRightMapBorder || isOutOfTopMapBorder || isOutOfLeftMapBorder
+  // пока что не разрешаем персонажам выходить за ЭКРАН
+  private handleBodyStuckPlacesWithMapBorders = (body: ColliderBody): Array<string> => {
+    const { bottomY, rightX, topY, leftX } = this.getBodyExtremeCoords(body)
+    const { outOfBottomMapBorder, outOfRightMapBorder, outOfTopMapBorder, outOfLeftMapBorder } =
+      this.getBodyOutOfMapState(body)
 
     const bodyStuckPlaces: Array<string> = []
 
-    if (isOutOfMap) {
-      if (isOutOfDownMapBorder) {
-        body.position.setY(bodyMaxY)
-        bodyStuckPlaces.push('downMapBorder')
-      }
-      if (isOutOfRightMapBorder) {
-        body.position.setX(bodyMaxX)
-        bodyStuckPlaces.push('rightMapBorder')
-      }
-      if (isOutOfTopMapBorder) {
-        body.position.setY(bodyMinY)
-        bodyStuckPlaces.push('topMapBorder')
-      }
-      if (isOutOfLeftMapBorder) {
-        body.position.setX(bodyMinX)
-        bodyStuckPlaces.push('leftMapBorder')
-      }
+    if (outOfBottomMapBorder) {
+      body.position.setY(bottomY)
+      bodyStuckPlaces.push('downMapBorder')
+    }
+    if (outOfRightMapBorder) {
+      body.position.setX(rightX)
+      bodyStuckPlaces.push('rightMapBorder')
+    }
+    if (outOfTopMapBorder) {
+      body.position.setY(topY)
+      bodyStuckPlaces.push('topMapBorder')
+    }
+    if (outOfLeftMapBorder) {
+      body.position.setX(leftX)
+      bodyStuckPlaces.push('leftMapBorder')
     }
 
     return bodyStuckPlaces
+  }
+
+  private handleBodyStuckPlaces = (body: ColliderBody): void => {
+    const bodyStuckPlacesWithStaticObstacles = this.handleBodyStuckPlacesWithStaticObstacles(body)
+    const bodyStuckPlacesWithMapBorders = this.handleBodyStuckPlacesWithMapBorders(body)
+
+    const bodyStuckPlaces = [...bodyStuckPlacesWithStaticObstacles, ...bodyStuckPlacesWithMapBorders]
+
+    if (bodyStuckPlaces.length > 0) {
+      bodyStuckPlaces.forEach((stuckPlace) => {
+        this.addStuck(body.id, stuckPlace)
+      })
+    } else {
+      this.removeStucks(body.id)
+    }
+  }
+
+  private handleBodyCollision = (body: ColliderBody): void => {
+    const prevBodyHitbox = this.bodiesPrevHitboxes[body.id]
+    const bodyMovementDirection = this.getMovementDirectionByHitbox(prevBodyHitbox, body.hitbox)
+
+    if (bodyMovementDirection !== null) {
+      this.handleBodyStuckPlaces(body)
+    }
+  }
+
+  private checkBodyForStucking = (body: ColliderBody): void => {
+    if (isCharacter(body)) {
+      const isBodyStucked = this.isBodyStucked(body.id)
+      body.movement.setIsStuck(isBodyStucked)
+    }
   }
 
   private checkBodyForSliding = (body: ColliderBody): void => {
@@ -660,54 +712,24 @@ export class Collider {
     }
   }
 
-  private checkBodiesForSliding = (): void => {
-    this.bodies.forEach(this.checkBodyForSliding)
+  private savePrevBodiesHitboxesIfNoPrevHitboxes = (body: ColliderBody): void => {
+    if (this.bodiesPrevHitboxes[body.id] === undefined) {
+      this.saveBodyHitboxToPrev(body)
+    }
   }
 
-  private handleBodiesCollision = (): void => {
-    this.bodies.forEach((body) => {
-      const prevBodyHitbox = this.bodiesPrevHitboxes[body.id]
-
-      const bodyMovementDirection = this.getMovementDirectionByHitbox(prevBodyHitbox, body.hitbox)
-
-      if (bodyMovementDirection !== null) {
-        const bodyCollisionStuckPlaces = this.handleBodyCollision(body)
-        const bodyMapStuckPlaces = this.keepBodyInMap(body)
-
-        const bodyStuckPlaces = [...bodyCollisionStuckPlaces, ...bodyMapStuckPlaces]
-
-        if (bodyStuckPlaces.length > 0) {
-          bodyStuckPlaces.forEach((stuckPlace) => {
-            this.addStuck(body.id, stuckPlace)
-          })
-        } else {
-          this.removeStucks(body.id)
-        }
-
-        if (isCharacter(body)) {
-          const isBodyStucked = this.isBodyStucked(body.id)
-          body.movement.setIsStuck(isBodyStucked)
-        }
-      }
-    })
+  private handleColliderBody = (body: ColliderBody): void => {
+    this.savePrevBodiesHitboxesIfNoPrevHitboxes(body)
+    this.handleBodyCollision(body)
+    this.checkBodyForStucking(body)
+    this.checkBodyForSliding(body)
+    this.saveBodyHitboxToPrev(body)
   }
-
-  private savePrevBodiesHitboxesIfNoPrevHitboxes = (): void => {
-    this.bodies.forEach((body) => {
-      if (this.bodiesPrevHitboxes[body.id] === undefined) {
-        this.saveBodyHitboxToPrev(body)
-      }
-    })
-  }
-
-  private savePrevBodiesHitboxes = (): void => {
-    this.bodies.forEach(this.saveBodyHitboxToPrev)
+  private handleColliderBodies = (): void => {
+    this.bodies.forEach(this.handleColliderBody)
   }
 
   update = (): void => {
-    this.savePrevBodiesHitboxesIfNoPrevHitboxes()
-    this.handleBodiesCollision()
-    this.checkBodiesForSliding()
-    this.savePrevBodiesHitboxes()
+    this.handleColliderBodies()
   }
 }
