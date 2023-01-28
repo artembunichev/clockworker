@@ -83,9 +83,6 @@ export class PlayerCharacterMovementKeys {
   get pressedRegulators(): Array<string> {
     return this.pressedKeys.filter(this.isRegulatorKey)
   }
-  get isRegulatorKeysPressed(): boolean {
-    return this.pressedRegulators.length > 0
-  }
   get lastPressedRegulator(): string {
     return last(this.pressedRegulators)
   }

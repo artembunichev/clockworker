@@ -98,12 +98,10 @@ export class PlayerCharacterMovement extends CharacterMovement {
   }
 
   handleRegulators = (): void => {
-    if (this.keys.isRegulatorKeysPressed) {
-      if (this.keys.isSprintKeyPressed) {
-        this.startSprint()
-      } else {
-        this.endSprint()
-      }
+    if (this.keys.isSprintKeyPressed) {
+      this.startSprint()
+    } else {
+      this.endSprint()
     }
   }
 
