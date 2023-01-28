@@ -6,26 +6,31 @@ import {
   MovementControllersKeys,
   MovementRegulatorsKeys,
 } from 'stores/game/play/settings/settings'
+import { KeyboardStore } from 'stores/keyboard.store'
 
 import { last } from 'lib/arrays'
 
 type Config = {
+  keyboard: KeyboardStore
   settings: GameSettings
 }
 
 export class PlayerCharacterMovementKeys {
+  private keyboard: KeyboardStore
   private settings: GameSettings
 
   constructor(config: Config) {
-    const { settings } = config
+    const { keyboard, settings } = config
+
+    this.keyboard = keyboard
     this.settings = settings
   }
 
   prohibitorsController = new ProhibitorsController()
 
   pressedKeys: Array<string> = []
-  setPressedKeys = (keys: Array<string>): void => {
-    this.pressedKeys = keys
+  updatePressedKeys = (): void => {
+    this.pressedKeys = this.keyboard.pressedKeysArray
   }
 
   //! контроллеры

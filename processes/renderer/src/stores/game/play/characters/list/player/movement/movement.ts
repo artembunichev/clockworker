@@ -16,15 +16,17 @@ export const initialPlayerCharacterMovementStateConfig: CharacterMovementStateCo
 
 type PlayerCharacterMovementConfig = ConfigForCharacterMovement & {
   settings: GameSettings
+  keyboard: KeyboardStore
 }
 
 export class PlayerCharacterMovement extends CharacterMovement {
   private settings: GameSettings
+  private keyboard: KeyboardStore
 
   keys: PlayerCharacterMovementKeys
 
   constructor(config: PlayerCharacterMovementConfig) {
-    const { position, animationController, initialMovementStateConfig, settings } = config
+    const { position, animationController, initialMovementStateConfig, settings, keyboard } = config
 
     super({
       position,
@@ -33,9 +35,10 @@ export class PlayerCharacterMovement extends CharacterMovement {
     })
 
     this.settings = settings
+    this.keyboard = keyboard
 
     // клавиши управления
-    this.keys = new PlayerCharacterMovementKeys({ settings: this.settings })
+    this.keys = new PlayerCharacterMovementKeys({ keyboard: this.keyboard, settings: this.settings })
 
     // автомув
     const superAutomoveRun = this.automove.run
@@ -52,26 +55,17 @@ export class PlayerCharacterMovement extends CharacterMovement {
   }
 
   //! обработка клавиш управления
-  handleMovementKeys = (keyboard: KeyboardStore): void => {
+  handleMovementKeys = (): void => {
     if (!this.keys.prohibitorsController.isProhibited) {
       const prevPressedControllersLength = this.keys.pressedControllers.length
 
-      this.keys.setPressedKeys(keyboard.pressedKeysArray)
+      this.keys.updatePressedKeys()
 
       // остановить движение только в момент, когда была отпущена последняя клавиша движения
       if (this.keys.pressedControllers.length === 0 && prevPressedControllersLength > 0) {
         this.stopMove()
       } else {
         if (this.keys.isControllerPressed) {
-          // проверка на нажатие регуляторов
-          if (this.keys.isRegulatorKeysPressed) {
-            if (this.keys.isSprintKeyPressed) {
-              this.startSprint()
-            }
-          } else {
-            this.endSprint()
-          }
-
           const movementDirection = getSingleMovementDirection(this.keys.pressedDirections)
 
           if (movementDirection) {
@@ -101,5 +95,20 @@ export class PlayerCharacterMovement extends CharacterMovement {
         this.animationController.pause()
       }
     }
+  }
+
+  handleRegulators = (): void => {
+    if (this.keys.isRegulatorKeysPressed) {
+      if (this.keys.isSprintKeyPressed) {
+        this.startSprint()
+      } else {
+        this.endSprint()
+      }
+    }
+  }
+
+  update = (): void => {
+    this.handleMovementKeys()
+    this.handleRegulators()
   }
 }

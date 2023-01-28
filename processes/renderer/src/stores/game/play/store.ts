@@ -79,8 +79,9 @@ export class GamePlayStore {
   createPlayerCharacter = (): Promise<void> => {
     const playerCharacterConfig: PlayerCharacterConfig = {
       name: this.dataFromPreGameForm.playerCharacterName,
-      settings: this.settings,
       screen: this.screen,
+      settings: this.settings,
+      keyboard: this.keyboard,
     }
 
     return this.player.createCharacter({
@@ -166,10 +167,6 @@ export class GamePlayStore {
   })
 
   //! игровые циклы
-  private handlePlayerCharacterMovementKeys = (): void => {
-    this.player.character?.movement.handleMovementKeys(this.keyboard)
-  }
-
   updateActiveCharacters = (): void => {
     this.characterController.activeCharacters.forEach((character) => {
       character.update()
@@ -184,7 +181,6 @@ export class GamePlayStore {
   }
 
   private gameLoop = (): void => {
-    this.handlePlayerCharacterMovementKeys()
     this.update()
   }
 

@@ -1,5 +1,6 @@
 import { AnyCharacterConfig, Character } from 'stores/game/play/characters/character'
 import { GameSettings } from 'stores/game/play/settings/settings'
+import { KeyboardStore } from 'stores/keyboard.store'
 
 import playerCharacterSpriteSheetSrc from 'content/sprites/characters/Player.png'
 
@@ -17,6 +18,7 @@ type ImageSrcs = { spriteSheet: typeof playerCharacterSpriteSheetSrc }
 
 export type PlayerCharacterConfig = Pick<AnyCharacterConfig, 'name' | 'screen'> & {
   settings: GameSettings
+  keyboard: KeyboardStore
 }
 
 export class PlayerCharacter extends Character<
@@ -25,11 +27,12 @@ export class PlayerCharacter extends Character<
   PlayerCharacterAnimationRegulatorList
 > {
   private settings: GameSettings
+  private keyboard: KeyboardStore
 
   movement: PlayerCharacterMovement
 
   constructor(config: PlayerCharacterConfig) {
-    const { name, screen, settings } = config
+    const { name, screen, settings, keyboard } = config
 
     super({
       is: 'player',
@@ -58,6 +61,7 @@ export class PlayerCharacter extends Character<
     })
 
     this.settings = settings
+    this.keyboard = keyboard
 
     //! движение
     this.movement = new PlayerCharacterMovement({
@@ -65,6 +69,13 @@ export class PlayerCharacter extends Character<
       settings: this.settings,
       animationController: this.animationController,
       initialMovementStateConfig: initialPlayerCharacterMovementStateConfig,
+      keyboard: this.keyboard,
     })
+
+    const superUpdate = this.update
+    this.update = (): void => {
+      superUpdate()
+      this.movement.update()
+    }
   }
 }
