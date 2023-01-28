@@ -40,3 +40,5 @@ export type XOR<A, B> = A | B extends AnyObject
 export type Entries<T> = Array<[keyof T, Properties<T>]>
 
 export type Rename<T, OK extends keyof T, NK extends string> = Omit<T, OK> & { [_ in NK]: T[OK] }
+
+export type PickKeyof<T, K extends keyof T> = Extract<keyof T, K>

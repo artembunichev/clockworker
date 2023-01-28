@@ -1,16 +1,19 @@
+import { PickKeyof } from 'process-shared/types/basic-utility-types'
 import { Modifier } from 'project-utility-types/abstract'
 
 import { RegulatorList, RegulatorTargetsInitialValues } from '../../entities/regulators'
+import { CharacterMovementState } from './state'
 
 export type CharacterMovementRegulatorName = 'sprint'
 
-const characterMovementRegulatorTargets = ['currentStepSize'] as const
-type CharacterMovementRegulatorTarget = typeof characterMovementRegulatorTargets[number]
+type CharacterMovementRegulatorTarget = PickKeyof<CharacterMovementState, 'currentStepSize'>
 
-export const characterMovementRegulatorTargetsInitialValues: RegulatorTargetsInitialValues<CharacterMovementRegulatorTarget> =
-  {
-    currentStepSize: 'baseStepSize',
-  }
+export const characterMovementRegulatorTargetsInitialValues: RegulatorTargetsInitialValues<
+  CharacterMovementState,
+  CharacterMovementRegulatorTarget
+> = {
+  currentStepSize: 'baseStepSize',
+}
 
 export const characterMovementRegulatorList: RegulatorList<
   CharacterMovementRegulatorName,

@@ -43,7 +43,7 @@ export class Animation<RL extends AnimationRLType = never> {
 
   currentSpriteIndex: number
 
-  regulators: Regulators<RL> | null
+  regulators: Regulators<RL, typeof this> | null
 
   constructor(config: AnimationConfig<RL>) {
     const { name, spriteSheet, sequence, framesPerSprite, initialScale, startFrom, regulators } =
@@ -62,6 +62,7 @@ export class Animation<RL extends AnimationRLType = never> {
         list: regulators,
         sourceObject: this,
         targetsInitialValues: regulatorTargetsInitialValues as RegulatorTargetsInitialValues<
+          typeof this,
           RegulatorTargetType<RL>
         >,
       })

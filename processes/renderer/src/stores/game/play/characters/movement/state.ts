@@ -14,8 +14,8 @@ export type CharacterMovementStateValue = {
 export type CharacterMovementStateConfig = { baseStepSize: number }
 
 export class CharacterMovementState {
-  private baseStepSize: number
-  private currentStepSize: number
+  baseStepSize: number
+  currentStepSize: number
 
   config: CharacterMovementStateConfig
 

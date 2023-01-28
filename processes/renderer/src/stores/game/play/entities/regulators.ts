@@ -11,30 +11,33 @@ type AnyRegulatorList = RegulatorList<string, string>
 export type RegulatorName<RL extends AnyRegulatorList> = Extract<keyof RL, string>
 export type RegulatorTarget<RL extends AnyRegulatorList> = Extract<keyof Properties<RL>, string>
 
-export type RegulatorTargetsInitialValues<Target extends string> = Record<Target, string>
+export type RegulatorTargetsInitialValues<
+  SourceObject extends AnyObject,
+  Target extends string,
+> = Record<Target, keyof SourceObject>
 
-type RegulatorsConfig<RL extends AnyRegulatorList> = {
-  sourceObject: AnyObject
-  targetsInitialValues: RegulatorTargetsInitialValues<RegulatorTarget<RL>>
+type RegulatorsConfig<RL extends AnyRegulatorList, SO extends AnyObject> = {
+  sourceObject: SO
+  targetsInitialValues: RegulatorTargetsInitialValues<SO, RegulatorTarget<RL>>
 }
 
-type Config<RL extends AnyRegulatorList> = {
+type Config<RL extends AnyRegulatorList, SO extends AnyObject> = {
   list: RL
-} & RegulatorsConfig<RL>
+} & RegulatorsConfig<RL, SO>
 
-export class Regulators<RL extends AnyRegulatorList> {
+export class Regulators<RL extends AnyRegulatorList, SO extends AnyObject> {
   list: RL
 
-  private config: RegulatorsConfig<RL>
+  private config: RegulatorsConfig<RL, SO>
 
-  constructor(config: Config<RL>) {
+  constructor(config: Config<RL, SO>) {
     const { list, sourceObject, targetsInitialValues } = config
 
     this.list = list
     this.setConfig({ sourceObject, targetsInitialValues })
   }
 
-  private setConfig = (config: RegulatorsConfig<RL>): void => {
+  private setConfig = (config: RegulatorsConfig<RL, SO>): void => {
     this.config = config
   }
 
