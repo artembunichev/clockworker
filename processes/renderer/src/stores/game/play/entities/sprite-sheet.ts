@@ -19,10 +19,10 @@ export class SpriteSheet {
   image: HTMLImageElement
   spriteWidth: number
   spriteHeight: number
-  firstSkipX: number
-  firstSkipY: number
-  skipX: number
-  skipY: number
+  private firstSkipX: number
+  private firstSkipY: number
+  private skipX: number
+  private skipY: number
   defaultScale?: number
 
   constructor(config: SpriteSheetConfig) {

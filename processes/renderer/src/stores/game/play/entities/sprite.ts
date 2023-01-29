@@ -16,8 +16,8 @@ export class Sprite {
   image: HTMLImageElement
   width: number
   height: number
-  sourceX: number
-  sourceY: number
+  private sourceX: number
+  private sourceY: number
   scale: number
 
   constructor(config: SpriteConfig) {
