@@ -1,9 +1,9 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig-base.json",
   "compilerOptions": {
     "module": "commonjs",
     "outDir": "../../dist",
     "typeRoots": ["../../@types"]
   },
-  "include": [".", "../shared"]
+  "include": ["."]
 }
