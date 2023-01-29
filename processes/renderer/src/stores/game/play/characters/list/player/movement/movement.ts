@@ -4,23 +4,28 @@ import {
 } from 'stores/game/play/characters/movement/movement'
 import { CharacterMovementStateConfig } from 'stores/game/play/characters/movement/state'
 import { getSingleMovementDirection } from 'stores/game/play/lib/movement'
-import { GameSettings } from 'stores/game/play/settings/settings'
+import { GameSettingsValues } from 'stores/game/play/settings/settings'
 import { KeyboardStore } from 'stores/keyboard.store'
+import { SettingType } from 'stores/lib/settings'
 
 import { RunAutomove } from '../../../movement/automove'
 import { PlayerCharacterMovementKeys } from './keys'
+
+export type PlayerCharacterMovementSettings = SettingType<
+  Pick<GameSettingsValues, 'movementControllers' | 'movementRegulators'>
+>
 
 export const initialPlayerCharacterMovementStateConfig: CharacterMovementStateConfig = {
   baseStepSize: 1.8,
 }
 
 type PlayerCharacterMovementConfig = ConfigForCharacterMovement & {
-  settings: GameSettings
+  settings: PlayerCharacterMovementSettings
   keyboard: KeyboardStore
 }
 
 export class PlayerCharacterMovement extends CharacterMovement {
-  private settings: GameSettings
+  private settings: PlayerCharacterMovementSettings
   private keyboard: KeyboardStore
 
   keys: PlayerCharacterMovementKeys

@@ -12,7 +12,7 @@ export class RootStore {
   popupHistory = new PopupHistory()
   appStore = new AppStore({ appSettings: this.appSettingsStore, popupHistory: this.popupHistory })
   updateStore: UpdateStore | null = isElectron()
-    ? new UpdateStore({ settings: this.appSettingsStore.values })
+    ? new UpdateStore({ settings: this.appSettingsStore })
     : null
   keyboardStore = new KeyboardStore()
   createGameStore = (): GameStore => {

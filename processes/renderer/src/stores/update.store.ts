@@ -2,14 +2,17 @@ import { makeAutoObservable } from 'mobx'
 
 import { DownloadProgressInfo, UpdateInfo } from 'process-shared/types/types'
 
-type Settings = { isGetUpdateNotifications: boolean }
+import { AppSettingsValues } from './app-settings/app-settings.store'
+import { SettingType } from './lib/settings'
+
+type UpdateSettings = SettingType<Pick<AppSettingsValues, 'isGetUpdateNotifications'>>
 
 type Config = {
-  settings: Settings
+  settings: UpdateSettings
 }
 
 export class UpdateStore {
-  private settings: Settings
+  private settings: UpdateSettings
 
   constructor(config: Config) {
     const { settings } = config
@@ -27,7 +30,7 @@ export class UpdateStore {
   }
 
   get isShowingNotificationAllowed(): boolean {
-    return this.settings.isGetUpdateNotifications
+    return this.settings.values.isGetUpdateNotifications
   }
 
   version: string | null = null

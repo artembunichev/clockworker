@@ -1,5 +1,4 @@
 import { AnyCharacterConfig, Character } from 'stores/game/play/characters/character'
-import { GameSettings } from 'stores/game/play/settings/settings'
 import { KeyboardStore } from 'stores/keyboard.store'
 
 import playerCharacterSpriteSheetSrc from 'content/sprites/characters/Player.png'
@@ -11,13 +10,16 @@ import {
 } from './animation'
 import {
   PlayerCharacterMovement,
+  PlayerCharacterMovementSettings,
   initialPlayerCharacterMovementStateConfig,
 } from './movement/movement'
+
+type PlayerCharacterSettings = PlayerCharacterMovementSettings
 
 type ImageSrcs = { spriteSheet: typeof playerCharacterSpriteSheetSrc }
 
 export type PlayerCharacterConfig = Pick<AnyCharacterConfig, 'name' | 'screen'> & {
-  settings: GameSettings
+  settings: PlayerCharacterSettings
   keyboard: KeyboardStore
 }
 
@@ -26,7 +28,7 @@ export class PlayerCharacter extends Character<
   PlayerCharacterAnimationName,
   PlayerCharacterAnimationRegulatorList
 > {
-  private settings: GameSettings
+  private settings: PlayerCharacterSettings
   private keyboard: KeyboardStore
 
   movement: PlayerCharacterMovement

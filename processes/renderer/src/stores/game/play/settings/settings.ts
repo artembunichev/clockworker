@@ -34,7 +34,7 @@ export class GameSettings {
     return getConvertedEditableSettings(this.editable)
   }
 
-  get current(): GameSettingsValues {
+  get values(): GameSettingsValues {
     return merge(this.internal, this.convertedEditableSettings) as GameSettingsValues
   }
 }

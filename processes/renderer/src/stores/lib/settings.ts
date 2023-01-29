@@ -4,6 +4,8 @@ import { AnyEditableSetting, EditableSettingVariant } from 'stores/entities/edit
 
 import { objectMap } from 'lib/objects'
 
+export type SettingType<T> = { values: T }
+
 export type EditableSettings<T extends AnyObject> = { [K in keyof T]: AnyEditableSetting }
 
 export const getConvertedEditableSettings = <
