@@ -23,6 +23,12 @@ export class GameSceneController {
   private screen: GameScreen
   private characterList: Characters
 
+  // список сцен, использующихся в контроллере
+  private refList = { marketMain: MarketMainScene }
+  // список созданных сцен
+  scenes: Scenes = {} as Scenes
+  currentScene: Scene = {} as Scene
+
   constructor(config: GameSceneControllerConfig) {
     const { screen, characterList } = config
 
@@ -35,14 +41,6 @@ export class GameSceneController {
       isAllCurrentSceneImagesLoaded: computed,
     })
   }
-
-  // список сцен, использующихся в контроллере
-  private refList = { marketMain: MarketMainScene }
-
-  // список созданных сцен
-  scenes: Scenes = {} as Scenes
-
-  currentScene: Scene = {} as Scene
 
   createScene = (sceneName: SceneName): void => {
     this.scenes[sceneName] = new this.refList[sceneName]({
@@ -75,11 +73,11 @@ export class GameSceneController {
     return this.currentScene.imageContainer.loadAll()
   }
 
-  get isAllCurrentSceneImagesLoaded(): boolean {
-    return this.currentScene.imageContainer.isAllImagesLoaded
-  }
-
   updateCurrentScene = (): void => {
     this.currentScene.drawMap()
+  }
+
+  get isAllCurrentSceneImagesLoaded(): boolean {
+    return this.currentScene.imageContainer.isAllImagesLoaded
   }
 }

@@ -17,12 +17,12 @@ export type AppSettingsValues = {
 }
 
 export class AppSettingsStore {
+  editable = new EditableAppSettings()
+
   constructor() {
     this.initialize()
     makeAutoObservable(this)
   }
-
-  editable = new EditableAppSettings()
 
   private initialize = (): void => {
     if (isElectron()) {

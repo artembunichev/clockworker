@@ -23,12 +23,12 @@ export type GameSettingsValues = {
 }
 
 export class GameSettings {
+  internal = new InternalGameSettings()
+  editable = new EditableGameSettings()
+
   constructor() {
     makeAutoObservable(this)
   }
-
-  internal = new InternalGameSettings()
-  editable = new EditableGameSettings()
 
   private get convertedEditableSettings(): Partial<GameSettingsValues> {
     return getConvertedEditableSettings(this.editable)

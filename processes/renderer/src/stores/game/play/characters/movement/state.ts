@@ -16,8 +16,13 @@ export type CharacterMovementStateConfig = { baseStepSize: number }
 export class CharacterMovementState {
   baseStepSize: number
   currentStepSize: number
-
   config: CharacterMovementStateConfig
+
+  regulators = new Regulators({
+    list: characterMovementRegulatorList,
+    sourceObject: this,
+    targetsInitialValues: characterMovementRegulatorTargetsInitialValues,
+  })
 
   constructor(initialConfig: CharacterMovementStateConfig) {
     this.setConfig(initialConfig)
@@ -38,12 +43,6 @@ export class CharacterMovementState {
       this.setBaseStepSize(baseStepSize)
     }
   }
-
-  regulators = new Regulators({
-    list: characterMovementRegulatorList,
-    sourceObject: this,
-    targetsInitialValues: characterMovementRegulatorTargetsInitialValues,
-  })
 
   get currentValue(): CharacterMovementStateValue {
     return {

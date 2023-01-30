@@ -52,10 +52,9 @@ export class Character<
   AnimationRL extends AnimationRLType = never,
 > extends Body {
   name: string
+  screen: GameScreen
   imageContainer: ImageContainer<ImageSrcs>
   spriteSheet: SpriteSheet
-  screen: GameScreen
-
   animationController: CharacterAnimationController<AnimationName, AnimationRL>
   movement: CharacterMovement
 
@@ -107,12 +106,12 @@ export class Character<
     this.setSize({ width: this.currentSprite.scaledWidth, height: this.currentSprite.scaledHeight })
   }
 
-  get currentSprite(): Sprite {
-    return this.animationController.currentSprite
-  }
-
   update = (): void => {
     this.animationController.currentAnimation.update()
     this.screen.drawSprite(this.currentSprite, this.position)
+  }
+
+  get currentSprite(): Sprite {
+    return this.animationController.currentSprite
   }
 }

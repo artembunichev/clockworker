@@ -14,6 +14,11 @@ type Config = {
 export class UpdateStore {
   private settings: UpdateSettings
 
+  version: string | null = null
+  releaseNotes: string | null = null
+  isNotificationOpened = false
+  currentPercentage: number | null = null
+
   constructor(config: Config) {
     const { settings } = config
 
@@ -29,19 +34,11 @@ export class UpdateStore {
     makeAutoObservable(this)
   }
 
-  get isShowingNotificationAllowed(): boolean {
-    return this.settings.values.isGetUpdateNotifications
-  }
-
-  version: string | null = null
-  releaseNotes: string | null = null
-
   setUpdateInfo = (updateInfo: UpdateInfo): void => {
     this.version = updateInfo.version
     this.releaseNotes = updateInfo.releaseNotes
   }
 
-  isNotificationOpened = false
   openNotification = (): void => {
     this.isNotificationOpened = true
   }
@@ -53,8 +50,11 @@ export class UpdateStore {
     window.ipcRenderer.send('updateGame')
   }
 
-  currentPercentage: number | null = null
   setCurrentPercentage = (percentage: number): void => {
     this.currentPercentage = percentage
+  }
+
+  get isShowingNotificationAllowed(): boolean {
+    return this.settings.values.isGetUpdateNotifications
   }
 }

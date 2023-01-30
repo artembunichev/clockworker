@@ -1,3 +1,5 @@
+import { remove } from 'lib/arrays'
+
 export class ProhibitorsController {
   list: Array<string> = []
 
@@ -6,7 +8,7 @@ export class ProhibitorsController {
   }
 
   remove = (prohibitor: string): void => {
-    this.list = this.list.filter((p) => p !== prohibitor)
+    this.list = remove(this.list, prohibitor)
   }
 
   get isProhibited(): boolean {

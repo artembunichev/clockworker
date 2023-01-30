@@ -47,6 +47,8 @@ export class Popup {
   onClose: PopupCallback
   private history: PopupHistory
 
+  isOpened = false
+
   constructor(config: Config) {
     const { name, onOpen, onClose, history } = config ?? {}
 
@@ -88,8 +90,6 @@ export class Popup {
       internalCallback?.()
     }
   }
-
-  isOpened = false
 
   private openDirectly = (onOpen?: PopupCallback, options?: PopupCallbackOptions): void => {
     this.isOpened = true

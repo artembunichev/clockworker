@@ -53,6 +53,9 @@ export class CharacterAutomove {
   private clearRegulators: Callback
   private animationController: DefaultCharacterAnimationController
 
+  isAutomoving = false
+  isStuck = false
+
   constructor(config: Config) {
     const {
       position,
@@ -75,17 +78,14 @@ export class CharacterAutomove {
     this.animationController = animationController
   }
 
-  isAutomoving = false
   setIsAutomoving = (value: boolean): void => {
     this.isAutomoving = value
   }
 
-  isStuck = false
   setIsStuck = (value: boolean): void => {
     this.isStuck = value
   }
 
-  // перемещает персонажа из стартовой позиции в конечную
   run: RunAutomove = (config: any) => {
     return new Promise((resolve) => {
       if (

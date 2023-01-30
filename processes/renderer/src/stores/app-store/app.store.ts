@@ -18,27 +18,26 @@ type Config = {
 export class AppStore {
   private appSettings: AppSettingsStore
   private popupHistory: PopupHistory
-
   popups: AppPopups
+
+  screen: AppScreen = 'main'
+  isQuit = false
 
   constructor(config: Config) {
     const { appSettings, popupHistory } = config
 
-    this.popupHistory = popupHistory
     this.appSettings = appSettings
-
+    this.popupHistory = popupHistory
     this.popups = new AppPopups(this.popupHistory)
 
     makeAutoObservable(this)
   }
 
-  screen: AppScreen = 'main'
   setScreen = (screen: AppScreen): void => {
     closeAllUnclosedPopups(this.popupHistory)
     this.screen = screen
   }
 
-  isQuit = false
   setIsQuit = (value: boolean): void => {
     this.isQuit = value
   }

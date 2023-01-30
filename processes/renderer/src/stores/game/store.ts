@@ -18,6 +18,10 @@ export class GameStore {
   private popupHistory: PopupHistory
   protected keyboard: KeyboardStore
 
+  screen: GameScreen = 'preGameForm'
+  preGameForm = new PreGameForm()
+  playStore: GamePlayStore | null = null
+
   constructor(config: GameStoreConfig) {
     const { popupHistory, keyboard } = config
 
@@ -27,17 +31,9 @@ export class GameStore {
     makeAutoObservable(this)
   }
 
-  //! экран
-  screen: GameScreen = 'preGameForm'
   setScreen = (screen: GameScreen): void => {
     this.screen = screen
   }
-
-  //! preGameStore
-  preGameForm = new PreGameForm()
-
-  //! playStore
-  playStore: GamePlayStore | null = null
 
   createGamePlayStore = (): void => {
     const dataFromPreGameForm: DataFromPreGameForm = {

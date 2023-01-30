@@ -38,10 +38,19 @@ export type ConfigForCharacterMovement = {
 export class CharacterMovement {
   private position: Position
   protected animationController: DefaultCharacterAnimationController
-
   movementState: CharacterMovementState
-
   automove: CharacterAutomove
+
+  // существует только в момент движения персонажа
+  direction: ExpandedDirection | null = null
+  // препятствия не запрещают движение, т.к. за ними следит коллайдер
+  movementProhibitorsController = new ProhibitorsController()
+  isMoving = false
+  isStuck = false
+  isSliding = false
+  animationBinds: AnimationBinds = {
+    sprint: 'speedup',
+  }
 
   constructor(config: ConfigForCharacterMovement) {
     const { position, animationController, initialMovementStateConfig } = config
@@ -63,12 +72,6 @@ export class CharacterMovement {
     })
   }
 
-  animationBinds: AnimationBinds = {
-    sprint: 'speedup',
-  }
-
-  //@ позиция
-  //! позиция на следующий шаг
   getPositionOnNextStep = (): XY => {
     const { stepSize } = this.movementState.currentValue
 
@@ -97,34 +100,19 @@ export class CharacterMovement {
     }
   }
 
-  //! направление движения
-  // существует только в момент движения персонажа
-  direction: ExpandedDirection | null = null
   setDirection = (direction: ExpandedDirection | null): void => {
     this.direction = direction
   }
-  //^@ позиция
 
-  //@ обработка движения
-  //! движение
-  // препятствия не запрещают движение, т.к. за ними следит коллайдер
-  movementProhibitorsController = new ProhibitorsController()
-  get isMovementProhibited(): boolean {
-    return this.movementProhibitorsController.isProhibited
-  }
-
-  isMoving = false
   setIsMoving = (value: boolean): void => {
     this.isMoving = value
   }
 
-  isStuck = false
   setIsStuck = (value: boolean): void => {
     this.isStuck = value
     this.automove.setIsStuck(value)
   }
 
-  isSliding = false
   setIsSliding = (value: boolean): void => {
     this.isSliding = value
   }
@@ -161,6 +149,13 @@ export class CharacterMovement {
     }
   }
 
+  stopMove = (): void => {
+    this.setIsMoving(false)
+    this.setDirection(null)
+    this.animationController.stop()
+  }
+
+  // действия с регуляторами
   private makeActionWithRegulator = (
     movementRegulatorName: CharacterMovementRegulatorName,
     action: 'apply' | 'remove',
@@ -207,11 +202,7 @@ export class CharacterMovement {
     this.removeRegulator('sprint')
   }
 
-  //! остановка
-  stopMove = (): void => {
-    this.setIsMoving(false)
-    this.setDirection(null)
-    this.animationController.stop()
+  get isMovementProhibited(): boolean {
+    return this.movementProhibitorsController.isProhibited
   }
-  //^@ обработка движения
 }

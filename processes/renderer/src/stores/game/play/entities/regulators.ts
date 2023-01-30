@@ -27,8 +27,9 @@ type Config<RL extends AnyRegulatorList, SO extends AnyObject> = {
 
 export class Regulators<RL extends AnyRegulatorList, SO extends AnyObject> {
   list: RL
-
   private config: RegulatorsConfig<RL, SO>
+
+  activeRegulatorNames: Array<RegulatorName<RL>> = []
 
   constructor(config: Config<RL, SO>) {
     const { list, sourceObject, targetsInitialValues } = config
@@ -41,7 +42,9 @@ export class Regulators<RL extends AnyRegulatorList, SO extends AnyObject> {
     this.config = config
   }
 
-  activeRegulatorNames: Array<RegulatorName<RL>> = []
+  isRegulatorActive = (regulatorName: RegulatorName<RL>): boolean => {
+    return this.activeRegulatorNames.includes(regulatorName)
+  }
 
   private getInitialTargetValue = (target: RegulatorTarget<RL>): any => {
     const { sourceObject, targetsInitialValues } = this.config
@@ -51,10 +54,6 @@ export class Regulators<RL extends AnyRegulatorList, SO extends AnyObject> {
   private modifyTarget = (target: RegulatorTarget<RL>, value: any): void => {
     const { sourceObject } = this.config
     sourceObject[target] = value
-  }
-
-  isRegulatorActive = (regulatorName: RegulatorName<RL>): boolean => {
-    return this.activeRegulatorNames.includes(regulatorName)
   }
 
   private getNewTargetValue = <T>(target: RegulatorTarget<RL>): T => {

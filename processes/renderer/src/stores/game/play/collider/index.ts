@@ -7,11 +7,11 @@ type Config = {
 
 export class Collider {
   private screen: GameScreen
-
   collision: ColliderCollision
 
   constructor(config: Config) {
     const { screen } = config
+
     this.screen = screen
 
     this.collision = new ColliderCollision({ screen: this.screen })

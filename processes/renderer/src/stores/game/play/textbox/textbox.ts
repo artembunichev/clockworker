@@ -10,6 +10,8 @@ type TextboxConfig<Name extends string> = {
 export class Textbox<TextboxName extends string> {
   name: TextboxName
   text: string
+  onOpen?: Callback
+  onClose?: Callback
 
   constructor(config: TextboxConfig<TextboxName>) {
     const { name, text, onOpen, onClose } = config
@@ -20,8 +22,6 @@ export class Textbox<TextboxName extends string> {
     this.setCallbacks({ onOpen, onClose })
   }
 
-  onOpen?: Callback
-  onClose?: Callback
   setCallbacks = ({ onOpen, onClose }: { onOpen?: Callback; onClose?: Callback }): void => {
     this.onOpen = onOpen
     this.onClose = onClose

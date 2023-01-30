@@ -36,10 +36,11 @@ export type AnimationControllerConfig<
 export class AnimationController<AnimationName extends string, RL extends AnimationRLType> {
   private spriteSheet: SpriteSheet
   private configs: AnimationConfigsForController<AnimationName>
-  private list: AnimationList<AnimationName, RL> = {} as AnimationList<AnimationName, RL>
   private regulators: RL | null = null
-
   currentAnimation: Animation<RL>
+
+  private list: AnimationList<AnimationName, RL> = {} as AnimationList<AnimationName, RL>
+  viewDirection: ViewDirections = ViewDirections.DOWN
 
   constructor(config: AnimationControllerConfig<AnimationName, RL>) {
     const { spriteSheet, configs, initialValue, regulators } = config
@@ -101,7 +102,6 @@ export class AnimationController<AnimationName extends string, RL extends Animat
     this.currentAnimation.resume()
   }
 
-  viewDirection: ViewDirections = ViewDirections.DOWN
   setViewDirection = (direction: ViewDirections): void => {
     this.viewDirection = direction
   }

@@ -5,7 +5,6 @@ import { PopupHistory } from 'stores/popup-history'
 
 export class AppPopups {
   private history: PopupHistory
-
   quitGameConfirm: Popup
   quitInMainMenuConfirm: Popup
   settingsMenu: Popup

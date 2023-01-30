@@ -14,15 +14,18 @@ export class GamePauseController {
   private characterController: CharacterController
   private sharedMethods: SharedPlayMethods
 
+  isGamePaused = false
+
   constructor(config: Config) {
     const { characterController, sharedMethods } = config
 
     this.characterController = characterController
     this.sharedMethods = sharedMethods
+
     makeAutoObservable(this)
   }
 
-  //! пауза
+  // пауза
   pauseCharactersMovement = (prohibitorName: string): void => {
     this.characterController.activeCharacters.forEach((character) => {
       character.movement.movementProhibitorsController.add(prohibitorName)
@@ -37,7 +40,7 @@ export class GamePauseController {
     this.pauseHandlingPlayerCharacterMovementKeys(prohibitorName)
   }
 
-  //! возобновление
+  // возобновление
   resumeCharactersMovement = (prohibitorName: string): void => {
     this.characterController.activeCharacters.forEach((character) => {
       character.movement.movementProhibitorsController.remove(prohibitorName)
@@ -52,7 +55,6 @@ export class GamePauseController {
     this.resumeHandlingPlayerCharacterMovementKeys(prohibitorName)
   }
 
-  isGamePaused = false
   pauseGame = (): void => {
     this.isGamePaused = true
     this.onPause({ prohibitorName: 'pause' })

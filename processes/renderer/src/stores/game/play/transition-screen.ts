@@ -17,8 +17,9 @@ export class TransitionScreen {
   disappearanceMs: number
   durationMs: number
   background: string
-
   private sharedPlayMethods: SharedPlayMethods
+
+  isOpened = false
 
   constructor(config: TransitionScreenConfig) {
     const { appearanceMs, disappearanceMs, durationMs, background, sharedPlayMethods } = config
@@ -32,7 +33,6 @@ export class TransitionScreen {
     makeAutoObservable(this)
   }
 
-  isOpened = false
   open = async (): Promise<void> => {
     this.sharedPlayMethods.playerCharacter.addMovementKeysProhibitor('transitionScreen')
     this.isOpened = true

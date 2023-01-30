@@ -30,7 +30,6 @@ export class PlayerCharacter extends Character<
 > {
   private settings: PlayerCharacterSettings
   private keyboard: KeyboardStore
-
   movement: PlayerCharacterMovement
 
   constructor(config: PlayerCharacterConfig) {
@@ -65,7 +64,6 @@ export class PlayerCharacter extends Character<
     this.settings = settings
     this.keyboard = keyboard
 
-    //! движение
     this.movement = new PlayerCharacterMovement({
       position: this.position,
       settings: this.settings,

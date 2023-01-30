@@ -27,7 +27,6 @@ type PlayerCharacterMovementConfig = ConfigForCharacterMovement & {
 export class PlayerCharacterMovement extends CharacterMovement {
   private settings: PlayerCharacterMovementSettings
   private keyboard: KeyboardStore
-
   keys: PlayerCharacterMovementKeys
 
   constructor(config: PlayerCharacterMovementConfig) {
@@ -42,12 +41,9 @@ export class PlayerCharacterMovement extends CharacterMovement {
     this.settings = settings
     this.keyboard = keyboard
 
-    // клавиши управления
     this.keys = new PlayerCharacterMovementKeys({ keyboard: this.keyboard, settings: this.settings })
 
-    // автомув
     const superAutomoveRun = this.automove.run
-
     const runAutomove: RunAutomove = (config: any) => {
       this.keys.prohibitorsController.add('automove')
       return superAutomoveRun(config).then((response) => {
@@ -59,7 +55,6 @@ export class PlayerCharacterMovement extends CharacterMovement {
     this.automove.run = runAutomove
   }
 
-  //! обработка клавиш управления
   handleMovementKeys = (): void => {
     if (!this.keys.prohibitorsController.isProhibited) {
       const prevPressedControllersLength = this.keys.pressedControllers.length

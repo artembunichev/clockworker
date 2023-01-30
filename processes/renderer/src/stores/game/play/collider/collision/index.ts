@@ -61,11 +61,14 @@ type Config = {
 
 export class ColliderCollision {
   private screen: GameScreen
-
-  helpers: ColliderCollisionHelpers
-
   core: ColliderCollisionCore
   work: ColliderCollisionWork
+  helpers: ColliderCollisionHelpers
+
+  bodyList = new List<ColliderBody, 'id'>([], { identifier: 'id' })
+  staticObstacleList = new List<HitboxWithId, 'id'>([], { identifier: 'id' })
+  stucks: Stucks = new Stucks()
+  bodiesPrevHitboxes = new BodiesPrevHitboxes()
 
   constructor(config: Config) {
     const { screen } = config
@@ -93,14 +96,6 @@ export class ColliderCollision {
       helpers: this.helpers,
     })
   }
-
-  bodyList = new List<ColliderBody, 'id'>([], { identifier: 'id' })
-
-  staticObstacleList = new List<HitboxWithId, 'id'>([], { identifier: 'id' })
-
-  stucks: Stucks = new Stucks()
-
-  bodiesPrevHitboxes = new BodiesPrevHitboxes()
 
   clear = (): void => {
     this.bodyList.clear()

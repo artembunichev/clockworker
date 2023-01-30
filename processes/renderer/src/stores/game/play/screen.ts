@@ -11,7 +11,6 @@ type GameScreenConfig = {
 export class GameScreen {
   width: number
   height: number
-
   canvas: Canvas
   ctx: Ctx
 

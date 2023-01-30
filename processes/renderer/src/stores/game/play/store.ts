@@ -32,11 +32,34 @@ export class GamePlayStore {
   private popupHistory: PopupHistory
   private keyboard: KeyboardStore
   dataFromPreGameForm: DataFromPreGameForm
-
   script: GameScript
   market: Market
   textboxController: TextboxController
   popups: GamePopups
+
+  isPlay = true
+  screen = new GameScreen({ width: screen.width, height: screen.height })
+  player: Player = new Player()
+  sharedMethods = new SharedPlayMethods()
+  characterController = new CharacterController()
+  settings = new GameSettings()
+  sceneController = new GameSceneController({
+    screen: this.screen,
+    characterList: this.characterController.characters,
+  })
+  pauseController = new GamePauseController({
+    characterController: this.characterController,
+    sharedMethods: this.sharedMethods,
+  })
+  collider = new Collider({ screen: this.screen })
+  isGameInitialized = false
+  opening = new TransitionScreen({
+    sharedPlayMethods: this.sharedMethods,
+    appearanceMs: 1500,
+    disappearanceMs: 1500,
+    durationMs: 3500,
+    background: '#000000',
+  })
 
   constructor(config: GamePlayStoreConfig) {
     const { popupHistory, keyboard, dataFromPreGameForm } = config
@@ -45,22 +68,18 @@ export class GamePlayStore {
     this.keyboard = keyboard
     this.dataFromPreGameForm = dataFromPreGameForm
 
-    //! сценарий
     this.script = getParsedGameScript({
       playerCharacterName: this.dataFromPreGameForm.playerCharacterName,
       marketName: this.dataFromPreGameForm.marketName,
     })
 
-    //! магазин
     this.market = new Market({ name: this.dataFromPreGameForm.marketName })
 
-    //! контроллер текстбоксов
     this.textboxController = new TextboxController({
       gameScript: this.script,
       pauseController: this.pauseController,
     })
 
-    //! попапы
     this.popups = new GamePopups({
       popupHistory: this.popupHistory,
       pauseController: this.pauseController,
@@ -69,13 +88,10 @@ export class GamePlayStore {
     makeAutoObservable(this)
   }
 
-  isPlay = true
   setIsPlay = (value: boolean): void => {
     this.isPlay = value
   }
 
-  //! игрок
-  player: Player = new Player()
   createPlayerCharacter = (): Promise<void> => {
     const playerCharacterConfig: PlayerCharacterConfig = {
       name: this.dataFromPreGameForm.playerCharacterName,
@@ -90,11 +106,6 @@ export class GamePlayStore {
     })
   }
 
-  //! общие методы
-  sharedMethods = new SharedPlayMethods()
-
-  //! контроллер персонажей
-  characterController = new CharacterController()
   addActiveCharacter = (characterName: CharacterName): void => {
     this.characterController.addActiveCharacter(characterName)
     const character = this.characterController.characters[characterName]
@@ -106,17 +117,6 @@ export class GamePlayStore {
     this.characterController.removeActiveCharacter(characterName)
   }
 
-  //! настройки
-  settings = new GameSettings()
-
-  //! экран
-  screen = new GameScreen({ width: screen.width, height: screen.height })
-
-  //! контроллер сцен
-  sceneController = new GameSceneController({
-    screen: this.screen,
-    characterList: this.characterController.characters,
-  })
   setScene = (sceneName: SceneName): Promise<void> => {
     return this.sceneController.setScene(sceneName).then(() => {
       this.characterController.clearActiveCharacters()
@@ -127,19 +127,8 @@ export class GamePlayStore {
     })
   }
 
-  //! контроллер паузы
-  pauseController = new GamePauseController({
-    characterController: this.characterController,
-    sharedMethods: this.sharedMethods,
-  })
-
-  //! коллайдер
-  collider = new Collider({ screen: this.screen })
-
-  //! подготовка игры
-  isGamePrepared = false
-  setIsGamePrepared = (value: boolean): void => {
-    this.isGamePrepared = value
+  setIsGameInitialized = (value: boolean): void => {
+    this.isGameInitialized = value
   }
   initializeGame = (): Promise<void> => {
     return this.setScene('marketMain').then(() => {
@@ -151,23 +140,14 @@ export class GamePlayStore {
             x: 'center',
             y: 'center',
           })
-          this.setIsGamePrepared(true)
+          this.setIsGameInitialized(true)
         }
       })
     })
   }
 
-  //! опенинг
-  opening = new TransitionScreen({
-    sharedPlayMethods: this.sharedMethods,
-    appearanceMs: 1500,
-    disappearanceMs: 1500,
-    durationMs: 3500,
-    background: '#000000',
-  })
-
-  //! игровые циклы
-  updateActiveCharacters = (): void => {
+  // игровые циклы
+  private updateActiveCharacters = (): void => {
     this.characterController.activeCharacters.forEach((character) => {
       character.update()
     })
@@ -184,7 +164,7 @@ export class GamePlayStore {
     this.update()
   }
 
-  mainLoop = (): void => {
+  private mainLoop = (): void => {
     this.gameLoop()
     const id = window.requestAnimationFrame(this.mainLoop)
     if (!this.isPlay) {
@@ -192,7 +172,6 @@ export class GamePlayStore {
     }
   }
 
-  //! запуск игры
   run = (): void => {
     this.initializeGame().then(() => {
       this.mainLoop()

@@ -49,10 +49,6 @@ export class RadioSetting<Value> {
     makeAutoObservable(this)
   }
 
-  get value(): Value {
-    return this.variants.find((v) => v.isSelected)!.value
-  }
-
   selectVariant = (variantId: string): void => {
     this.variants.forEach((variant) => {
       if (variant.id === variantId) {
@@ -61,5 +57,9 @@ export class RadioSetting<Value> {
         variant.isSelected = false
       }
     })
+  }
+
+  get value(): Value {
+    return this.variants.find((v) => v.isSelected)!.value
   }
 }

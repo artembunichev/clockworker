@@ -13,6 +13,12 @@ type Character = InstanceType<Properties<This['refList']>>
 export type Characters = Record<CharacterName, Character>
 
 export class CharacterController {
+  // список персонажей, использующихся в контроллере
+  private refList = { player: PlayerCharacter }
+  // список созданных персонажей
+  characters: Characters = {} as Characters
+  activeCharactersNames: Array<CharacterName> = []
+
   constructor() {
     makeObservable(this, {
       characters: observable,
@@ -20,12 +26,6 @@ export class CharacterController {
       isAllActiveCharactersImagesLoaded: computed,
     })
   }
-
-  // список персонажей, использующихся в контроллере
-  private refList = { player: PlayerCharacter }
-
-  // список созданных персонажей
-  characters: Characters = {} as Characters
 
   createCharacter = async <
     T extends CharacterName,
@@ -38,9 +38,6 @@ export class CharacterController {
     this.characters[name] = new this.refList[name](characterConfig)
     await this.characters[name].imageContainer.loadAll()
   }
-
-  // список персонажей, активных в текущий момент
-  activeCharactersNames: Array<CharacterName> = []
 
   addActiveCharacter = (characterName: CharacterName): void => {
     this.activeCharactersNames.push(characterName)

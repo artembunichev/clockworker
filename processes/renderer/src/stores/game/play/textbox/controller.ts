@@ -27,9 +27,14 @@ type TextboxControllerConfig = {
 export class TextboxController {
   private gameScript: GameScript
   private pauseController: GamePauseController
-
   internalOnOpen: Callback
   internalOnClose: Callback
+
+  // список текстбоксов, использующихся в контроллере
+  private refList = { welcome: WelcomeTextbox }
+  // список созданных текстбоксов
+  textboxes: Textboxes = {} as Textboxes
+  currentTextbox: TextboxInController | null = null
 
   constructor(config: TextboxControllerConfig) {
     const { gameScript, pauseController } = config
@@ -47,17 +52,9 @@ export class TextboxController {
     })
   }
 
-  // список текстбоксов, использующихся в контроллере
-  private refList = { welcome: WelcomeTextbox }
-
-  // список созданных текстбоксов
-  textboxes: Textboxes = {} as Textboxes
-
   createTextbox = (name: TextboxName): void => {
     this.textboxes[name] = new this.refList[name]({ gameScript: this.gameScript })
   }
-
-  currentTextbox: TextboxInController | null = null
 
   setCurrentTextbox = ({ name, onOpen, onClose }: SetTextboxConfig): void => {
     if (!this.textboxes[name]) {

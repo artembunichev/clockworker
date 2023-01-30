@@ -2,6 +2,7 @@ import { PlayerCharacter } from 'stores/game/play/characters/list/player/charact
 
 export class PlayerCharacterSharedMethods {
   private playerCharacter: PlayerCharacter | null = null
+
   setPlayerCharacter = (playerCharacter: PlayerCharacter): void => {
     this.playerCharacter = playerCharacter
   }

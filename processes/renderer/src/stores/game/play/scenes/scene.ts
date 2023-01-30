@@ -35,14 +35,11 @@ type GameSceneConfig<Name extends string> = {
 export class GameScene<SceneName extends string> {
   private screen: GameScreen
   private characterList: Characters
-
   name: SceneName
   private mapConfig: GameMapConfig
   map: GameMap
   mapSize: Size
-
   imageContainer: ImageContainer<Record<'tileset', string>>
-
   charactersManipulator: SceneCharactersManipulator
 
   constructor(config: GameSceneConfig<SceneName>) {
@@ -56,6 +53,7 @@ export class GameScene<SceneName extends string> {
       width: this.mapConfig.scheme.width * this.mapConfig.scheme.tilewidth,
       height: this.mapConfig.scheme.height * this.mapConfig.scheme.tileheight,
     }
+
     this.imageContainer = new ImageContainer({ tileset: this.mapConfig.tilesetSrc })
 
     this.charactersManipulator = new SceneCharactersManipulator({

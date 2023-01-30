@@ -21,17 +21,17 @@ type CreateOpenNoteConfig = Pick<OpenHistoryNote, 'popup' | 'forwardedFrom'>
 type CreateCloseNoteConfig = Pick<CloseHistoryNote, 'popup'>
 
 export class PopupHistory {
+  notes: Array<HistoryNote> = []
+  private notesForClear = 100
+
   constructor() {
     makeAutoObservable(this)
   }
-
-  notes: Array<HistoryNote> = []
 
   clearNotes = (): void => {
     this.notes = []
   }
 
-  private notesForClear = 100
   checkForClear = (): void => {
     if (!this.unclosedPopups.length && this.notes.length >= this.notesForClear) {
       this.clearNotes()

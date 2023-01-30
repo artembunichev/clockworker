@@ -31,13 +31,6 @@ export class Sprite {
     this.scale = scale
   }
 
-  get scaledWidth(): number {
-    return this.width * this.scale
-  }
-  get scaledHeight(): number {
-    return this.height * this.scale
-  }
-
   draw = (ctx: Ctx, position: XY): void => {
     drawImage(ctx, this.image, {
       width: this.width,
@@ -47,5 +40,12 @@ export class Sprite {
       scale: this.scale,
       position,
     })
+  }
+
+  get scaledWidth(): number {
+    return this.width * this.scale
+  }
+  get scaledHeight(): number {
+    return this.height * this.scale
   }
 }

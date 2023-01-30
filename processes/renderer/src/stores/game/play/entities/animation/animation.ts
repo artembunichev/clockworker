@@ -40,10 +40,12 @@ export class Animation<RL extends AnimationRLType = never> {
   framesPerSprite: number
   scale: number
   private startFrom: number
-
   currentSpriteIndex: number
-
   regulators: Regulators<RL, typeof this> | null
+
+  frameCount = 0
+  isPlaying = false
+  isPaused = false
 
   constructor(config: AnimationConfig<RL>) {
     const { name, spriteSheet, sequence, framesPerSprite, initialScale, startFrom, regulators } =
@@ -88,12 +90,6 @@ export class Animation<RL extends AnimationRLType = never> {
     }
   }
 
-  get currentSprite(): Sprite {
-    const [row, column] = this.sequence[this.currentSpriteIndex]
-    return this.spriteSheet.getSprite(row, column, { scale: this.scale })
-  }
-
-  frameCount = 0
   private setFrameCount = (value: number): void => {
     this.frameCount = value
   }
@@ -112,9 +108,6 @@ export class Animation<RL extends AnimationRLType = never> {
     }
     this.regulators?.modifyAllRegulatorTargets()
   }
-
-  isPlaying = false
-  isPaused = false
 
   update = (): void => {
     if (!this.isPlaying) {
@@ -151,5 +144,10 @@ export class Animation<RL extends AnimationRLType = never> {
   }
   resume = (): void => {
     this.isPaused = false
+  }
+
+  get currentSprite(): Sprite {
+    const [row, column] = this.sequence[this.currentSpriteIndex]
+    return this.spriteSheet.getSprite(row, column, { scale: this.scale })
   }
 }

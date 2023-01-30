@@ -17,6 +17,9 @@ export class PlayerCharacterMovementKeys {
   private keyboard: KeyboardStore
   private settings: PlayerCharacterMovementSettings
 
+  pressedKeys: Array<string> = []
+  prohibitorsController = new ProhibitorsController()
+
   constructor(config: Config) {
     const { keyboard, settings } = config
 
@@ -24,21 +27,22 @@ export class PlayerCharacterMovementKeys {
     this.settings = settings
   }
 
-  prohibitorsController = new ProhibitorsController()
-
-  pressedKeys: Array<string> = []
   updatePressedKeys = (): void => {
     this.pressedKeys = this.keyboard.pressedKeysArray
   }
 
-  //! контроллеры
-  get controllerKeys(): MovementControllersKeys {
-    return this.settings.values.movementControllers
-  }
   isControllerKey = (key: string): boolean => {
     return Object.values(this.controllerKeys).some((controller) => key === controller)
   }
 
+  isRegulatorKey = (key: string): boolean => {
+    return Object.values(this.regulatorKeys).some((regulator) => key === regulator)
+  }
+
+  // контроллеры
+  get controllerKeys(): MovementControllersKeys {
+    return this.settings.values.movementControllers
+  }
   get pressedControllers(): Array<string> {
     return this.pressedKeys.slice().reverse().filter(this.isControllerKey)
   }
@@ -70,12 +74,9 @@ export class PlayerCharacterMovementKeys {
     return this.pressedControllers.includes(this.controllerKeys.left)
   }
 
-  //! регуляторы
+  // регуляторы
   get regulatorKeys(): MovementRegulatorsKeys {
     return this.settings.values.movementRegulators
-  }
-  isRegulatorKey = (key: string): boolean => {
-    return Object.values(this.regulatorKeys).some((regulator) => key === regulator)
   }
 
   get pressedRegulators(): Array<string> {

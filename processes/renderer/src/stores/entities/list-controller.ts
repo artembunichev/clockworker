@@ -10,6 +10,7 @@ type Config<T, Id extends keyof T> = {
 export class List<T, Id extends keyof T> {
   elements: Array<T>
   private identifier: Id | null = null
+
   constructor(list: Array<T>, config?: Config<T, Id>) {
     this.elements = list
 

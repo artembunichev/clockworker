@@ -48,15 +48,6 @@ export class CheckboxSetting<Value> {
     makeAutoObservable(this)
   }
 
-  get value(): Array<Value> {
-    return this.variants.reduce((acc, variant) => {
-      if (variant.isSelected) {
-        acc.push(variant.value)
-      }
-      return acc
-    }, [] as Array<Value>)
-  }
-
   selectVariant = (variantId: string): void => {
     this.variants.forEach((variant) => {
       if (variant.id === variantId) {
@@ -64,12 +55,20 @@ export class CheckboxSetting<Value> {
       }
     })
   }
-
   unselectVariant = (variantId: string): void => {
     this.variants.forEach((variant) => {
       if (variant.id === variantId) {
         variant.isSelected = false
       }
     })
+  }
+
+  get value(): Array<Value> {
+    return this.variants.reduce((acc, variant) => {
+      if (variant.isSelected) {
+        acc.push(variant.value)
+      }
+      return acc
+    }, [] as Array<Value>)
   }
 }

@@ -1,6 +1,8 @@
 import { makeAutoObservable } from 'mobx'
 
 export class KeyboardStore {
+  private pressedKeys: Set<string> = new Set()
+
   constructor() {
     window.addEventListener('keydown', (e) => {
       this.pressedKeys.add(e.code)
@@ -15,8 +17,6 @@ export class KeyboardStore {
 
     makeAutoObservable(this)
   }
-
-  private pressedKeys: Set<string> = new Set()
 
   get pressedKeysArray(): Array<string> {
     return Array.from(this.pressedKeys)
