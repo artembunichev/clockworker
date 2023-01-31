@@ -71,6 +71,9 @@ const Piece = styled.div<{ width: number; gap: number }>`
   }
 `
 const Percentage = styled.span`
+  min-width: 54px;
+  text-align: center;
+  margin-top: -5px;
   margin-left: 11px;
   font-size: 24px;
 `

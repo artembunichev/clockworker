@@ -17,6 +17,7 @@ export const UpdatePopup: FC<Props> = observer(({ updateStore }) => {
     isShowingNotificationAllowed,
     version,
     releaseNotes,
+    isDownloading,
     currentPercentage,
     isNotificationOpened,
     updateGame,
@@ -34,7 +35,7 @@ export const UpdatePopup: FC<Props> = observer(({ updateStore }) => {
     <>
       {version !== null &&
         releaseNotes !== null &&
-        (currentPercentage === null ? (
+        (!isDownloading ? (
           <UpdateNotification
             isOpened={isNotificationOpened}
             version={version}

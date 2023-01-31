@@ -17,7 +17,8 @@ export class UpdateStore {
   version: string | null = null
   releaseNotes: string | null = null
   isNotificationOpened = false
-  currentPercentage: number | null = null
+  isDownloading = false
+  currentPercentage = 0
 
   constructor(config: Config) {
     const { settings } = config
@@ -46,7 +47,12 @@ export class UpdateStore {
     this.isNotificationOpened = false
   }
 
+  setIsDownloading = (value: boolean): void => {
+    this.isDownloading = value
+  }
+
   updateGame = (): void => {
+    this.setIsDownloading(true)
     window.ipcRenderer.send('updateGame')
   }
 
