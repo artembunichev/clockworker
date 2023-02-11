@@ -2,9 +2,9 @@ import { computed, makeObservable, observable } from 'mobx'
 
 import { Properties } from 'process-shared/types/basic-utility-types'
 
-import { PlayerCharacter } from 'stores/game/play/characters/list/player/character'
-
 import { remove } from 'lib/arrays'
+
+import { PlayerCharacter } from './list/player/character'
 
 type This = InstanceType<typeof CharacterController>
 

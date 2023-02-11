@@ -5,10 +5,9 @@ import {
   RegulatorTarget as RegulatorTargetType,
   RegulatorTargetsInitialValues,
   Regulators,
-} from 'stores/game/play/entities/regulators'
-import { Sprite } from 'stores/game/play/entities/sprite'
-import { SpriteSheet } from 'stores/game/play/entities/sprite-sheet'
-
+} from '../regulators'
+import { Sprite } from '../sprite'
+import { SpriteSheet } from '../sprite-sheet'
 import { AnimationRLType, regulatorTargetsInitialValues } from './regulators'
 
 export type AnimationSequence = Array<Indexes>

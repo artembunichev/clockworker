@@ -1,10 +1,5 @@
 import { ExpandedDirection, XY } from 'project-utility-types/plane'
 
-import {
-  CharacterMovementState,
-  CharacterMovementStateConfig,
-} from 'stores/game/play/characters/movement/state'
-
 import { capitalizeFirstSymbol } from 'lib/strings'
 
 import { Position } from '../../entities/position'
@@ -17,6 +12,7 @@ import {
 } from '../animation'
 import { CharacterAutomove } from './automove'
 import { CharacterMovementRegulatorName } from './regulators'
+import { CharacterMovementState, CharacterMovementStateConfig } from './state'
 
 export type MoveConfig = {
   direction: ExpandedDirection

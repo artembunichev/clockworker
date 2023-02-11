@@ -1,11 +1,10 @@
 import TiledMap from 'tiled-types/types'
 
-import { GameScreen } from 'stores/game/play/screen'
-
 import mapSchemeJSON from 'content/scenes/market/maps/main/market-main-map.json'
 import tilesetSrc from 'content/scenes/market/maps/main/tileset.png'
 
 import { Characters } from '../../characters/controller'
+import { GameScreen } from '../../screen'
 import { GameScene } from '../scene'
 
 type Config = {

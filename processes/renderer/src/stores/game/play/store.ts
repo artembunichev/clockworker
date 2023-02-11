@@ -1,6 +1,5 @@
 import { makeAutoObservable } from 'mobx'
 
-import { PlayerCharacterConfig } from 'stores/game/play/characters/list/player/character'
 import { KeyboardStore } from 'stores/keyboard.store'
 import { PopupHistory } from 'stores/popup-history'
 
@@ -8,6 +7,7 @@ import { GameScript, getParsedGameScript } from 'content/text/get-parsed-game-sc
 
 import { PreGameForm } from '../pre-game-form'
 import { CharacterController, CharacterName } from './characters/controller'
+import { PlayerCharacterConfig } from './characters/list/player/character'
 import { Collider } from './collider'
 import { Market } from './market'
 import { GamePauseController } from './pause-controller'

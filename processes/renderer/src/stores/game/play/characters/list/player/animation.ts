@@ -3,7 +3,7 @@ import {
   DefaultCharacterAnimationRL,
   ShortCharacterMovementAnimationConfig,
   getCharacterMovementAnimationConfigsForController,
-} from 'stores/game/play/characters/animation'
+} from '../../animation'
 
 export type PlayerCharacterAnimationName = CharacterMovementAnimationName
 export type PlayerCharacterAnimationRegulatorList = DefaultCharacterAnimationRL

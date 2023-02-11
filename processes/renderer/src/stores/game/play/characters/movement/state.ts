@@ -1,7 +1,6 @@
-import { Regulators } from 'stores/game/play/entities/regulators'
-
 import { areEquivalent } from 'lib/are-equivalent'
 
+import { Regulators } from '../../entities/regulators'
 import {
   characterMovementRegulatorList,
   characterMovementRegulatorTargetsInitialValues,

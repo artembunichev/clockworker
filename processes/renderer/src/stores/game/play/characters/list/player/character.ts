@@ -1,8 +1,8 @@
-import { AnyCharacterConfig, Character } from 'stores/game/play/characters/character'
 import { KeyboardStore } from 'stores/keyboard.store'
 
 import playerCharacterSpriteSheetSrc from 'content/sprites/characters/Player.png'
 
+import { AnyCharacterConfig, Character } from '../../character'
 import {
   PlayerCharacterAnimationName,
   PlayerCharacterAnimationRegulatorList,

@@ -1,9 +1,5 @@
-import {
-  PlayerCharacter,
-  PlayerCharacterConfig,
-} from 'stores/game/play/characters/list/player/character'
-
 import { CharacterController } from './characters/controller'
+import { PlayerCharacter, PlayerCharacterConfig } from './characters/list/player/character'
 
 type CreatePlayerCharacterConfig = {
   characterController: CharacterController

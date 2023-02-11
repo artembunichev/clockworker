@@ -1,8 +1,7 @@
-import { Sprite } from 'stores/game/play/entities/sprite'
-import { SpriteSheet } from 'stores/game/play/entities/sprite-sheet'
-
 import { Animation, AnimationConfig, RunAnimationOptions } from './animation/animation'
 import { AnimationRLType } from './animation/regulators'
+import { Sprite } from './sprite'
+import { SpriteSheet } from './sprite-sheet'
 
 export enum ViewDirections {
   DOWN = 0,
