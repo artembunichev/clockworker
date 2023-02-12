@@ -27,6 +27,9 @@ export type DeepPartial<T> = T extends AnyObject ? { [K in keyof T]?: DeepPartia
 
 export type Properties<T> = T[keyof T]
 
+export type Overwrite<T, K extends keyof T, P> = {
+  [Key in keyof T]: Key extends K ? P : T[Key]
+}
 export type OverwriteProperties<T, P> = Record<keyof T, P>
 
 export type NeverProperties<T> = { [_ in keyof T]?: never }
