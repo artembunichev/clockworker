@@ -1,17 +1,20 @@
 import { computed, makeObservable, observable } from 'mobx'
 
-import { Properties } from 'process-shared/types/basic-utility-types'
-
 import { resolvedPromise } from 'lib/async'
 
 import { Characters } from '../characters/controller'
 import { GameScreen } from '../screen'
-import { MarketMainScene } from './list/market'
+import { marketMainSceneConfig } from './list/market'
+import { GameScene, GameSceneConfig } from './scene'
+import { GameSceneCreator, SceneCreatorConfig } from './scene-creator'
 
-type This = InstanceType<typeof GameSceneController>
+export type ControllerSceneConfig<T extends string> = Omit<
+  GameSceneConfig<T>,
+  keyof SceneCreatorConfig
+>
 
-type Scene = InstanceType<Properties<This['refList']>>
-export type SceneName = keyof This['refList']
+export type SceneName = GameSceneController['sceneConfigs'][number]['name']
+type Scene = GameScene<SceneName>
 type Scenes = Record<SceneName, Scene>
 
 type GameSceneControllerConfig = {
@@ -20,11 +23,10 @@ type GameSceneControllerConfig = {
 }
 
 export class GameSceneController {
-  private screen: GameScreen
-  private characterList: Characters
+  private sceneCreator: GameSceneCreator
 
   // список сцен, использующихся в контроллере
-  private refList = { marketMain: MarketMainScene }
+  private sceneConfigs = [marketMainSceneConfig]
   // список созданных сцен
   scenes: Scenes = {} as Scenes
   currentScene: Scene = {} as Scene
@@ -32,8 +34,7 @@ export class GameSceneController {
   constructor(config: GameSceneControllerConfig) {
     const { screen, characterList } = config
 
-    this.screen = screen
-    this.characterList = characterList
+    this.sceneCreator = new GameSceneCreator({ screen, characterList })
 
     makeObservable(this, {
       scenes: observable,
@@ -42,11 +43,13 @@ export class GameSceneController {
     })
   }
 
-  createScene = (sceneName: SceneName): void => {
-    this.scenes[sceneName] = new this.refList[sceneName]({
-      screen: this.screen,
-      characterList: this.characterList,
-    })
+  getSceneConfig = (name: SceneName): ControllerSceneConfig<any> => {
+    return this.sceneConfigs.find((config) => config.name === name)!
+  }
+
+  createScene = (name: SceneName): void => {
+    const mapConfig = this.getSceneConfig(name).map
+    this.scenes[name] = this.sceneCreator.createScene(name, mapConfig)
   }
 
   setScene = (sceneName: SceneName): Promise<void> => {

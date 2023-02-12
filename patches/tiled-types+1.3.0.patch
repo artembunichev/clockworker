@@ -1,0 +1,13 @@
+diff --git a/node_modules/tiled-types/types/index.d.ts b/node_modules/tiled-types/types/index.d.ts
+index cf78c80..a93215c 100644
+--- a/node_modules/tiled-types/types/index.d.ts
++++ b/node_modules/tiled-types/types/index.d.ts
+@@ -232,7 +232,7 @@ export type TiledMapType = 'orthogonal' | 'isometric' | 'staggered' | 'hexagonal
+ 
+ export interface TiledMapAbstract<O extends TiledMapType> {
+     type?: 'map';
+-    version: number;
++    version: string;
+     tiledversion?: string;
+     width: number;
+     height: number;

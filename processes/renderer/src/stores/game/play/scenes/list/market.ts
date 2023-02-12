@@ -1,28 +1,14 @@
 import TiledMap from 'tiled-types/types'
 
-import mapSchemeJSON from 'content/scenes/market/maps/main/market-main-map.json'
+import mapScheme from 'content/scenes/market/maps/main/market-main-map.json'
 import tilesetSrc from 'content/scenes/market/maps/main/tileset.png'
 
-import { Characters } from '../../characters/controller'
-import { GameScreen } from '../../screen'
-import { GameScene } from '../scene'
+import { ControllerSceneConfig } from '../controller'
 
-type Config = {
-  screen: GameScreen
-  characterList: Characters
-}
-
-export class MarketMainScene extends GameScene<'marketMain'> {
-  constructor(config: Config) {
-    const { screen, characterList } = config
-
-    const mapScheme = JSON.parse(JSON.stringify(mapSchemeJSON)) as TiledMap
-
-    super({
-      name: 'marketMain',
-      screen,
-      map: { tilesetSrc, scheme: mapScheme },
-      characterList,
-    })
-  }
+export const marketMainSceneConfig: ControllerSceneConfig<'marketMain'> = {
+  name: 'marketMain',
+  map: {
+    scheme: mapScheme as TiledMap,
+    tilesetSrc,
+  },
 }

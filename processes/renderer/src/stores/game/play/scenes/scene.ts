@@ -13,7 +13,7 @@ import { SpriteSheet } from '../entities/sprite-sheet'
 import { GameScreen } from '../screen'
 import { SceneCharactersManipulator } from './manipulator'
 
-type GameMapConfig = {
+export type GameSceneMapConfig = {
   tilesetSrc: string
   scheme: TiledMap
 }
@@ -25,9 +25,9 @@ export type GameMap = {
   hitboxes: Array<HitboxWithId>
 }
 
-type GameSceneConfig<Name extends string> = {
+export type GameSceneConfig<Name extends string> = {
   name: Name
-  map: GameMapConfig
+  map: GameSceneMapConfig
   screen: GameScreen
   characterList: Characters
 }
@@ -36,7 +36,7 @@ export class GameScene<SceneName extends string> {
   private screen: GameScreen
   private characterList: Characters
   name: SceneName
-  private mapConfig: GameMapConfig
+  private mapConfig: GameSceneMapConfig
   map: GameMap
   mapSize: Size
   imageContainer: ImageContainer<Record<'tileset', string>>
