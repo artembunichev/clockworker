@@ -27,7 +27,7 @@ export type Merge<A, B> = A | B extends AnyObject
 
 export type DeepPartial<T> = T extends AnyObject ? { [K in keyof T]?: DeepPartial<T[K]> } : T
 
-export type Properties<T> = T[keyof T]
+export type PropertyOf<T> = T[keyof T]
 
 export type Overwrite<T, K extends keyof T, P> = {
   [Key in keyof T]: Key extends K ? P : T[Key]
@@ -42,7 +42,7 @@ export type XOR<A, B> = A | B extends AnyObject
   ? (B & NeverProperties<Without<A, B>>) | (A & NeverProperties<Without<B, A>>)
   : A | B
 
-export type Entries<T> = Array<[keyof T, Properties<T>]>
+export type Entries<T> = Array<[keyof T, PropertyOf<T>]>
 
 export type Rename<T, OK extends keyof T, NK extends string> = Omit<T, OK> & { [_ in NK]: T[OK] }
 

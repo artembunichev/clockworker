@@ -1,4 +1,4 @@
-import { AnyObject, Callback, Properties } from 'process-shared/types/basic-utility-types'
+import { AnyObject, Callback, PropertyOf } from 'process-shared/types/basic-utility-types'
 import { Modifier } from 'project-utility-types/abstract'
 
 import { remove } from 'lib/arrays'
@@ -10,7 +10,7 @@ export type RegulatorList<Name extends string, Target extends string> = Record<N
 type AnyRegulatorList = RegulatorList<string, string>
 
 export type RegulatorName<RL extends AnyRegulatorList> = Extract<keyof RL, string>
-export type RegulatorTarget<RL extends AnyRegulatorList> = Extract<keyof Properties<RL>, string>
+export type RegulatorTarget<RL extends AnyRegulatorList> = Extract<keyof PropertyOf<RL>, string>
 
 export type RegulatorTargetsInitialValues<
   SourceObject extends AnyObject,

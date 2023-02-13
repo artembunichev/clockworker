@@ -1,6 +1,6 @@
 import { computed, makeObservable, observable } from 'mobx'
 
-import { Callback, Properties } from 'process-shared/types/basic-utility-types'
+import { Callback, PropertyOf } from 'process-shared/types/basic-utility-types'
 
 import { GameScript } from 'content/text/game-script'
 
@@ -9,7 +9,7 @@ import { WelcomeTextbox } from './list/welcome'
 
 type This = InstanceType<typeof TextboxController>
 
-type TextboxInController = InstanceType<Properties<This['refList']>>
+type TextboxInController = InstanceType<PropertyOf<This['refList']>>
 type TextboxName = keyof This['refList']
 type Textboxes = Record<TextboxName, TextboxInController>
 

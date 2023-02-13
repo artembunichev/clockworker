@@ -3,7 +3,7 @@ import {
   Keys,
   Merge,
   OverwriteProperties,
-  Properties,
+  PropertyOf,
 } from 'process-shared/types/basic-utility-types'
 
 export const isObject = (value: any): value is object => {
@@ -40,7 +40,7 @@ export const merge = <T1 extends AnyObject, T2 extends AnyObject>(
 }
 
 // использовать только в случае, если все свойства будут иметь одинаковый тип
-type ObjectMapCallback<T, R> = (value: Properties<T>) => R
+type ObjectMapCallback<T, R> = (value: PropertyOf<T>) => R
 export const objectMapAll = <T extends AnyObject, R>(
   object: T,
   callback: ObjectMapCallback<T, R>,

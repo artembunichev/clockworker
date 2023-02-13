@@ -1,6 +1,6 @@
 import { computed, makeObservable, observable } from 'mobx'
 
-import { Properties } from 'process-shared/types/basic-utility-types'
+import { PropertyOf } from 'process-shared/types/basic-utility-types'
 
 import { remove } from 'lib/arrays'
 
@@ -9,7 +9,7 @@ import { PlayerCharacter } from './list/player/character'
 type This = InstanceType<typeof CharacterController>
 
 export type CharacterName = keyof This['refList']
-type Character = InstanceType<Properties<This['refList']>>
+type Character = InstanceType<PropertyOf<This['refList']>>
 export type Characters = Record<CharacterName, Character>
 
 export class CharacterController {
