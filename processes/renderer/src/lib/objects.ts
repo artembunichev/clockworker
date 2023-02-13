@@ -1,5 +1,6 @@
 import {
   AnyObject,
+  Keys,
   Merge,
   OverwriteProperties,
   Properties,
@@ -9,6 +10,10 @@ export const isObject = (value: any): value is object => {
   return typeof value === 'object' && !Array.isArray(value) && value !== null
 }
 
+export const objectKeys = <T extends object>(o: T): Keys<T> => {
+  return Object.keys(o) as Keys<typeof o>
+}
+
 export const merge = <T1 extends AnyObject, T2 extends AnyObject>(
   object1: T1,
   object2: T2,
@@ -16,7 +21,7 @@ export const merge = <T1 extends AnyObject, T2 extends AnyObject>(
   const merged = { ...object1 }
 
   const mergeObjects = (target: AnyObject, source: AnyObject): void => {
-    Object.keys(source).forEach((key) => {
+    objectKeys(source).forEach((key) => {
       if (target[key] === undefined) {
         target[key] = source[key]
       } else {
@@ -40,7 +45,7 @@ export const objectMapAll = <T extends AnyObject, R>(
   object: T,
   callback: ObjectMapCallback<T, R>,
 ): OverwriteProperties<T, R> => {
-  return (Object.keys(object) as Array<keyof T>).reduce((result, key) => {
+  return objectKeys(object).reduce((result, key) => {
     result[key] = callback(object[key])
     return result
   }, {} as OverwriteProperties<T, R>)

@@ -1,5 +1,7 @@
 export type AnyObject = Record<string, any>
 
+export type Keys<T> = Array<keyof T>
+
 export type AnyArray = Array<any>
 
 export type Callback = () => void

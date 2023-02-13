@@ -2,6 +2,7 @@ import { AnyObject, Callback, Properties } from 'process-shared/types/basic-util
 import { Modifier } from 'project-utility-types/abstract'
 
 import { remove } from 'lib/arrays'
+import { objectKeys } from 'lib/objects'
 
 type Regulator<Target extends string> = Record<Target, Modifier<any>>
 
@@ -74,7 +75,7 @@ export class Regulators<RL extends AnyRegulatorList, SO extends AnyObject> {
     regulatorName: RegulatorName<RL>,
     modifiedTargets: Array<RegulatorTarget<RL>>,
   ): void => {
-    const targets = Object.keys(this.list[regulatorName]) as Array<RegulatorTarget<RL>>
+    const targets = objectKeys(this.list[regulatorName]) as Array<RegulatorTarget<RL>>
     targets.forEach((target) => {
       if (!modifiedTargets.includes(target)) {
         const newTargetValue = this.getNewTargetValue(target)
@@ -86,8 +87,9 @@ export class Regulators<RL extends AnyRegulatorList, SO extends AnyObject> {
 
   modifyAllRegulatorTargets = (): void => {
     const modifiedTargets: Array<RegulatorTarget<RL>> = []
-    Object.keys(this.list).forEach((regulatorName) =>
-      this.modifyRegulatorTargets(regulatorName as RegulatorName<RL>, modifiedTargets),
+    const regulatorNames = objectKeys(this.list) as Array<RegulatorName<RL>>
+    regulatorNames.forEach((regulatorName) =>
+      this.modifyRegulatorTargets(regulatorName, modifiedTargets),
     )
   }
 

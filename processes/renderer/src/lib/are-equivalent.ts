@@ -1,6 +1,6 @@
 import { AnyObject } from 'process-shared/types/basic-utility-types'
 
-import { isObject } from './objects'
+import { isObject, objectKeys } from './objects'
 
 const areEquivalentArrays = (array1: Array<any>, array2: Array<any>): boolean => {
   const length1 = array1.length
@@ -14,11 +14,11 @@ const areEquivalentArrays = (array1: Array<any>, array2: Array<any>): boolean =>
 }
 
 const areEquivalentObjects = (object1: AnyObject, object2: AnyObject): boolean => {
-  const length1 = Object.keys(object1).length
-  const length2 = Object.keys(object2).length
+  const length1 = objectKeys(object1).length
+  const length2 = objectKeys(object2).length
 
   if (length1 === length2) {
-    return Object.keys(object1).every((key) => areEquivalent(object1[key], object2[key]))
+    return objectKeys(object1).every((key) => areEquivalent(object1[key], object2[key]))
   }
 
   return false

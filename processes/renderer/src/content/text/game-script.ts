@@ -1,8 +1,7 @@
 import { deepClone } from 'lib/deep-clone'
+import { objectKeys } from 'lib/objects'
 
 import script from './game-script.json'
-
-type ContentKey = keyof typeof script['content']
 
 type Replacers = Array<{ key: string; value: string }>
 
@@ -24,9 +23,9 @@ export const getParsedGameScript = (config: GetParsedScriptConfig): GameScript =
   ]
 
   const parsedScript = deepClone(script)
-  Object.keys(parsedScript.content).forEach((contentKey) => {
+  objectKeys(parsedScript.content).forEach((contentKey) => {
     replacers.forEach((replacer) => {
-      parsedScript.content[contentKey as ContentKey] = parsedScript.content[contentKey as ContentKey]
+      parsedScript.content[contentKey] = parsedScript.content[contentKey]
         .split(replacer.key)
         .join(replacer.value)
     })
