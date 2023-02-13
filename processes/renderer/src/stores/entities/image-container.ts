@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 
-import { objectKeys } from 'lib/objects'
+import { objectKeys, objectValues } from 'lib/objects'
 
 export type ImageContainerOptions = {
   loadImmediately?: boolean
@@ -62,6 +62,6 @@ export class ImageContainer<Srcs extends ImageSrcs> {
   }
 
   get isAllImagesLoaded(): boolean {
-    return Object.values(this.list).every((image) => image.isLoaded)
+    return objectValues(this.list).every((image) => image.isLoaded)
   }
 }

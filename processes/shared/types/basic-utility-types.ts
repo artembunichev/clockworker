@@ -29,6 +29,8 @@ export type DeepPartial<T> = T extends AnyObject ? { [K in keyof T]?: DeepPartia
 
 export type PropertyOf<T> = T[keyof T]
 
+export type Properties<T> = Array<PropertyOf<T>>
+
 export type Overwrite<T, K extends keyof T, P> = {
   [Key in keyof T]: Key extends K ? P : T[Key]
 }

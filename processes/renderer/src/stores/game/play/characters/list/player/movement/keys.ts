@@ -5,6 +5,7 @@ import { MovementControllersKeys, MovementRegulatorsKeys } from 'stores/game/pla
 import { KeyboardStore } from 'stores/keyboard.store'
 
 import { last } from 'lib/arrays'
+import { objectValues } from 'lib/objects'
 
 import { PlayerCharacterMovementSettings } from './movement'
 
@@ -32,11 +33,11 @@ export class PlayerCharacterMovementKeys {
   }
 
   isControllerKey = (key: string): boolean => {
-    return Object.values(this.controllerKeys).some((controller) => key === controller)
+    return objectValues(this.controllerKeys).some((controller) => key === controller)
   }
 
   isRegulatorKey = (key: string): boolean => {
-    return Object.values(this.regulatorKeys).some((regulator) => key === regulator)
+    return objectValues(this.regulatorKeys).some((regulator) => key === regulator)
   }
 
   // контроллеры

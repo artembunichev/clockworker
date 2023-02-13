@@ -1,3 +1,5 @@
+import { objectValues } from 'lib/objects'
+
 import { Animation, AnimationConfig, RunAnimationOptions } from './animation/animation'
 import { AnimationRLType } from './animation/regulators'
 import { Sprite } from './sprite'
@@ -69,7 +71,7 @@ export class AnimationController<AnimationName extends string, RL extends Animat
   }
 
   setScale = (scale: number): void => {
-    Object.values<Animation<RL>>(this.list).forEach((animation) => {
+    objectValues(this.list).forEach((animation) => {
       animation.setScale(scale)
     })
   }

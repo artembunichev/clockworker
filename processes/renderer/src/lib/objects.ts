@@ -3,6 +3,7 @@ import {
   Keys,
   Merge,
   OverwriteProperties,
+  Properties,
   PropertyOf,
 } from 'process-shared/types/basic-utility-types'
 
@@ -11,7 +12,11 @@ export const isObject = (value: any): value is object => {
 }
 
 export const objectKeys = <T extends object>(o: T): Keys<T> => {
-  return Object.keys(o) as Keys<typeof o>
+  return Object.keys(o) as Keys<T>
+}
+
+export const objectValues = <T extends object>(o: T): Properties<T> => {
+  return Object.values(o) as Properties<T>
 }
 
 export const merge = <T1 extends AnyObject, T2 extends AnyObject>(

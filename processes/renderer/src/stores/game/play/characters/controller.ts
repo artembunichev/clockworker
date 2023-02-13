@@ -3,6 +3,7 @@ import { computed, makeObservable, observable } from 'mobx'
 import { PropertyOf } from 'process-shared/types/basic-utility-types'
 
 import { remove } from 'lib/arrays'
+import { objectValues } from 'lib/objects'
 
 import { PlayerCharacter } from './list/player/character'
 
@@ -68,7 +69,7 @@ export class CharacterController {
   }
 
   get isAllActiveCharactersImagesLoaded(): boolean {
-    return Object.values(this.characters).every(
+    return objectValues(this.characters).every(
       (activeCharacter) => activeCharacter.imageContainer.isAllImagesLoaded,
     )
   }
