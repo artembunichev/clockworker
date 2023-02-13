@@ -1,5 +1,6 @@
 import {
   AnyObject,
+  Entries,
   Keys,
   Merge,
   OverwriteProperties,
@@ -17,6 +18,10 @@ export const objectKeys = <T extends object>(o: T): Keys<T> => {
 
 export const objectValues = <T extends object>(o: T): Properties<T> => {
   return Object.values(o) as Properties<T>
+}
+
+export const objectEntries = <T extends object>(o: T): Entries<T> => {
+  return Object.entries(o) as Entries<T>
 }
 
 export const merge = <T1 extends AnyObject, T2 extends AnyObject>(

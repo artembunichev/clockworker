@@ -1,7 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 
 import isElectron from 'is-electron'
-import { Entries } from 'process-shared/types/basic-utility-types'
 
 import { CheckboxSetting } from 'stores/entities/editable-settings/checkbox-setting'
 import { RadioSetting } from 'stores/entities/editable-settings/radio-setting'
@@ -9,6 +8,7 @@ import { SingleValueSetting } from 'stores/entities/editable-settings/single-val
 import { getConvertedEditableSettings } from 'stores/lib/settings'
 
 import { areEquivalent } from 'lib/are-equivalent'
+import { objectEntries } from 'lib/objects'
 
 import { EditableAppSettings } from './editable-settings'
 
@@ -60,7 +60,7 @@ export class AppSettingsStore {
   private syncSettingsWithFile = (): void => {
     const values = this.getSettingsFromFile()
 
-    return (Object.entries(values) as Entries<AppSettingsValues>).forEach(([name, value]) => {
+    objectEntries(values).forEach(([name, value]) => {
       const thisEditableSetting = this.editable[name]
 
       if (thisEditableSetting instanceof SingleValueSetting) {

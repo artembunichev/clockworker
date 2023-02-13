@@ -1,4 +1,4 @@
-import { objectValues } from 'lib/objects'
+import { objectEntries, objectValues } from 'lib/objects'
 
 import { Animation, AnimationConfig, RunAnimationOptions } from './animation/animation'
 import { AnimationRLType } from './animation/regulators'
@@ -58,16 +58,14 @@ export class AnimationController<AnimationName extends string, RL extends Animat
   }
 
   private createAnimations = (): void => {
-    Object.entries<AnimationConfigForController>(this.configs).forEach(
-      ([animationName, animationConfig]) => {
-        this.list[animationName as AnimationName] = new Animation<RL>({
-          name: animationName,
-          spriteSheet: this.spriteSheet,
-          regulators: this.regulators ? this.regulators : undefined,
-          ...animationConfig,
-        })
-      },
-    )
+    objectEntries(this.configs).forEach(([animationName, animationConfig]) => {
+      this.list[animationName] = new Animation<RL>({
+        name: animationName,
+        spriteSheet: this.spriteSheet,
+        regulators: this.regulators ? this.regulators : undefined,
+        ...animationConfig,
+      })
+    })
   }
 
   setScale = (scale: number): void => {

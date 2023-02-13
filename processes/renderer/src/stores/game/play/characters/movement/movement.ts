@@ -1,5 +1,6 @@
 import { ExpandedDirection, XY } from 'project-utility-types/plane'
 
+import { objectEntries } from 'lib/objects'
 import { capitalizeFirstSymbol } from 'lib/strings'
 
 import { Position } from '../../entities/position'
@@ -165,10 +166,12 @@ export class CharacterMovement {
         ? this.animationController.currentAnimation.regulators?.applyRegulator
         : this.animationController.currentAnimation.regulators?.removeRegulator
 
-    Object.entries(this.animationBinds).forEach(([mrName, arName]) => {
+    objectEntries(this.animationBinds).forEach(([mrName, arName]) => {
       if (mrName === movementRegulatorName) {
-        movementFn(mrName as keyof typeof this.animationBinds)
-        animationFn?.(arName)
+        movementFn(mrName)
+        if (arName) {
+          animationFn?.(arName)
+        }
       }
     })
   }
