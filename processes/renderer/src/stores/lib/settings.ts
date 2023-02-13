@@ -2,7 +2,7 @@ import { AnyObject } from 'process-shared/types/basic-utility-types'
 
 import { AnyEditableSetting, EditableSettingVariant } from 'stores/entities/editable-settings/types'
 
-import { objectMap } from 'lib/objects'
+import { objectMapAll } from 'lib/objects'
 
 export type SettingType<T> = { values: T }
 
@@ -14,5 +14,5 @@ export const getConvertedEditableSettings = <
 >(
   editableSettings: T,
 ): { [K in keyof T]: T[K]['value'] } => {
-  return objectMap(editableSettings, ({ value }) => value)
+  return objectMapAll(editableSettings, ({ value }) => value)
 }

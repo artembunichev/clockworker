@@ -34,8 +34,9 @@ export const merge = <T1 extends AnyObject, T2 extends AnyObject>(
   return merged as Merge<T1, T2>
 }
 
+// использовать только в случае, если все свойства будут иметь одинаковый тип
 type ObjectMapCallback<T, R> = (value: Properties<T>) => R
-export const objectMap = <T extends AnyObject, R>(
+export const objectMapAll = <T extends AnyObject, R>(
   object: T,
   callback: ObjectMapCallback<T, R>,
 ): OverwriteProperties<T, R> => {
