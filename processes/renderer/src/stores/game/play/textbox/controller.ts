@@ -2,7 +2,7 @@ import { computed, makeObservable, observable } from 'mobx'
 
 import { Callback, Properties } from 'process-shared/types/basic-utility-types'
 
-import { GameScript } from 'content/text/get-parsed-game-script'
+import { GameScript } from 'content/text/game-script'
 
 import { GamePauseController } from '../pause-controller'
 import { WelcomeTextbox } from './list/welcome'

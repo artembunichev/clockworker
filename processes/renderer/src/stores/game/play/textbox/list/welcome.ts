@@ -1,4 +1,4 @@
-import { GameScript } from 'content/text/get-parsed-game-script'
+import { GameScript } from 'content/text/game-script'
 
 import { Textbox } from '../textbox'
 

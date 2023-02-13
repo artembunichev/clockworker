@@ -3,7 +3,7 @@ import { makeAutoObservable } from 'mobx'
 import { KeyboardStore } from 'stores/keyboard.store'
 import { PopupHistory } from 'stores/popup-history'
 
-import { GameScript, getParsedGameScript } from 'content/text/get-parsed-game-script'
+import { GameScript, getParsedGameScript } from 'content/text/game-script'
 
 import { PreGameForm } from '../pre-game-form'
 import { CharacterController, CharacterName } from './characters/controller'
