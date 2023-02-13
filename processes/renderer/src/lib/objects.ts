@@ -5,7 +5,7 @@ import {
   Properties,
 } from 'process-shared/types/basic-utility-types'
 
-export const isObject = (value: any): boolean => {
+export const isObject = (value: any): value is object => {
   return typeof value === 'object' && !Array.isArray(value) && value !== null
 }
 
