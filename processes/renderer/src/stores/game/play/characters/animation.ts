@@ -7,21 +7,23 @@ import {
   ViewDirections,
 } from '../entities/animation-controller'
 import { AnimationSequence } from '../entities/animation/animation'
-import { AnimationRLType, AnimationRegulatorList } from '../entities/animation/regulators'
+import { AnimationRegulatorList } from '../entities/animation/regulators'
 import { getRowSequence } from '../lib/animation'
 
 export type CharacterMovementAnimationName = 'walkDown' | 'walkRight' | 'walkUp' | 'walkLeft'
-
 export type DefaultCharacterAnimationName = CharacterMovementAnimationName
-
-export type CharacterAnimationName<AnimationName extends string> =
-  | DefaultCharacterAnimationName
-  | AnimationName
+export type CharacterAnimationName<Name extends string> = DefaultCharacterAnimationName | Name
 
 export type DefaultCharacterAnimationRegulatorName = 'speedup' | 'slowdown'
+export type CharacterAnimationRegulatorName<Name extends string> =
+  | DefaultCharacterAnimationRegulatorName
+  | Name
 
-export type DefaultCharacterAnimationRL =
-  AnimationRegulatorList<DefaultCharacterAnimationRegulatorName>
+type DefaultCharacterAnimationRL = AnimationRegulatorList<DefaultCharacterAnimationRegulatorName>
+
+export type CharacterAnimationRegulatorList<RegulatorName extends string> = RegulatorName extends never
+  ? DefaultCharacterAnimationRL
+  : AnimationRegulatorList<DefaultCharacterAnimationRegulatorName | RegulatorName>
 
 export const defaultCharacterAnimationRegulatorList: DefaultCharacterAnimationRL = {
   speedup: {
@@ -31,10 +33,6 @@ export const defaultCharacterAnimationRegulatorList: DefaultCharacterAnimationRL
     framesPerSprite: ((prev) => Math.round(prev * 1.3)) as Modifier<number>,
   },
 }
-
-export type CharacterAnimationRegulatorList<RL extends AnimationRLType> = RL extends never
-  ? DefaultCharacterAnimationRL
-  : DefaultCharacterAnimationRL & RL
 
 export type ShortCharacterMovementAnimationConfig = Omit<
   AnimationConfigForController,
@@ -78,13 +76,13 @@ export const getCharacterMovementAnimationConfigsForController = (
 
 export type CharacterAnimationController<
   AnimationName extends string,
-  AnimationRL extends AnimationRLType = never,
+  RegulatorName extends string = never,
 > = AnimationController<
   CharacterAnimationName<AnimationName>,
-  CharacterAnimationRegulatorList<AnimationRL>
+  CharacterAnimationRegulatorName<RegulatorName>
 >
 
 export type DefaultCharacterAnimationController = AnimationController<
   DefaultCharacterAnimationName,
-  DefaultCharacterAnimationRL
+  DefaultCharacterAnimationRegulatorName
 >

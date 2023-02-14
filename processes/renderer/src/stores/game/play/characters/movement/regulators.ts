@@ -16,6 +16,7 @@ export const characterMovementRegulatorTargetsInitialValues: RegulatorTargetsIni
 }
 
 export const characterMovementRegulatorList: RegulatorList<
+  CharacterMovementState,
   CharacterMovementRegulatorName,
   CharacterMovementRegulatorTarget
 > = {

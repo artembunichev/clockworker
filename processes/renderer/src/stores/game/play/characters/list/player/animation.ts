@@ -1,12 +1,12 @@
 import {
-  CharacterMovementAnimationName,
-  DefaultCharacterAnimationRL,
+  DefaultCharacterAnimationName,
+  DefaultCharacterAnimationRegulatorName,
   ShortCharacterMovementAnimationConfig,
   getCharacterMovementAnimationConfigsForController,
 } from '../../animation'
 
-export type PlayerCharacterAnimationName = CharacterMovementAnimationName
-export type PlayerCharacterAnimationRegulatorList = DefaultCharacterAnimationRL
+export type PlayerCharacterAnimationName = DefaultCharacterAnimationName
+export type PlayerCharacterAnimationRegulatorName = DefaultCharacterAnimationRegulatorName
 
 const playerCharacterMovementAnimationConfig: ShortCharacterMovementAnimationConfig = {
   initialScale: 2.5,

@@ -1,7 +1,7 @@
 import { objectEntries, objectValues } from 'lib/objects'
 
 import { Animation, AnimationConfig, RunAnimationOptions } from './animation/animation'
-import { AnimationRLType } from './animation/regulators'
+import { AnimationRegulatorList } from './animation/regulators'
 import { Sprite } from './sprite'
 import { SpriteSheet } from './sprite-sheet'
 
@@ -19,31 +19,34 @@ export type AnimationConfigsForController<AnimationName extends string> = Record
   AnimationConfigForController
 >
 
-type AnimationList<AnimationName extends string, RL extends AnimationRLType> = Record<
+type AnimationList<AnimationName extends string, RegulatorName extends string> = Record<
   AnimationName,
-  Animation<RL>
+  Animation<RegulatorName>
 >
 
 export type AnimationControllerConfig<
   AnimationName extends string,
-  RL extends AnimationRLType = never,
+  RegulatorName extends string = never,
 > = {
   spriteSheet: SpriteSheet
   configs: AnimationConfigsForController<AnimationName>
   initialValue: AnimationName
-  regulators?: RL
+  regulators?: AnimationRegulatorList<RegulatorName>
 }
 
-export class AnimationController<AnimationName extends string, RL extends AnimationRLType> {
+export class AnimationController<AnimationName extends string, RegulatorName extends string> {
   private spriteSheet: SpriteSheet
   private configs: AnimationConfigsForController<AnimationName>
-  private regulators: RL | null = null
-  currentAnimation: Animation<RL>
+  currentAnimation: Animation<RegulatorName>
 
-  private list: AnimationList<AnimationName, RL> = {} as AnimationList<AnimationName, RL>
+  private regulators: AnimationRegulatorList<RegulatorName> | null = null
+  private list: AnimationList<AnimationName, RegulatorName> = {} as AnimationList<
+    AnimationName,
+    RegulatorName
+  >
   viewDirection: ViewDirections = ViewDirections.DOWN
 
-  constructor(config: AnimationControllerConfig<AnimationName, RL>) {
+  constructor(config: AnimationControllerConfig<AnimationName, RegulatorName>) {
     const { spriteSheet, configs, initialValue, regulators } = config
 
     this.spriteSheet = spriteSheet
@@ -59,10 +62,10 @@ export class AnimationController<AnimationName extends string, RL extends Animat
 
   private createAnimations = (): void => {
     objectEntries(this.configs).forEach(([animationName, animationConfig]) => {
-      this.list[animationName] = new Animation<RL>({
+      this.list[animationName] = new Animation<RegulatorName>({
         name: animationName,
         spriteSheet: this.spriteSheet,
-        regulators: this.regulators ? this.regulators : undefined,
+        regulators: this.regulators ?? undefined,
         ...animationConfig,
       })
     })

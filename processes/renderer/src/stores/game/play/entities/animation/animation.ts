@@ -1,14 +1,14 @@
 import { Callback } from 'process-shared/types/basic-utility-types'
 import { Indexes } from 'project-utility-types/abstract'
 
-import {
-  RegulatorTarget as RegulatorTargetType,
-  RegulatorTargetsInitialValues,
-  Regulators,
-} from '../regulators'
+import { Regulators } from '../regulators'
 import { Sprite } from '../sprite'
 import { SpriteSheet } from '../sprite-sheet'
-import { AnimationRLType, regulatorTargetsInitialValues } from './regulators'
+import {
+  AnimationRegulatorList,
+  AnimationRegulatorTarget,
+  regulatorTargetsInitialValues,
+} from './regulators'
 
 export type AnimationSequence = Array<Indexes>
 
@@ -17,21 +17,27 @@ export type AnimationControls = {
   stop: Callback
 }
 
-export type RunAnimationOptions<RL extends AnimationRLType = never> = Partial<
-  Pick<AnimationConfig<RL>, 'framesPerSprite'>
+export type AnimationRegulatorsType<RegulatorName extends string> = Regulators<
+  Animation<RegulatorName>,
+  RegulatorName,
+  AnimationRegulatorTarget
 >
 
-export type AnimationConfig<RL extends AnimationRLType = never> = {
+export type RunAnimationOptions<RegulatorName extends string = never> = Partial<
+  Pick<AnimationConfig<RegulatorName>, 'framesPerSprite'>
+>
+
+export type AnimationConfig<RegulatorName extends string = never> = {
   name: string
   spriteSheet: SpriteSheet
   sequence: AnimationSequence
   framesPerSprite: number
   initialScale: number
   startFrom?: number
-  regulators?: RL
+  regulators?: AnimationRegulatorList<RegulatorName>
 }
 
-export class Animation<RL extends AnimationRLType = never> {
+export class Animation<RegulatorName extends string = never> {
   name: string
   private spriteSheet: SpriteSheet
   sequence: AnimationSequence
@@ -40,13 +46,13 @@ export class Animation<RL extends AnimationRLType = never> {
   scale: number
   private startFrom: number
   currentSpriteIndex: number
-  regulators: Regulators<RL, typeof this> | null
+  regulators: AnimationRegulatorsType<RegulatorName> | null
 
   frameCount = 0
   isPlaying = false
   isPaused = false
 
-  constructor(config: AnimationConfig<RL>) {
+  constructor(config: AnimationConfig<RegulatorName>) {
     const { name, spriteSheet, sequence, framesPerSprite, initialScale, startFrom, regulators } =
       config
 
@@ -59,14 +65,9 @@ export class Animation<RL extends AnimationRLType = never> {
     this.startFrom = startFrom ?? 0
 
     if (regulators) {
-      this.regulators = new Regulators({
-        list: regulators,
-        sourceObject: this,
-        targetsInitialValues: regulatorTargetsInitialValues as RegulatorTargetsInitialValues<
-          typeof this,
-          RegulatorTargetType<RL>
-        >,
-      })
+      this.regulators = new Regulators(this as Animation, regulators, {
+        targetsInitialValues: regulatorTargetsInitialValues,
+      }) as AnimationRegulatorsType<RegulatorName> | null
     } else {
       this.regulators = null
     }
@@ -124,7 +125,7 @@ export class Animation<RL extends AnimationRLType = never> {
     }
   }
 
-  run = (options?: RunAnimationOptions<RL>): void => {
+  run = (options?: RunAnimationOptions<RegulatorName>): void => {
     const { framesPerSprite } = options ?? {}
 
     if (framesPerSprite) {

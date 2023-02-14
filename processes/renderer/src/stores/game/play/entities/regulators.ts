@@ -1,63 +1,65 @@
-import { AnyObject, Callback, PropertyOf } from 'process-shared/types/basic-utility-types'
+import { Callback } from 'process-shared/types/basic-utility-types'
 import { Modifier } from 'project-utility-types/abstract'
 
 import { remove } from 'lib/arrays'
 import { objectKeys } from 'lib/objects'
 
-type Regulator<Target extends string> = Record<Target, Modifier<any>>
+export type Regulator<SO extends object, Target extends keyof SO> = Record<Target, Modifier<any>>
+export type RegulatorList<SO extends object, Name extends string, Target extends keyof SO> = Record<
+  Name,
+  Regulator<SO, Target>
+>
 
-export type RegulatorList<Name extends string, Target extends string> = Record<Name, Regulator<Target>>
-type AnyRegulatorList = RegulatorList<string, string>
+export type RegulatorTargetsInitialValues<SO extends object, Target extends keyof SO> = Record<
+  Target,
+  keyof SO
+>
 
-export type RegulatorName<RL extends AnyRegulatorList> = Extract<keyof RL, string>
-export type RegulatorTarget<RL extends AnyRegulatorList> = Extract<keyof PropertyOf<RL>, string>
-
-export type RegulatorTargetsInitialValues<
-  SourceObject extends AnyObject,
-  Target extends string,
-> = Record<Target, keyof SourceObject>
-
-type RegulatorsConfig<RL extends AnyRegulatorList, SO extends AnyObject> = {
+type InternalConfig<SO extends object, Target extends keyof SO> = {
   sourceObject: SO
-  targetsInitialValues: RegulatorTargetsInitialValues<SO, RegulatorTarget<RL>>
+  targetsInitialValues: RegulatorTargetsInitialValues<SO, Target>
 }
 
-type Config<RL extends AnyRegulatorList, SO extends AnyObject> = {
-  list: RL
-} & RegulatorsConfig<RL, SO>
+type Config<SO extends object, Target extends keyof SO> = {
+  targetsInitialValues: RegulatorTargetsInitialValues<SO, Target>
+}
 
-export class Regulators<RL extends AnyRegulatorList, SO extends AnyObject> {
-  list: RL
-  private config: RegulatorsConfig<RL, SO>
+export class Regulators<SO extends object, Name extends string, Target extends keyof SO> {
+  list: RegulatorList<SO, Name, Target>
+  private config: InternalConfig<SO, Target>
 
-  activeRegulatorNames: Array<RegulatorName<RL>> = []
+  activeRegulatorNames: Array<Name> = []
 
-  constructor(config: Config<RL, SO>) {
-    const { list, sourceObject, targetsInitialValues } = config
+  constructor(
+    sourceObject: SO,
+    regulatorList: RegulatorList<SO, Name, Target>,
+    config: Config<SO, Target>,
+  ) {
+    const { targetsInitialValues } = config
 
-    this.list = list
+    this.list = regulatorList
     this.setConfig({ sourceObject, targetsInitialValues })
   }
 
-  private setConfig = (config: RegulatorsConfig<RL, SO>): void => {
+  private setConfig = (config: InternalConfig<SO, Target>): void => {
     this.config = config
   }
 
-  isRegulatorActive = (regulatorName: RegulatorName<RL>): boolean => {
+  isRegulatorActive = (regulatorName: Name): boolean => {
     return this.activeRegulatorNames.includes(regulatorName)
   }
 
-  private getInitialTargetValue = (target: RegulatorTarget<RL>): any => {
+  private getInitialTargetValue = (target: Target): any => {
     const { sourceObject, targetsInitialValues } = this.config
     return sourceObject[targetsInitialValues[target]]
   }
 
-  private modifyTarget = (target: RegulatorTarget<RL>, value: any): void => {
+  private modifyTarget = (target: Target, value: any): void => {
     const { sourceObject } = this.config
     sourceObject[target] = value
   }
 
-  private getNewTargetValue = <T>(target: RegulatorTarget<RL>): T => {
+  private getNewTargetValue = <T>(target: Target): T => {
     const initialTargetValue = this.getInitialTargetValue(target)
     const newValue = this.activeRegulatorNames.reduce((acc: T, regulatorName) => {
       const regulator = this.list[regulatorName]
@@ -71,11 +73,8 @@ export class Regulators<RL extends AnyRegulatorList, SO extends AnyObject> {
     return newValue
   }
 
-  private modifyRegulatorTargets = (
-    regulatorName: RegulatorName<RL>,
-    modifiedTargets: Array<RegulatorTarget<RL>>,
-  ): void => {
-    const targets = objectKeys(this.list[regulatorName]) as Array<RegulatorTarget<RL>>
+  private modifyRegulatorTargets = (regulatorName: Name, modifiedTargets: Array<Target>): void => {
+    const targets = objectKeys(this.list[regulatorName]) as Array<Target>
     targets.forEach((target) => {
       if (!modifiedTargets.includes(target)) {
         const newTargetValue = this.getNewTargetValue(target)
@@ -86,8 +85,8 @@ export class Regulators<RL extends AnyRegulatorList, SO extends AnyObject> {
   }
 
   modifyAllRegulatorTargets = (): void => {
-    const modifiedTargets: Array<RegulatorTarget<RL>> = []
-    const regulatorNames = objectKeys(this.list) as Array<RegulatorName<RL>>
+    const modifiedTargets: Array<Target> = []
+    const regulatorNames = objectKeys(this.list) as Array<Name>
     regulatorNames.forEach((regulatorName) =>
       this.modifyRegulatorTargets(regulatorName, modifiedTargets),
     )
@@ -98,14 +97,14 @@ export class Regulators<RL extends AnyRegulatorList, SO extends AnyObject> {
     this.modifyAllRegulatorTargets()
   }
 
-  applyRegulator = (regulatorName: RegulatorName<RL>): void => {
+  applyRegulator = (regulatorName: Name): void => {
     if (!this.isRegulatorActive(regulatorName)) {
       this.makeRegulatorAction(() => {
         this.activeRegulatorNames.push(regulatorName)
       })
     }
   }
-  removeRegulator = (regulatorName: RegulatorName<RL>): void => {
+  removeRegulator = (regulatorName: Name): void => {
     if (this.isRegulatorActive(regulatorName)) {
       this.makeRegulatorAction(() => {
         this.activeRegulatorNames = remove(this.activeRegulatorNames, regulatorName)

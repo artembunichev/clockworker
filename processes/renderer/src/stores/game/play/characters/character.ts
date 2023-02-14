@@ -4,7 +4,7 @@ import { merge } from 'lib/objects'
 
 import { Body, BodyConfig } from '../body'
 import { AnimationConfigsForController, AnimationController } from '../entities/animation-controller'
-import { AnimationRLType } from '../entities/animation/regulators'
+import { AnimationRegulatorsType } from '../entities/animation/animation'
 import { Sprite } from '../entities/sprite'
 import { SpriteSheet, SpriteSheetConfig } from '../entities/sprite-sheet'
 import { GameScreen } from '../screen'
@@ -12,6 +12,7 @@ import {
   CharacterAnimationController,
   CharacterAnimationName,
   CharacterAnimationRegulatorList,
+  CharacterAnimationRegulatorName,
   DefaultCharacterAnimationController,
   defaultCharacterAnimationRegulatorList,
 } from './animation'
@@ -28,10 +29,10 @@ type ImageContainerCharacterConfig<Srcs extends CharacterImageSrcs> = {
   options?: ImageContainerOptions
 }
 
-type AnimationCharacterConfig<AnimationName extends string, AnimationRL extends AnimationRLType> = {
+type AnimationCharacterConfig<Name extends string, RegulatorName extends string> = {
   spriteSheetConfig: Omit<SpriteSheetConfig, 'image'>
-  configs: AnimationConfigsForController<AnimationName>
-  regulators?: AnimationRL
+  configs: AnimationConfigsForController<Name>
+  regulators?: AnimationRegulatorsType<RegulatorName>
 }
 
 type MovementCharacterConfig = Omit<ConfigForCharacterMovement, 'position' | 'animationController'>
@@ -39,30 +40,30 @@ type MovementCharacterConfig = Omit<ConfigForCharacterMovement, 'position' | 'an
 export type CharacterConfig<
   ImageSrcs extends CharacterImageSrcs,
   AnimationName extends string,
-  AnimationRL extends AnimationRLType,
+  AnimationRegulatorName extends string,
 > = BaseCharacterConfig & {
   images: ImageContainerCharacterConfig<ImageSrcs>
-  animation: AnimationCharacterConfig<AnimationName, AnimationRL>
+  animation: AnimationCharacterConfig<AnimationName, AnimationRegulatorName>
   movement: MovementCharacterConfig
 }
 
 export class Character<
   ImageSrcs extends CharacterImageSrcs,
   AnimationName extends string,
-  AnimationRL extends AnimationRLType = never,
+  AnimationRegulatorName extends string = never,
 > extends Body {
   name: string
   screen: GameScreen
   imageContainer: ImageContainer<ImageSrcs>
   spriteSheet: SpriteSheet
-  animationController: CharacterAnimationController<AnimationName, AnimationRL>
+  animationController: CharacterAnimationController<AnimationName, AnimationRegulatorName>
   movement: CharacterMovement
 
   constructor(
     config: CharacterConfig<
       ImageSrcs,
       CharacterAnimationName<AnimationName>,
-      CharacterAnimationRegulatorList<AnimationRL>
+      CharacterAnimationRegulatorName<AnimationRegulatorName>
     >,
   ) {
     const { is, name, screen, images, animation, movement } = config
@@ -81,7 +82,7 @@ export class Character<
 
     this.animationController = new AnimationController<
       CharacterAnimationName<AnimationName>,
-      CharacterAnimationRegulatorList<AnimationRL>
+      CharacterAnimationRegulatorName<AnimationRegulatorName>
     >({
       spriteSheet: this.spriteSheet,
       configs: animation.configs,
@@ -89,7 +90,7 @@ export class Character<
       regulators: merge(
         defaultCharacterAnimationRegulatorList,
         animation.regulators ?? {},
-      ) as CharacterAnimationRegulatorList<AnimationRL>,
+      ) as CharacterAnimationRegulatorList<AnimationRegulatorName>,
     })
 
     this.setSpriteScale(this.animationController.currentSprite.scale)

@@ -5,7 +5,7 @@ import playerCharacterSpriteSheetSrc from 'content/sprites/characters/Player.png
 import { AnyCharacterConfig, Character } from '../../character'
 import {
   PlayerCharacterAnimationName,
-  PlayerCharacterAnimationRegulatorList,
+  PlayerCharacterAnimationRegulatorName,
   playerCharacterAnimationConfigs,
 } from './animation'
 import {
@@ -26,7 +26,7 @@ export type PlayerCharacterConfig = Pick<AnyCharacterConfig, 'name' | 'screen'> 
 export class PlayerCharacter extends Character<
   ImageSrcs,
   PlayerCharacterAnimationName,
-  PlayerCharacterAnimationRegulatorList
+  PlayerCharacterAnimationRegulatorName
 > {
   private settings: PlayerCharacterSettings
   private keyboard: KeyboardStore

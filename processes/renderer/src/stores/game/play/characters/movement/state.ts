@@ -17,9 +17,7 @@ export class CharacterMovementState {
   currentStepSize: number
   config: CharacterMovementStateConfig
 
-  regulators = new Regulators({
-    list: characterMovementRegulatorList,
-    sourceObject: this,
+  regulators = new Regulators(this, characterMovementRegulatorList, {
     targetsInitialValues: characterMovementRegulatorTargetsInitialValues,
   })
 
