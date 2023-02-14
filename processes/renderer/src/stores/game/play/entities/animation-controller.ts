@@ -1,6 +1,6 @@
 import { objectEntries, objectValues } from 'lib/objects'
 
-import { Animation, AnimationConfig, RunAnimationOptions } from './animation/animation'
+import { Animation, AnimationConfig, RunAnimationOptions } from './animation'
 import { AnimationRegulatorList } from './animation/regulators'
 import { Sprite } from './sprite'
 import { SpriteSheet } from './sprite-sheet'

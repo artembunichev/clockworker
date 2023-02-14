@@ -9,7 +9,7 @@ import { useWindowClick } from 'hooks/use-window-click'
 
 import { colors } from 'lib/theme'
 
-import { AutoPrintedText } from 'components/auto-printed-text/auto-printed-text'
+import { AutoPrintedText } from 'components/auto-printed-text'
 import { ButtonWithCross } from 'components/buttons/button-with-cross'
 import { useGamePlayStore } from 'screens/game/screen'
 

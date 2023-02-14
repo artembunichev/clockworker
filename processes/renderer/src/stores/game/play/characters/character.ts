@@ -3,8 +3,8 @@ import { ImageContainer, ImageContainerOptions, ImageSrcs } from 'stores/entitie
 import { merge } from 'lib/objects'
 
 import { Body, BodyConfig } from '../body'
+import { AnimationRegulatorsType } from '../entities/animation'
 import { AnimationConfigsForController, AnimationController } from '../entities/animation-controller'
-import { AnimationRegulatorsType } from '../entities/animation/animation'
 import { Sprite } from '../entities/sprite'
 import { SpriteSheet, SpriteSheetConfig } from '../entities/sprite-sheet'
 import { GameScreen } from '../screen'
@@ -16,7 +16,7 @@ import {
   DefaultCharacterAnimationController,
   defaultCharacterAnimationRegulatorList,
 } from './animation'
-import { CharacterMovement, ConfigForCharacterMovement } from './movement/movement'
+import { CharacterMovement, ConfigForCharacterMovement } from './movement'
 
 export type AnyCharacter = Character<any, any, any>
 export type AnyCharacterConfig = CharacterConfig<any, any, any>

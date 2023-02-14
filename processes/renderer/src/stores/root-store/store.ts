@@ -1,7 +1,7 @@
 import isElectron from 'is-electron'
 
-import { AppSettingsStore } from 'stores/app-settings/app-settings.store'
-import { AppStore } from 'stores/app-store/app.store'
+import { AppSettingsStore } from 'stores/app-settings/store'
+import { AppStore } from 'stores/app-store/store'
 import { GameStore } from 'stores/game/store'
 import { KeyboardStore } from 'stores/keyboard.store'
 import { PopupHistory } from 'stores/popup-history'

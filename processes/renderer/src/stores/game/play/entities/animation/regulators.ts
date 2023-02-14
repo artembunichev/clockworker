@@ -1,7 +1,7 @@
 import { PickKeyof } from 'process-shared/types/basic-utility-types'
 
+import { Animation } from '.'
 import { RegulatorList, RegulatorTargetsInitialValues } from '../regulators'
-import { Animation } from './animation'
 
 export type AnimationRegulatorTarget = PickKeyof<Animation, 'framesPerSprite'>
 

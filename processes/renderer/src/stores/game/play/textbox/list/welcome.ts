@@ -1,6 +1,6 @@
 import { GameScript } from 'content/text/game-script'
 
-import { Textbox } from '../textbox'
+import { Textbox } from '..'
 
 type Config = {
   gameScript: GameScript

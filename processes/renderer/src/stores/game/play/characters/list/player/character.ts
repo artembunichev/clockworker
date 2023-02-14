@@ -12,7 +12,7 @@ import {
   PlayerCharacterMovement,
   PlayerCharacterMovementSettings,
   initialPlayerCharacterMovementStateConfig,
-} from './movement/movement'
+} from './movement'
 
 type PlayerCharacterSettings = PlayerCharacterMovementSettings
 

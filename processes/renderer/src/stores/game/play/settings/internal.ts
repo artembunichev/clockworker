@@ -1,4 +1,4 @@
-import { GameSettingsValues } from './settings'
+import { GameSettingsValues } from '.'
 
 type InternalGameSettingsType = Partial<GameSettingsValues>
 

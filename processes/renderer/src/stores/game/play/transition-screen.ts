@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx'
 
 import { delay } from 'lib/async'
 
-import { SharedPlayMethods } from './shared-methods/shared-methods'
+import { SharedPlayMethods } from './shared-methods'
 
 export type TransitionScreenConfig = {
   appearanceMs: number

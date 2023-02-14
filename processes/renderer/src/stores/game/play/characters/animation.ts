@@ -1,12 +1,12 @@
 import { Modifier } from 'project-utility-types/abstract'
 
+import { AnimationSequence } from '../entities/animation'
 import {
   AnimationConfigForController,
   AnimationConfigsForController,
   AnimationController,
   ViewDirections,
 } from '../entities/animation-controller'
-import { AnimationSequence } from '../entities/animation/animation'
 import { AnimationRegulatorList } from '../entities/animation/regulators'
 import { getRowSequence } from '../lib/animation'
 

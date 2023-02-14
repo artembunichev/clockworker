@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 
 import { CharacterController } from './characters/controller'
-import { SharedPlayMethods } from './shared-methods/shared-methods'
+import { SharedPlayMethods } from './shared-methods'
 
 type PauseControlsConfig = { prohibitorName: string }
 

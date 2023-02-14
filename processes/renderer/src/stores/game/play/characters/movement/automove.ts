@@ -3,11 +3,11 @@ import { XY } from 'project-utility-types/plane'
 
 import { areEquivalent } from 'lib/are-equivalent'
 
+import { MoveConfig, MoveFn } from '.'
 import { Position } from '../../entities/position'
 import { ProhibitorsController } from '../../entities/prohibitors-controller'
 import { getMovementDirection } from '../../lib/movement'
 import { DefaultCharacterAnimationController } from '../animation'
-import { MoveConfig, MoveFn } from './movement'
 import { CharacterMovementState } from './state'
 
 type BaseRunAutomoveConfig = Pick<MoveConfig, 'stateConfig'>

@@ -1,8 +1,8 @@
 import { makeAutoObservable } from 'mobx'
 
-import { DownloadProgressInfo, UpdateInfo } from 'process-shared/types/types'
+import { DownloadProgressInfo, UpdateInfo } from 'process-shared/types'
 
-import { AppSettingsValues } from './app-settings/app-settings.store'
+import { AppSettingsValues } from './app-settings/store'
 import { SettingType } from './lib/settings'
 
 type UpdateSettings = SettingType<Pick<AppSettingsValues, 'isGetUpdateNotifications'>>

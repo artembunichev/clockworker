@@ -1,7 +1,7 @@
 import { RadioSetting } from 'stores/entities/editable-settings/radio-setting'
 import { EditableSettings } from 'stores/lib/settings'
 
-import { GameSettingsValues, MovementControllersKeys } from './settings'
+import { GameSettingsValues, MovementControllersKeys } from '.'
 
 export type EditableGameSettingsType = Partial<EditableSettings<GameSettingsValues>>
 
