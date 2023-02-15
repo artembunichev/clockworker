@@ -86,7 +86,7 @@ export class Regulators<SO extends object, Name extends string, Target extends k
 
   modifyAllRegulatorTargets = (): void => {
     const modifiedTargets: Array<Target> = []
-    const regulatorNames = objectKeys(this.list) as Array<Name>
+    const regulatorNames = objectKeys(this.list)
     regulatorNames.forEach((regulatorName) =>
       this.modifyRegulatorTargets(regulatorName, modifiedTargets),
     )
