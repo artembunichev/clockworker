@@ -7,10 +7,8 @@ import { objectValues } from 'lib/objects'
 
 import { PlayerCharacter } from './list/player/character'
 
-type This = InstanceType<typeof CharacterController>
-
-export type CharacterName = keyof This['refList']
-type Character = InstanceType<PropertyOf<This['refList']>>
+export type CharacterName = keyof CharacterController['refList']
+type Character = InstanceType<PropertyOf<CharacterController['refList']>>
 export type Characters = Record<CharacterName, Character>
 
 export class CharacterController {
@@ -30,7 +28,7 @@ export class CharacterController {
 
   createCharacter = async <
     T extends CharacterName,
-    CharacterConfig extends ConstructorParameters<This['refList'][T]>[number],
+    CharacterConfig extends ConstructorParameters<CharacterController['refList'][T]>[number],
   >(
     name: T,
     ...args: CharacterConfig extends never ? [undefined] : [CharacterConfig]

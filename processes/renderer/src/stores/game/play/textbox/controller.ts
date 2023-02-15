@@ -7,10 +7,8 @@ import { GameScript } from 'content/text/game-script'
 import { GamePauseController } from '../pause-controller'
 import { WelcomeTextbox } from './list/welcome'
 
-type This = InstanceType<typeof TextboxController>
-
-type TextboxInController = InstanceType<PropertyOf<This['refList']>>
-type TextboxName = keyof This['refList']
+type TextboxInController = InstanceType<PropertyOf<TextboxController['refList']>>
+type TextboxName = keyof TextboxController['refList']
 type Textboxes = Record<TextboxName, TextboxInController>
 
 type SetTextboxConfig = {
