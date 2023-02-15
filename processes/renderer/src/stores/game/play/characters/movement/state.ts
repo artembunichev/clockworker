@@ -1,4 +1,4 @@
-import { areEquivalent } from 'lib/are-equivalent'
+import { isEqual } from 'lib/is-equal'
 
 import { Regulators } from '../../entities/regulators'
 import {
@@ -34,7 +34,7 @@ export class CharacterMovementState {
   }
 
   setConfig = (config: CharacterMovementStateConfig): void => {
-    if (!this.config || !areEquivalent(this.config, config)) {
+    if (!this.config || !isEqual(this.config, config)) {
       this.config = config
       const { baseStepSize } = config
       this.setBaseStepSize(baseStepSize)

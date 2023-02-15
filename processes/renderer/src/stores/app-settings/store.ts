@@ -7,7 +7,7 @@ import { RadioSetting } from 'stores/entities/editable-settings/radio-setting'
 import { SingleValueSetting } from 'stores/entities/editable-settings/single-value-setting'
 import { getConvertedEditableSettings } from 'stores/lib/settings'
 
-import { areEquivalent } from 'lib/are-equivalent'
+import { isEqual } from 'lib/is-equal'
 import { objectEntries } from 'lib/objects'
 
 import { EditableAppSettings } from './editable-settings'
@@ -69,7 +69,7 @@ export class AppSettingsStore {
 
       if (thisEditableSetting instanceof CheckboxSetting) {
         thisEditableSetting.variants.forEach((v) => {
-          if (areEquivalent(v, value)) {
+          if (isEqual(v, value)) {
             thisEditableSetting.selectVariant(v.id)
           } else {
             thisEditableSetting.unselectVariant(v.id)
@@ -79,7 +79,7 @@ export class AppSettingsStore {
 
       if (thisEditableSetting instanceof RadioSetting) {
         thisEditableSetting.variants.forEach((v) => {
-          if (areEquivalent(v, value)) {
+          if (isEqual(v, value)) {
             thisEditableSetting.selectVariant(v.id)
           }
         })

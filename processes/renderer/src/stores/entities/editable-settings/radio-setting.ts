@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 
-import { areEquivalent } from 'lib/are-equivalent'
+import { isEqual } from 'lib/is-equal'
 
 import { EditableSettingVariants } from './types'
 
@@ -9,7 +9,7 @@ export const getVariantsWithInitialValue = <T>(
   initialValue: T,
 ): EditableSettingVariants<T> => {
   return variants.map((variant) => {
-    if (areEquivalent(variant.value, initialValue)) {
+    if (isEqual(variant.value, initialValue)) {
       return {
         ...variant,
         isSelected: true,

@@ -1,7 +1,7 @@
 import { Callback } from 'process-shared/types/basic-utility-types'
 import { XY } from 'project-utility-types/plane'
 
-import { areEquivalent } from 'lib/are-equivalent'
+import { isEqual } from 'lib/is-equal'
 
 import { MoveConfig, MoveFn } from '.'
 import { Position } from '../../entities/position'
@@ -121,7 +121,7 @@ export class CharacterAutomove {
         }
 
         // если движение НЕ по прямой
-        if ((start.x !== end.x && start.y !== end.y) || areEquivalent(start, end)) {
+        if ((start.x !== end.x && start.y !== end.y) || isEqual(start, end)) {
           return resolve(false)
         }
 
@@ -150,7 +150,7 @@ export class CharacterAutomove {
             this.setIsAutomoving(false)
           }
 
-          if (this.isAutomoving && !areEquivalent(this.position.value, end)) {
+          if (this.isAutomoving && !isEqual(this.position.value, end)) {
             // остановка на конечной позиции, если следующим шагом уходим дальше
             const setPositionToEndAndStopAutomoving = (x: number, y: number): void => {
               this.position.setXY(x, y)

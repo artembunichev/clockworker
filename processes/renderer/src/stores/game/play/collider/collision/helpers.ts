@@ -1,6 +1,6 @@
 import { ExpandedDirection, PointPair, XY } from 'project-utility-types/plane'
 
-import { areEquivalent } from 'lib/are-equivalent'
+import { isEqual } from 'lib/is-equal'
 
 import { ColliderBody, HitboxWithId, ObstacleList, Stucks } from '.'
 import { getMovementDirection } from '../../lib/movement'
@@ -140,6 +140,6 @@ export class ColliderCollisionHelpers {
       { x: hitbox.x2, y: hitbox.y2 },
       { x: hitbox.x1, y: hitbox.y2 },
     ]
-    return cornerPoints.some((cornerPoint) => areEquivalent(point, cornerPoint))
+    return cornerPoints.some((cornerPoint) => isEqual(point, cornerPoint))
   }
 }
