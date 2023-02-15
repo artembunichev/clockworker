@@ -1,5 +1,3 @@
-import { Modifier } from 'project-utility-types/abstract'
-
 import { AnimationSequence } from '../entities/animation'
 import {
   AnimationConfigForController,
@@ -27,10 +25,10 @@ export type CharacterAnimationRegulatorList<RegulatorName extends string> = Regu
 
 export const defaultCharacterAnimationRegulatorList: DefaultCharacterAnimationRL = {
   speedup: {
-    framesPerSprite: ((prev) => Math.round(prev * 0.55)) as Modifier<number>,
+    framesPerSprite: (prev) => Math.round(prev * 0.55),
   },
   slowdown: {
-    framesPerSprite: ((prev) => Math.round(prev * 1.3)) as Modifier<number>,
+    framesPerSprite: (prev) => Math.round(prev * 1.3),
   },
 }
 

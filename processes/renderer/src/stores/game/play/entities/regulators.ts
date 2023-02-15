@@ -4,7 +4,10 @@ import { Modifier } from 'project-utility-types/abstract'
 import { remove } from 'lib/arrays'
 import { objectKeys } from 'lib/objects'
 
-export type Regulator<SO extends object, Target extends keyof SO> = Record<Target, Modifier<any>>
+export type Regulator<SO extends object, Target extends keyof SO> = Record<
+  Target,
+  Modifier<SO[Target]>
+>
 export type RegulatorList<SO extends object, Name extends string, Target extends keyof SO> = Record<
   Name,
   Regulator<SO, Target>
@@ -63,7 +66,7 @@ export class Regulators<SO extends object, Name extends string, Target extends k
     const initialTargetValue = this.getInitialTargetValue(target)
     const newValue = this.activeRegulatorNames.reduce((acc: T, regulatorName) => {
       const regulator = this.list[regulatorName]
-      const targetModifier = regulator[target] as Modifier<T>
+      const targetModifier = regulator[target]
       if (targetModifier instanceof Function) {
         return targetModifier(acc)
       } else {

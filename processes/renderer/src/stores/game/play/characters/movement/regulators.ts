@@ -1,5 +1,4 @@
 import { PickKeyof } from 'process-shared/types/basic-utility-types'
-import { Modifier } from 'project-utility-types/abstract'
 
 import { RegulatorList, RegulatorTargetsInitialValues } from '../../entities/regulators'
 import { CharacterMovementState } from './state'
@@ -21,6 +20,6 @@ export const characterMovementRegulatorList: RegulatorList<
   CharacterMovementRegulatorTarget
 > = {
   sprint: {
-    currentStepSize: ((prev) => prev * 2.1) as Modifier<number>,
+    currentStepSize: (prev) => prev * 2.1,
   },
 }
