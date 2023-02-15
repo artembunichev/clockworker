@@ -8,6 +8,8 @@ import {
   PropertyOf,
 } from 'process-shared/types/basic-utility-types'
 
+import { deepClone } from './deep-clone'
+
 export const isObject = (value: any): value is object => {
   return typeof value === 'object' && !Array.isArray(value) && value !== null
 }
@@ -28,25 +30,31 @@ export const merge = <T1 extends AnyObject, T2 extends AnyObject>(
   object1: T1,
   object2: T2,
 ): Merge<T1, T2> => {
-  const merged = { ...object1 }
+  const merged = {} as Merge<T1, T2>
 
-  const mergeObjects = (target: AnyObject, source: AnyObject): void => {
+  const overwrite = <T extends object>(object: T, key: keyof T, value: any): void => {
+    object[key] = deepClone(value)
+  }
+
+  const copyValues = (source: AnyObject, target: AnyObject): void => {
     objectKeys(source).forEach((key) => {
       if (target[key] === undefined) {
-        target[key] = source[key]
+        overwrite(target, key, source[key])
       } else {
         if (isObject(target[key]) && isObject(source[key])) {
-          mergeObjects(target[key], source[key])
+          copyValues(source[key], target[key])
         } else {
-          target[key] = source[key]
+          overwrite(target, key, source[key])
         }
       }
     })
   }
 
-  mergeObjects(merged, object2)
+  Array.from([object1, object2]).forEach((obj) => {
+    copyValues(obj, merged)
+  })
 
-  return merged as Merge<T1, T2>
+  return merged
 }
 
 // использовать только в случае, если все свойства будут иметь одинаковый тип
