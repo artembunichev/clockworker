@@ -1,5 +1,4 @@
 import {
-  AnyObject,
   Entries,
   Keys,
   Merge,
@@ -26,7 +25,7 @@ export const objectEntries = <T extends object>(o: T): Entries<T> => {
   return Object.entries(o) as Entries<T>
 }
 
-export const merge = <T1 extends AnyObject, T2 extends AnyObject>(
+export const merge = <T1 extends object, T2 extends object>(
   object1: T1,
   object2: T2,
 ): Merge<T1, T2> => {
@@ -36,7 +35,7 @@ export const merge = <T1 extends AnyObject, T2 extends AnyObject>(
     object[key] = deepClone(value)
   }
 
-  const copyValues = (source: AnyObject, target: AnyObject): void => {
+  const copyValues = (source: object, target: object): void => {
     objectKeys(source).forEach((key) => {
       if (target[key] === undefined) {
         overwrite(target, key, source[key])
@@ -59,7 +58,7 @@ export const merge = <T1 extends AnyObject, T2 extends AnyObject>(
 
 // использовать только в случае, если все свойства будут иметь одинаковый тип
 type ObjectMapCallback<T, R> = (value: PropertyOf<T>) => R
-export const objectMapAll = <T extends AnyObject, R>(
+export const objectMapAll = <T extends object, R>(
   object: T,
   callback: ObjectMapCallback<T, R>,
 ): OverwriteProperties<T, R> => {

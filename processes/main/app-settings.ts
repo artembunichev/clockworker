@@ -1,7 +1,6 @@
 import { app } from 'electron'
 import * as fs from 'fs'
 
-import { AnyObject } from '../shared/types/basic-utility-types'
 import { appSettingsFilename } from './filenames'
 import { ipcMain } from './ipc-main'
 
@@ -14,13 +13,13 @@ export const handleAppSettings = (): void => {
     event.returnValue = fileExists
   })
 
-  ipcMain.handle<AnyObject>('setAppSettingsToFileAsync', async (_, settings) => {
+  ipcMain.handle<object>('setAppSettingsToFileAsync', async (_, settings) => {
     return fs.promises.writeFile(pathToAppSettings, JSON.stringify(settings), {
       encoding: 'utf-8',
     })
   })
 
-  ipcMain.on<AnyObject>('setAppSettingsToFileSync', (_, settings) => {
+  ipcMain.on<object>('setAppSettingsToFileSync', (_, settings) => {
     fs.writeFileSync(pathToAppSettings, JSON.stringify(settings), {
       encoding: 'utf-8',
     })

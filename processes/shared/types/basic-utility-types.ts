@@ -1,5 +1,3 @@
-export type AnyObject = Record<string, any>
-
 export type Keys<T> = Array<keyof T>
 
 export type AnyArray = Array<any>
@@ -21,11 +19,11 @@ export type NonNullableProperties<T, K extends keyof T = keyof T> = {
   [P in keyof T]: P extends K ? NonNullable<T[P]> : T[P]
 }
 
-export type Merge<A, B> = A | B extends AnyObject
+export type Merge<A, B> = A | B extends object
   ? Omit<A, keyof B> & Omit<B, keyof A> & { [K in keyof (A | B)]: Merge<A[K], B[K]> }
   : B
 
-export type DeepPartial<T> = T extends AnyObject ? { [K in keyof T]?: DeepPartial<T[K]> } : T
+export type DeepPartial<T> = T extends object ? { [K in keyof T]?: DeepPartial<T[K]> } : T
 
 export type PropertyOf<T> = T[keyof T]
 
@@ -40,7 +38,7 @@ export type NeverProperties<T> = { [_ in keyof T]?: never }
 
 export type Without<A, B> = Omit<A, keyof B>
 
-export type XOR<A, B> = A | B extends AnyObject
+export type XOR<A, B> = A | B extends object
   ? (B & NeverProperties<Without<A, B>>) | (A & NeverProperties<Without<B, A>>)
   : A | B
 

@@ -1,8 +1,6 @@
-import { AnyObject } from 'process-shared/types/basic-utility-types'
-
 import { objectKeys } from './objects'
 
-const isEqualObjects = (object1: AnyObject, object2: AnyObject): boolean => {
+const isEqualObjects = (object1: object, object2: object): boolean => {
   const length1 = objectKeys(object1).length
   const length2 = objectKeys(object2).length
 
