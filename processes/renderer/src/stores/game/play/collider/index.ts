@@ -22,6 +22,6 @@ export class Collider {
   }
 
   update = (): void => {
-    this.collision.work.update()
+    this.collision.update()
   }
 }

@@ -101,4 +101,8 @@ export class ColliderCollision {
     this.bodyList.clear()
     this.staticObstacleList.clear()
   }
+
+  update = (): void => {
+    this.work.update()
+  }
 }
