@@ -10,3 +10,5 @@ build
 *.tmx
 
 *.todo
+
+tileset.json
