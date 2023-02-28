@@ -1,5 +1,5 @@
-import { IpcEventName } from '../../processes/shared/types'
-import { TypedIpcRenderer } from '../../processes/shared/types/typed-electron-api'
+import { IpcEventName } from '../../processes/shared/src/types'
+import { TypedIpcRenderer } from '../../processes/shared/src/types/typed-electron-api'
 
 declare global {
   interface Window {

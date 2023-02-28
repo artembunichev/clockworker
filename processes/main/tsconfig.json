@@ -5,7 +5,7 @@
     "outDir": "../../dist/main",
     "baseUrl": "src",
     "paths": {
-      "shared/*": ["../../shared/*"]
+      "shared/*": ["../../shared/src/*"]
     },
     "typeRoots": ["../../@types"]
   },

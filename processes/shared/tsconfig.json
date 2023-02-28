@@ -4,7 +4,7 @@
     "composite": true,
     "declaration": true,
     "emitDeclarationOnly": true,
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
       "shared/*": ["*"]
     },

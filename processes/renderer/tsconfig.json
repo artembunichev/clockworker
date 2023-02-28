@@ -8,8 +8,8 @@
     "jsx": "react-jsx",
     "baseUrl": "src",
     "paths": {
-      "shared/*": ["../../shared/*"],
-      "content/*": ["../../shared/content/*"]
+      "shared/*": ["../../shared/src/*"],
+      "content/*": ["../../shared/src/content/*"]
     },
     "typeRoots": ["../../node_modules/@types", "../../@types"]
   },
