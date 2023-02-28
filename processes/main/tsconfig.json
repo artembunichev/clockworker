@@ -7,7 +7,7 @@
     "paths": {
       "shared/*": ["../../shared/src/*"]
     },
-    "typeRoots": ["../../@types"]
+    "typeRoots": ["../shared/@types"]
   },
   "include": ["."],
   "references": [{ "path": "../shared" }]

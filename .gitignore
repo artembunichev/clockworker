@@ -4,14 +4,14 @@ build
 
 .vscode/*
 
-processes/**/*.d.ts
+processes/**/src/**/*.d.ts
+vite.config.d.ts
 *.tsbuildinfo
 
 *.mock.*
 
 *.psd
 *.tmx
+tileset.json
 
 *.todo
-
-tileset.json

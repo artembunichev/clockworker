@@ -11,7 +11,7 @@
       "shared/*": ["../../shared/src/*"],
       "content/*": ["../../shared/src/content/*"]
     },
-    "typeRoots": ["../../node_modules/@types", "../../@types"]
+    "typeRoots": ["../../node_modules/@types", "../shared/@types"]
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }, { "path": "../shared" }]
