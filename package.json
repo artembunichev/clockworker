@@ -52,7 +52,6 @@
   "dependencies": {
     "@react-spring/web": "^9.5.2",
     "electron-updater": "^5.2.1",
-    "is-electron": "^2.2.1",
     "mobx": "^6.6.1",
     "mobx-react-lite": "^3.4.0",
     "nanoid": "^4.0.0",
