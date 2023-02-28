@@ -3,9 +3,9 @@
   "compilerOptions": {
     "module": "commonjs",
     "outDir": "../../dist/main",
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
-      "shared/*": ["../shared/*"]
+      "shared/*": ["../../shared/*"]
     },
     "typeRoots": ["../../@types"]
   },
