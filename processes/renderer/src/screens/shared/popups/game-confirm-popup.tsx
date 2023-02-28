@@ -3,7 +3,7 @@ import React, { CSSProperties } from 'react'
 import styled from 'styled-components'
 
 import { FC } from 'basic-utility-types'
-import { Callback, RequiredBy } from 'process-shared/types/basic-utility-types'
+import { Callback, RequiredBy } from 'shared/types/basic-utility-types'
 
 import { PixelatedButton } from 'components/pixelated/pixelated-components'
 

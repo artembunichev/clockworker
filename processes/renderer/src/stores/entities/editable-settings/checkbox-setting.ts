@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 
-import { isEqual } from 'process-shared/lib/is-equal'
+import { isEqual } from 'shared/lib/is-equal'
 
 import { EditableSettingVariants } from './types'
 

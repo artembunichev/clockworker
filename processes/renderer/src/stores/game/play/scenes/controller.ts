@@ -1,6 +1,6 @@
 import { computed, makeObservable, observable } from 'mobx'
 
-import { resolvedPromise } from 'process-shared/lib/async'
+import { resolvedPromise } from 'shared/lib/async'
 
 import { Characters } from '../characters/controller'
 import { GameScreen } from '../screen'

@@ -1,5 +1,5 @@
-import { isEqual } from 'process-shared/lib/is-equal'
 import { ExpandedDirection, PrimitiveDirection, XY } from 'project-utility-types/plane'
+import { isEqual } from 'shared/lib/is-equal'
 
 import { ViewDirections } from '../entities/animation-controller'
 

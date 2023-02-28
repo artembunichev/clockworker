@@ -1,4 +1,4 @@
-import { PickKeyof } from 'process-shared/types/basic-utility-types'
+import { PickKeyof } from 'shared/types/basic-utility-types'
 
 import { RegulatorList, RegulatorTargetsInitialValues } from '../../entities/regulators'
 import { CharacterMovementState } from './state'

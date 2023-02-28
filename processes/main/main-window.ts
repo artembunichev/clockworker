@@ -1,8 +1,7 @@
 import { BrowserWindow } from 'electron'
 import * as path from 'path'
-
-import { IpcEventName } from '../shared/types'
-import { TypedBrowserWindow } from '../shared/types/typed-electron-api'
+import { IpcEventName } from 'shared/types'
+import { TypedBrowserWindow } from 'shared/types/typed-electron-api'
 
 export var mainWindow: TypedBrowserWindow<IpcEventName> | null
 export const createWindow = (): void => {

@@ -1,5 +1,5 @@
-import { Callback } from 'process-shared/types/basic-utility-types'
 import { Indexes } from 'project-utility-types/abstract'
+import { Callback } from 'shared/types/basic-utility-types'
 
 import { Regulators } from '../regulators'
 import { Sprite } from '../sprite'

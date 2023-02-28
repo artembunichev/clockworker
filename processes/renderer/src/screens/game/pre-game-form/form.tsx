@@ -3,9 +3,9 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { FC } from 'basic-utility-types'
-import { isLetter, isNumber } from 'process-shared/lib/strings'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { doubleBorderStyle } from 'shared-styles'
+import { isLetter, isNumber } from 'shared/lib/strings'
 
 import { PreGameFormFields } from 'stores/game/pre-game-form'
 

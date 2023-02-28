@@ -8,7 +8,7 @@
     "jsx": "react-jsx",
     "baseUrl": "src",
     "paths": {
-      "process-shared/*": ["../../shared/*"],
+      "shared/*": ["../../shared/*"],
       "content/*": ["../../shared/content/*"]
     },
     "typeRoots": ["../../node_modules/@types", "../../@types"]

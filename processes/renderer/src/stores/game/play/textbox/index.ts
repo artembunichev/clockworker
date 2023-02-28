@@ -1,4 +1,4 @@
-import { Callback } from 'process-shared/types/basic-utility-types'
+import { Callback } from 'shared/types/basic-utility-types'
 
 type TextboxConfig<Name extends string> = {
   name: Name

@@ -3,8 +3,8 @@ import React, { CSSProperties, useEffect } from 'react'
 import styled from 'styled-components'
 
 import { FC } from 'basic-utility-types'
-import { Callback, RequiredBy } from 'process-shared/types/basic-utility-types'
 import { doubleBorderStyle } from 'shared-styles'
+import { Callback, RequiredBy } from 'shared/types/basic-utility-types'
 
 import { colors } from 'lib/theme'
 

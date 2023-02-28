@@ -1,6 +1,6 @@
 import { computed, makeObservable, observable } from 'mobx'
 
-import { Callback, PropertyOf } from 'process-shared/types/basic-utility-types'
+import { Callback, PropertyOf } from 'shared/types/basic-utility-types'
 
 import { GameScript } from 'content/text/game-script'
 

@@ -1,6 +1,6 @@
 import { autoUpdater } from 'electron-updater'
+import { DownloadProgressInfo, UpdateInfo } from 'shared/types'
 
-import { DownloadProgressInfo, UpdateInfo } from '../shared/types'
 import { ipcMain } from './ipc-main'
 import { mainWindow } from './main-window'
 

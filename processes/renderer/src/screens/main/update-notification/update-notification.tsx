@@ -3,7 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { FC } from 'basic-utility-types'
-import { Callback, NonNullableProperties } from 'process-shared/types/basic-utility-types'
+import { Callback, NonNullableProperties } from 'shared/types/basic-utility-types'
 
 import { UpdateStore } from 'stores/update.store'
 

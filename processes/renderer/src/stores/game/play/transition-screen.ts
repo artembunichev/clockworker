@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 
-import { delay } from 'process-shared/lib/async'
+import { delay } from 'shared/lib/async'
 
 import { SharedPlayMethods } from './shared-methods'
 

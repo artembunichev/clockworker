@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 
-import { Callback } from 'process-shared/types/basic-utility-types'
+import { Callback } from 'shared/types/basic-utility-types'
 
 import { OpenHistoryNote, PopupHistory } from '../popup-history'
 

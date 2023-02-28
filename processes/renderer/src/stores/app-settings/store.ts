@@ -1,8 +1,8 @@
 import { makeAutoObservable } from 'mobx'
 
 import isElectron from 'is-electron'
-import { isEqual } from 'process-shared/lib/is-equal'
-import { objectEntries } from 'process-shared/lib/objects'
+import { isEqual } from 'shared/lib/is-equal'
+import { objectEntries } from 'shared/lib/objects'
 
 import { CheckboxSetting } from 'stores/entities/editable-settings/checkbox-setting'
 import { RadioSetting } from 'stores/entities/editable-settings/radio-setting'

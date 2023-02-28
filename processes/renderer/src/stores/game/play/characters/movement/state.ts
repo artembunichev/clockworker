@@ -1,4 +1,4 @@
-import { isEqual } from 'process-shared/lib/is-equal'
+import { isEqual } from 'shared/lib/is-equal'
 
 import { Regulators } from '../../entities/regulators'
 import {

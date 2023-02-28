@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { Callback } from 'process-shared/types/basic-utility-types'
+import { Callback } from 'shared/types/basic-utility-types'
 
 export const useWindowClick = (fn: Callback): void => {
   useEffect(() => {

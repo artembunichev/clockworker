@@ -1,4 +1,4 @@
-import { Remover, remove } from 'process-shared/lib/arrays'
+import { Remover, remove } from 'shared/lib/arrays'
 
 type RemoveOneArg<T, Id extends keyof T> = Id extends null ? T : T[Id]
 type RemoverManyArg<T, Id extends keyof T> = Id extends null ? Array<T> : Array<T[Id]>

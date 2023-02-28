@@ -1,4 +1,4 @@
-import { objectEntries, objectValues } from 'process-shared/lib/objects'
+import { objectEntries, objectValues } from 'shared/lib/objects'
 
 import { Animation, AnimationConfig, RunAnimationOptions } from './animation'
 import { AnimationRegulatorList } from './animation/regulators'

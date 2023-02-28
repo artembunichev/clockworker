@@ -1,6 +1,6 @@
-import { last } from 'process-shared/lib/arrays'
-import { objectValues } from 'process-shared/lib/objects'
 import { PrimitiveDirection } from 'project-utility-types/plane'
+import { last } from 'shared/lib/arrays'
+import { objectValues } from 'shared/lib/objects'
 
 import { ProhibitorsController } from 'stores/game/play/entities/prohibitors-controller'
 import { MovementControllersKeys, MovementRegulatorsKeys } from 'stores/game/play/settings'

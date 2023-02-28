@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { FC } from 'basic-utility-types'
 import { nanoid } from 'nanoid'
-import { Callback } from 'process-shared/types/basic-utility-types'
+import { Callback } from 'shared/types/basic-utility-types'
 
 type Props = {
   text: string

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
-import { predicate } from 'process-shared/lib/boolean'
-import { Callback } from 'process-shared/types/basic-utility-types'
+import { predicate } from 'shared/lib/boolean'
+import { Callback } from 'shared/types/basic-utility-types'
 
 const isWindow = (element: unknown): element is Window => {
   return element === window

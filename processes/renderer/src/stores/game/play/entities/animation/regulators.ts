@@ -1,4 +1,4 @@
-import { PickKeyof } from 'process-shared/types/basic-utility-types'
+import { PickKeyof } from 'shared/types/basic-utility-types'
 
 import { Animation } from '.'
 import { RegulatorList, RegulatorTargetsInitialValues } from '../regulators'

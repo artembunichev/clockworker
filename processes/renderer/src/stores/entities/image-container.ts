@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 
-import { objectKeys, objectValues } from 'process-shared/lib/objects'
+import { objectKeys, objectValues } from 'shared/lib/objects'
 
 export type ImageContainerOptions = {
   loadImmediately?: boolean

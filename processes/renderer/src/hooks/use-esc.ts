@@ -1,4 +1,4 @@
-import { Rename } from 'process-shared/types/basic-utility-types'
+import { Rename } from 'shared/types/basic-utility-types'
 
 import { closeLastUnclosedPopup } from 'stores/lib/popups'
 import { useStore } from 'stores/root-store/context'

@@ -1,4 +1,4 @@
-import { objectMapAll } from 'process-shared/lib/objects'
+import { objectMapAll } from 'shared/lib/objects'
 
 import { AnyEditableSetting, EditableSettingVariant } from 'stores/entities/editable-settings/types'
 

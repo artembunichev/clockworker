@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 
-import { merge } from 'process-shared/lib/objects'
+import { merge } from 'shared/lib/objects'
 
 import { getConvertedEditableSettings } from 'stores/lib/settings'
 

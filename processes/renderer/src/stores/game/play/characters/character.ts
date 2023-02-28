@@ -1,4 +1,4 @@
-import { merge } from 'process-shared/lib/objects'
+import { merge } from 'shared/lib/objects'
 
 import { ImageContainer, ImageContainerOptions, ImageSrcs } from 'stores/entities/image-container'
 

@@ -1,7 +1,7 @@
-import { remove } from 'process-shared/lib/arrays'
-import { objectKeys } from 'process-shared/lib/objects'
-import { Callback } from 'process-shared/types/basic-utility-types'
 import { Modifier } from 'project-utility-types/abstract'
+import { remove } from 'shared/lib/arrays'
+import { objectKeys } from 'shared/lib/objects'
+import { Callback } from 'shared/types/basic-utility-types'
 
 export type Regulator<SO extends object, Target extends keyof SO> = Record<
   Target,
