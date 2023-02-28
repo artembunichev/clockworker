@@ -1,5 +1,5 @@
-import { deepClone } from 'lib/deep-clone'
-import { objectKeys } from 'lib/objects'
+import { deepClone } from 'shared/lib/deep-clone'
+import { objectKeys } from 'shared/lib/objects'
 
 import script from './game-script.json'
 

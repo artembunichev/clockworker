@@ -2,8 +2,13 @@
   "extends": "../../tsconfig-base.json",
   "compilerOptions": {
     "module": "commonjs",
-    "outDir": "../../dist",
+    "outDir": "../../dist/main",
+    "baseUrl": ".",
+    "paths": {
+      "shared/*": ["../shared/*"]
+    },
     "typeRoots": ["../../@types"]
   },
-  "include": ["."]
+  "include": ["."],
+  "references": [{ "path": "../shared" }]
 }

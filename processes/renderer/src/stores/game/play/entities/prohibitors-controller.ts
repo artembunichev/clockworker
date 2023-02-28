@@ -1,4 +1,4 @@
-import { remove } from 'lib/arrays'
+import { remove } from 'process-shared/lib/arrays'
 
 export class ProhibitorsController {
   list: Array<string> = []

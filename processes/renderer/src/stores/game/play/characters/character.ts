@@ -1,6 +1,6 @@
-import { ImageContainer, ImageContainerOptions, ImageSrcs } from 'stores/entities/image-container'
+import { merge } from 'process-shared/lib/objects'
 
-import { merge } from 'lib/objects'
+import { ImageContainer, ImageContainerOptions, ImageSrcs } from 'stores/entities/image-container'
 
 import { Body, BodyConfig } from '../body'
 import { AnimationRegulatorsType } from '../entities/animation'

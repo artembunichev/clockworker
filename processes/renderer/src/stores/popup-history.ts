@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 
-import { countOf, last } from 'lib/arrays'
+import { countOf, last } from 'process-shared/lib/arrays'
 
 import { Popup } from './entities/popup'
 

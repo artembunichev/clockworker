@@ -4,6 +4,9 @@ build
 
 .vscode/*
 
+processes/**/*.d.ts
+*.tsbuildinfo
+
 *.mock.*
 
 *.psd

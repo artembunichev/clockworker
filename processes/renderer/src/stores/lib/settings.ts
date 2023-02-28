@@ -1,6 +1,6 @@
-import { AnyEditableSetting, EditableSettingVariant } from 'stores/entities/editable-settings/types'
+import { objectMapAll } from 'process-shared/lib/objects'
 
-import { objectMapAll } from 'lib/objects'
+import { AnyEditableSetting, EditableSettingVariant } from 'stores/entities/editable-settings/types'
 
 export type SettingType<T> = { values: T }
 

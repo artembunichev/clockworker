@@ -1,8 +1,8 @@
 import { makeAutoObservable } from 'mobx'
 
-import { getConvertedEditableSettings } from 'stores/lib/settings'
+import { merge } from 'process-shared/lib/objects'
 
-import { merge } from 'lib/objects'
+import { getConvertedEditableSettings } from 'stores/lib/settings'
 
 import { EditableGameSettings } from './editable'
 import { InternalGameSettings } from './internal'

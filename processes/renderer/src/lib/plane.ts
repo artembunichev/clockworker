@@ -1,6 +1,5 @@
+import { isBetween } from 'process-shared/lib/numbers'
 import { PointPair, XY } from 'project-utility-types/plane'
-
-import { isBetween } from './numbers'
 
 export const getDistanceBetweenPoints = (point1: XY, point2: XY): number => {
   return Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2))

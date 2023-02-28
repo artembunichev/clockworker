@@ -1,7 +1,6 @@
+import { isEqual } from 'process-shared/lib/is-equal'
 import { Callback } from 'process-shared/types/basic-utility-types'
 import { XY } from 'project-utility-types/plane'
-
-import { isEqual } from 'lib/is-equal'
 
 import { MoveConfig, MoveFn } from '.'
 import { Position } from '../../entities/position'

@@ -1,6 +1,5 @@
+import { isEqual } from 'process-shared/lib/is-equal'
 import { ExpandedDirection, PointPair, XY } from 'project-utility-types/plane'
-
-import { isEqual } from 'lib/is-equal'
 
 import { ColliderBody, HitboxWithId, ObstacleList, Stucks } from '.'
 import { getMovementDirection } from '../../lib/movement'

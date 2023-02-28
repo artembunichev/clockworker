@@ -1,7 +1,6 @@
+import { objectEntries } from 'process-shared/lib/objects'
+import { capitalizeFirstSymbol } from 'process-shared/lib/strings'
 import { ExpandedDirection, XY } from 'project-utility-types/plane'
-
-import { objectEntries } from 'lib/objects'
-import { capitalizeFirstSymbol } from 'lib/strings'
 
 import { Position } from '../../entities/position'
 import { ProhibitorsController } from '../../entities/prohibitors-controller'

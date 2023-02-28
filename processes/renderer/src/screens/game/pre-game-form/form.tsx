@@ -3,12 +3,12 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { FC } from 'basic-utility-types'
+import { isLetter, isNumber } from 'process-shared/lib/strings'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { doubleBorderStyle } from 'shared-styles'
 
 import { PreGameFormFields } from 'stores/game/pre-game-form'
 
-import { isLetter, isNumber } from 'lib/strings'
 import { colors } from 'lib/theme'
 
 import {

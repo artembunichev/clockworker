@@ -5,7 +5,7 @@ import {
   OverwriteProperties,
   Properties,
   PropertyOf,
-} from 'process-shared/types/basic-utility-types'
+} from 'shared/types/basic-utility-types'
 
 import { deepClone } from './deep-clone'
 

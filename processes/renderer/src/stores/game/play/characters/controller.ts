@@ -1,9 +1,8 @@
 import { computed, makeObservable, observable } from 'mobx'
 
+import { remove } from 'process-shared/lib/arrays'
+import { objectValues } from 'process-shared/lib/objects'
 import { PropertyOf } from 'process-shared/types/basic-utility-types'
-
-import { remove } from 'lib/arrays'
-import { objectValues } from 'lib/objects'
 
 import { PlayerCharacter } from './list/player/character'
 

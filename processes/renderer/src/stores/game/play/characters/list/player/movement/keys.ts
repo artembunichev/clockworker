@@ -1,11 +1,10 @@
+import { last } from 'process-shared/lib/arrays'
+import { objectValues } from 'process-shared/lib/objects'
 import { PrimitiveDirection } from 'project-utility-types/plane'
 
 import { ProhibitorsController } from 'stores/game/play/entities/prohibitors-controller'
 import { MovementControllersKeys, MovementRegulatorsKeys } from 'stores/game/play/settings'
 import { KeyboardStore } from 'stores/keyboard.store'
-
-import { last } from 'lib/arrays'
-import { objectValues } from 'lib/objects'
 
 import { PlayerCharacterMovementSettings } from '.'
 

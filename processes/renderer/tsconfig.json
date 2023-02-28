@@ -8,10 +8,11 @@
     "jsx": "react-jsx",
     "baseUrl": "src",
     "paths": {
-      "process-shared/*": ["../../shared/*"]
+      "process-shared/*": ["../../shared/*"],
+      "content/*": ["../../shared/content/*"]
     },
     "typeRoots": ["../../node_modules/@types", "../../@types"]
   },
   "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [{ "path": "./tsconfig.node.json" }, { "path": "../shared" }]
 }
