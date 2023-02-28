@@ -3,7 +3,7 @@ import { objectKeys } from 'shared/lib/objects'
 
 import script from './game-script.json'
 
-type Replacers = Array<{ key: string; value: string }>
+type Replacer = { key: string; value: string }
 
 export type GameScript = typeof script
 
@@ -15,7 +15,7 @@ type GetParsedScriptConfig = {
 export const getParsedGameScript = (config: GetParsedScriptConfig): GameScript => {
   const { playerCharacterName, marketName } = config
 
-  const replacers: Replacers = [
+  const replacers: Array<Replacer> = [
     // @ - имя игрока
     { key: '@', value: playerCharacterName },
     // # - название магазина
