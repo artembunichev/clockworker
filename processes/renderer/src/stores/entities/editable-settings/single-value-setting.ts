@@ -1,18 +1,18 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable } from 'mobx';
 
 // настройка, содержащая в себе одно значение
 export class SingleValueSetting<Value> {
-  id: string
-  value: Value
+  id: string;
+  value: Value;
 
   constructor(id: string, initialValue: Value) {
-    this.id = id
-    this.setValue(initialValue)
+    this.id = id;
+    this.setValue(initialValue);
 
-    makeAutoObservable(this)
+    makeAutoObservable(this);
   }
 
   setValue = (value: Value): void => {
-    this.value = value
-  }
+    this.value = value;
+  };
 }

@@ -5,13 +5,13 @@ export type IpcEventName =
   | 'checkIfAppSettingsFileExists'
   | 'setAppSettingsToFileAsync'
   | 'setAppSettingsToFileSync'
-  | 'getAppSettings'
+  | 'getAppSettings';
 
 export type UpdateInfo = {
-  version: string
-  releaseNotes: string
-}
+  version: string;
+  releaseNotes: string;
+};
 
 export type DownloadProgressInfo = {
-  percentage: number
-}
+  percentage: number;
+};

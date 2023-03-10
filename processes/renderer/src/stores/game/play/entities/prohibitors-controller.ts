@@ -1,17 +1,17 @@
-import { remove } from 'shared/lib/arrays'
+import { remove } from 'shared/lib/arrays';
 
 export class ProhibitorsController {
-  list: Array<string> = []
+  list: Array<string> = [];
 
   add = (prohibitor: string): void => {
-    this.list.push(prohibitor)
-  }
+    this.list.push(prohibitor);
+  };
 
   remove = (prohibitor: string): void => {
-    this.list = remove(this.list, prohibitor)
-  }
+    this.list = remove(this.list, prohibitor);
+  };
 
   get isProhibited(): boolean {
-    return this.list.length > 0
+    return this.list.length > 0;
   }
 }

@@ -4,7 +4,7 @@
   "trailingComma": "all",
   "singleQuote": true,
   "jsxSingleQuote": true,
-  "semi": false,
+  "semi": true,
   "importOrder": [
     "^(react$)|(styled\\-components$)|(mobx.*)$",
     "<THIRD_PARTY_MODULES>",

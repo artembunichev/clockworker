@@ -1,31 +1,31 @@
-import { observer } from 'mobx-react-lite'
-import React from 'react'
-import styled from 'styled-components'
+import { observer } from 'mobx-react-lite';
+import React from 'react';
+import styled from 'styled-components';
 
-import { FC } from 'basic-utility-types'
+import { FC } from 'basic-utility-types';
 
-import { CheckboxSetting } from 'stores/entities/editable-settings/checkbox-setting'
-import { RadioSetting } from 'stores/entities/editable-settings/radio-setting'
+import { CheckboxSetting } from 'stores/entities/editable-settings/checkbox-setting';
+import { RadioSetting } from 'stores/entities/editable-settings/radio-setting';
 
-import { colors } from 'lib/theme'
+import { colors } from 'lib/theme';
 
-import { PixelatedCheckbox } from 'components/checkbox/pixelated-checkbox'
+import { PixelatedCheckbox } from 'components/checkbox/pixelated-checkbox';
 
 type Props = {
-  setting: CheckboxSetting<unknown> | RadioSetting<unknown>
-  checkboxSize: number
-}
+  setting: CheckboxSetting<unknown> | RadioSetting<unknown>;
+  checkboxSize: number;
+};
 
 export const SettingVariants: FC<Props> = observer(({ setting, checkboxSize }) => {
   const onSelect = (variantId: string): void => {
-    setting.selectVariant(variantId)
-  }
+    setting.selectVariant(variantId);
+  };
 
   const onUnselect = (variantId: string): void => {
     if (setting instanceof CheckboxSetting) {
-      setting.unselectVariant(variantId)
+      setting.unselectVariant(variantId);
     }
-  }
+  };
 
   return (
     <Variants>
@@ -42,22 +42,22 @@ export const SettingVariants: FC<Props> = observer(({ setting, checkboxSize }) =
               checkedBackgroundColor={colors.mainMediumWell}
             />
           </Variant>
-        )
+        );
       })}
     </Variants>
-  )
-})
+  );
+});
 
 const Variants = styled.div`
   flex: 1 0 auto;
   display: flex;
   justify-content: space-around;
-`
+`;
 const Variant = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`
+`;
 const Label = styled.div`
   margin-bottom: 8px;
-`
+`;

@@ -1,20 +1,20 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable } from 'mobx';
 
-export type PreGameFormFields = Pick<PreGameForm, 'playerCharacterName' | 'marketName'>
+export type PreGameFormFields = Pick<PreGameForm, 'playerCharacterName' | 'marketName'>;
 
 export class PreGameForm {
-  playerCharacterName = ''
-  marketName = ''
+  playerCharacterName = '';
+  marketName = '';
 
   constructor() {
-    makeAutoObservable(this)
+    makeAutoObservable(this);
   }
 
   setPlayerCharacterName = (name: string): void => {
-    this.playerCharacterName = name
-  }
+    this.playerCharacterName = name;
+  };
 
   setMarketName = (name: string): void => {
-    this.marketName = name
-  }
+    this.marketName = name;
+  };
 }

@@ -1,59 +1,59 @@
-import { XY } from 'project-utility-types/plane'
-import { isEqual } from 'shared/lib/is-equal'
-import { Callback } from 'shared/types/basic-utility-types'
+import { XY } from 'project-utility-types/plane';
+import { isEqual } from 'shared/lib/is-equal';
+import { Callback } from 'shared/types/basic-utility-types';
 
-import { MoveConfig, MoveFn } from '.'
-import { Position } from '../../entities/position'
-import { ProhibitorsController } from '../../entities/prohibitors-controller'
-import { getMovementDirection } from '../../lib/movement'
-import { DefaultCharacterAnimationController } from '../animation'
-import { CharacterMovementState } from './state'
+import { MoveConfig, MoveFn } from '.';
+import { Position } from '../../entities/position';
+import { ProhibitorsController } from '../../entities/prohibitors-controller';
+import { getMovementDirection } from '../../lib/movement';
+import { DefaultCharacterAnimationController } from '../animation';
+import { CharacterMovementState } from './state';
 
-type BaseRunAutomoveConfig = Pick<MoveConfig, 'stateConfig'>
+type BaseRunAutomoveConfig = Pick<MoveConfig, 'stateConfig'>;
 
-type RunAutomoveFromTo = BaseRunAutomoveConfig & { from?: XY; to: XY }
-type RunAutomoveDeltaX = BaseRunAutomoveConfig & { deltaX: number }
-type RunAutomoveDeltaY = BaseRunAutomoveConfig & { deltaY: number }
+type RunAutomoveFromTo = BaseRunAutomoveConfig & { from?: XY; to: XY };
+type RunAutomoveDeltaX = BaseRunAutomoveConfig & { deltaX: number };
+type RunAutomoveDeltaY = BaseRunAutomoveConfig & { deltaY: number };
 
 export type RunAutomove = {
-  (config: RunAutomoveFromTo): Promise<boolean>
-  (config: RunAutomoveDeltaX): Promise<boolean>
-  (config: RunAutomoveDeltaY): Promise<boolean>
-}
+  (config: RunAutomoveFromTo): Promise<boolean>;
+  (config: RunAutomoveDeltaX): Promise<boolean>;
+  (config: RunAutomoveDeltaY): Promise<boolean>;
+};
 
 const isAutomoveFromToConfig = (config: any): config is RunAutomoveFromTo => {
-  return (config as RunAutomoveFromTo).to !== undefined
-}
+  return (config as RunAutomoveFromTo).to !== undefined;
+};
 const isAutomoveDeltaXConfig = (config: any): config is RunAutomoveDeltaX => {
-  return (config as RunAutomoveDeltaX).deltaX !== undefined
-}
+  return (config as RunAutomoveDeltaX).deltaX !== undefined;
+};
 const isAutomoveDeltaYConfig = (config: any): config is RunAutomoveDeltaY => {
-  return (config as RunAutomoveDeltaY).deltaY !== undefined
-}
+  return (config as RunAutomoveDeltaY).deltaY !== undefined;
+};
 
 type Config = {
-  position: Position
-  movementState: CharacterMovementState
-  movementProhibitorsController: ProhibitorsController
-  getPositionOnNextStep: () => XY
-  move: MoveFn
-  stopMove: Callback
-  animationController: DefaultCharacterAnimationController
-  clearRegulators: Callback
-}
+  position: Position;
+  movementState: CharacterMovementState;
+  movementProhibitorsController: ProhibitorsController;
+  getPositionOnNextStep: () => XY;
+  move: MoveFn;
+  stopMove: Callback;
+  animationController: DefaultCharacterAnimationController;
+  clearRegulators: Callback;
+};
 
 export class CharacterAutomove {
-  private position: Position
-  private movementState: CharacterMovementState
-  private movementProhibitorsController: ProhibitorsController
-  private getPositionOnNextStep: () => XY
-  private move: MoveFn
-  private stopMove: Callback
-  private clearRegulators: Callback
-  private animationController: DefaultCharacterAnimationController
+  private position: Position;
+  private movementState: CharacterMovementState;
+  private movementProhibitorsController: ProhibitorsController;
+  private getPositionOnNextStep: () => XY;
+  private move: MoveFn;
+  private stopMove: Callback;
+  private clearRegulators: Callback;
+  private animationController: DefaultCharacterAnimationController;
 
-  isAutomoving = false
-  isStuck = false
+  isAutomoving = false;
+  isStuck = false;
 
   constructor(config: Config) {
     const {
@@ -65,25 +65,25 @@ export class CharacterAutomove {
       stopMove,
       clearRegulators,
       animationController,
-    } = config
+    } = config;
 
-    this.position = position
-    this.movementState = movementState
-    this.movementProhibitorsController = movementProhibitorsController
-    this.getPositionOnNextStep = getPositionOnNextStep
-    this.move = move
-    this.stopMove = stopMove
-    this.clearRegulators = clearRegulators
-    this.animationController = animationController
+    this.position = position;
+    this.movementState = movementState;
+    this.movementProhibitorsController = movementProhibitorsController;
+    this.getPositionOnNextStep = getPositionOnNextStep;
+    this.move = move;
+    this.stopMove = stopMove;
+    this.clearRegulators = clearRegulators;
+    this.animationController = animationController;
   }
 
   setIsAutomoving = (value: boolean): void => {
-    this.isAutomoving = value
-  }
+    this.isAutomoving = value;
+  };
 
   setIsStuck = (value: boolean): void => {
-    this.isStuck = value
-  }
+    this.isStuck = value;
+  };
 
   run: RunAutomove = (config: any) => {
     return new Promise((resolve) => {
@@ -92,94 +92,94 @@ export class CharacterAutomove {
         isAutomoveDeltaXConfig(config) ||
         isAutomoveDeltaYConfig(config)
       ) {
-        this.clearRegulators()
+        this.clearRegulators();
 
-        const { stateConfig } = config
+        const { stateConfig } = config;
 
         if (stateConfig) {
-          this.movementState.setConfig(stateConfig)
+          this.movementState.setConfig(stateConfig);
         }
 
-        const start: XY = { x: this.position.x, y: this.position.y }
-        const end: XY = { x: this.position.x, y: this.position.y }
+        const start: XY = { x: this.position.x, y: this.position.y };
+        const end: XY = { x: this.position.x, y: this.position.y };
 
         if (isAutomoveFromToConfig(config)) {
-          const { from, to } = config
+          const { from, to } = config;
           if (from) {
-            start.x = from.x
-            start.y = from.y
+            start.x = from.x;
+            start.y = from.y;
           }
-          end.x = to.x
-          end.y = to.y
+          end.x = to.x;
+          end.y = to.y;
         } else if (isAutomoveDeltaXConfig(config)) {
-          const { deltaX } = config
-          end.x = start.x + deltaX
+          const { deltaX } = config;
+          end.x = start.x + deltaX;
         } else if (isAutomoveDeltaYConfig(config)) {
-          const { deltaY } = config
-          end.y = start.y + deltaY
+          const { deltaY } = config;
+          end.y = start.y + deltaY;
         }
 
         // если движение НЕ по прямой
         if ((start.x !== end.x && start.y !== end.y) || isEqual(start, end)) {
-          return resolve(false)
+          return resolve(false);
         }
 
         const startAutoMoving = (): void => {
-          this.setIsAutomoving(true)
-        }
+          this.setIsAutomoving(true);
+        };
         const stopAutomoving = (): void => {
-          this.stopMove()
-          this.setIsAutomoving(false)
-        }
+          this.stopMove();
+          this.setIsAutomoving(false);
+        };
 
-        startAutoMoving()
+        startAutoMoving();
 
         // перемещаем героя в стартовую позицию
-        this.position.setXY(start.x, start.y)
+        this.position.setXY(start.x, start.y);
 
         // условие выше гарантирует, стартовая и конечная позиции не совпадают
-        const direction = getMovementDirection(start, end)!
+        const direction = getMovementDirection(start, end)!;
 
         // нужна, чтобы не вызывать move(), после того, как встали на конечную позицию
-        var shouldMove = true
+        var shouldMove = true;
 
         // двигаемся в текущем направлении, пока не дойдём до конечной позиции
         const automoveInDirection = (): void => {
           if (this.isStuck) {
-            this.setIsAutomoving(false)
+            this.setIsAutomoving(false);
           }
 
           if (this.isAutomoving && !isEqual(this.position.value, end)) {
             // остановка на конечной позиции, если следующим шагом уходим дальше
             const setPositionToEndAndStopAutomoving = (x: number, y: number): void => {
-              this.position.setXY(x, y)
-              shouldMove = false
-            }
+              this.position.setXY(x, y);
+              shouldMove = false;
+            };
 
-            const positionOnNextStep = this.getPositionOnNextStep()
+            const positionOnNextStep = this.getPositionOnNextStep();
 
             if (direction === 'down') {
               if (positionOnNextStep.y > end.y) {
-                setPositionToEndAndStopAutomoving(this.position.x, end.y)
+                setPositionToEndAndStopAutomoving(this.position.x, end.y);
               }
             } else if (direction === 'right') {
               if (positionOnNextStep.x > end.x) {
-                setPositionToEndAndStopAutomoving(end.x, this.position.y)
+                setPositionToEndAndStopAutomoving(end.x, this.position.y);
               }
             } else if (direction === 'up') {
               if (positionOnNextStep.y < end.y) {
-                setPositionToEndAndStopAutomoving(this.position.x, end.y)
+                setPositionToEndAndStopAutomoving(this.position.x, end.y);
               }
             } else if (direction === 'left') {
               if (positionOnNextStep.x < end.x) {
-                setPositionToEndAndStopAutomoving(end.x, this.position.y)
+                setPositionToEndAndStopAutomoving(end.x, this.position.y);
               }
             }
 
             if (shouldMove) {
               if (!this.movementProhibitorsController.isProhibited) {
-                this.animationController.resume()
-                this.move({ direction, stateConfig })
+                this.animationController.resume();
+                this.move({ direction, stateConfig });
               } else {
                 if (
                   this.movementProhibitorsController.list.every(
@@ -187,22 +187,22 @@ export class CharacterAutomove {
                   )
                 ) {
                   // всё, кроме паузы и текстбокса прекращает анимацию
-                  this.animationController.stop()
+                  this.animationController.stop();
                 } else {
                   // когда игра на паузе или открыт текстбокс - анимация замирает
-                  this.animationController.pause()
+                  this.animationController.pause();
                 }
               }
             }
 
-            window.requestAnimationFrame(automoveInDirection)
+            window.requestAnimationFrame(automoveInDirection);
           } else {
-            stopAutomoving()
-            resolve(true)
+            stopAutomoving();
+            resolve(true);
           }
-        }
-        automoveInDirection()
+        };
+        automoveInDirection();
       }
-    })
-  }
+    });
+  };
 }

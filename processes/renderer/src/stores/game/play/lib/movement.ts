@@ -1,40 +1,40 @@
-import { ExpandedDirection, PrimitiveDirection, XY } from 'project-utility-types/plane'
-import { isEqual } from 'shared/lib/is-equal'
+import { ExpandedDirection, PrimitiveDirection, XY } from 'project-utility-types/plane';
+import { isEqual } from 'shared/lib/is-equal';
 
-import { ViewDirections } from '../entities/animation-controller'
+import { ViewDirections } from '../entities/animation-controller';
 
 export const getMovementDirection = (start: XY, end: XY): ExpandedDirection | null => {
   if (isEqual(start, end)) {
-    return null
+    return null;
   }
 
-  var direction: ExpandedDirection = '' as ExpandedDirection
+  var direction: ExpandedDirection = '' as ExpandedDirection;
   if (start.y < end.y) {
-    direction += 'down'
+    direction += 'down';
   } else if (start.y > end.y) {
-    direction += 'up'
+    direction += 'up';
   }
 
   if (start.x < end.x) {
-    direction += 'right'
+    direction += 'right';
   } else if (start.x > end.x) {
-    direction += 'left'
+    direction += 'left';
   }
 
-  return direction as ExpandedDirection
-}
+  return direction as ExpandedDirection;
+};
 
 export const getReversedPrimitiveDirection = (direction: PrimitiveDirection): PrimitiveDirection => {
   if (direction === 'down') {
-    return 'up'
+    return 'up';
   } else if (direction === 'right') {
-    return 'left'
+    return 'left';
   } else if (direction === 'up') {
-    return 'down'
+    return 'down';
   } else {
-    return 'right'
+    return 'right';
   }
-}
+};
 
 export const convertMovementDirectionToViewDirection = (
   direction: ExpandedDirection,
@@ -45,8 +45,8 @@ export const convertMovementDirectionToViewDirection = (
     ? ViewDirections.LEFT
     : direction.includes('down')
     ? ViewDirections.DOWN
-    : ViewDirections.UP
-}
+    : ViewDirections.UP;
+};
 
 export const convertExpandedDirectionToPrimitiveDirection = (
   direction: ExpandedDirection,
@@ -57,31 +57,31 @@ export const convertExpandedDirectionToPrimitiveDirection = (
     ? 'left'
     : direction.includes('down')
     ? 'down'
-    : 'up'
-}
+    : 'up';
+};
 
 // убирает направления, компенсирующие друг друга (пример: вверх-вниз)
 export const compensatePrimitiveMovementDirections = (
   directions: Array<PrimitiveDirection>,
 ): Array<PrimitiveDirection> => {
   return directions.filter((direction) => {
-    return directions.every((d) => d !== getReversedPrimitiveDirection(direction))
-  })
-}
+    return directions.every((d) => d !== getReversedPrimitiveDirection(direction));
+  });
+};
 
 export const getSingleMovementDirection = (
   directions: Array<PrimitiveDirection>,
 ): ExpandedDirection | null => {
-  const filteredDirections = compensatePrimitiveMovementDirections(directions)
+  const filteredDirections = compensatePrimitiveMovementDirections(directions);
 
   if (filteredDirections.length) {
     const movementDirection: ExpandedDirection = filteredDirections
       // сортируем, чтобы названия направлений получались в едином формате
       .sort((_, b) => (b === 'down' || b === 'up' ? 1 : -1))
-      .join('') as ExpandedDirection
+      .join('') as ExpandedDirection;
 
-    return movementDirection
+    return movementDirection;
   }
 
-  return null
-}
+  return null;
+};

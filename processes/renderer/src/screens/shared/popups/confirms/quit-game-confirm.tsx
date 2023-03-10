@@ -1,23 +1,23 @@
-import { observer } from 'mobx-react-lite'
-import React from 'react'
+import { observer } from 'mobx-react-lite';
+import React from 'react';
 
-import { FC } from 'basic-utility-types'
-import { Callback } from 'shared/types/basic-utility-types'
+import { FC } from 'basic-utility-types';
+import { Callback } from 'shared/types/basic-utility-types';
 
-import { useStore } from 'stores/root-store/context'
+import { useStore } from 'stores/root-store/context';
 
-import { colors } from 'lib/theme'
+import { colors } from 'lib/theme';
 
-import { GameConfirmPopup } from '../game-confirm-popup'
+import { GameConfirmPopup } from '../game-confirm-popup';
 
 type Props = {
-  onAccept?: Callback
-}
+  onAccept?: Callback;
+};
 
 export const QuitGameConfirm: FC<Props> = observer(({ onAccept }) => {
-  const { appStore } = useStore()
+  const { appStore } = useStore();
 
-  const { quitGameConfirm } = appStore.popups
+  const { quitGameConfirm } = appStore.popups;
 
   return (
     <GameConfirmPopup
@@ -30,8 +30,8 @@ export const QuitGameConfirm: FC<Props> = observer(({ onAccept }) => {
       question={'Выйти из игры?'}
       acceptText={'Да'}
       onAccept={() => {
-        onAccept?.()
-        appStore.quitGame()
+        onAccept?.();
+        appStore.quitGame();
       }}
       rejectText={'Нет'}
       onReject={null}
@@ -41,5 +41,5 @@ export const QuitGameConfirm: FC<Props> = observer(({ onAccept }) => {
         backgroundColor: colors.mainMedium,
       }}
     />
-  )
-})
+  );
+});

@@ -1,40 +1,40 @@
-import { observer } from 'mobx-react-lite'
-import React from 'react'
-import styled from 'styled-components'
+import { observer } from 'mobx-react-lite';
+import React from 'react';
+import styled from 'styled-components';
 
-import { FC } from 'basic-utility-types'
+import { FC } from 'basic-utility-types';
 
-import { useStore } from 'stores/root-store/context'
+import { useStore } from 'stores/root-store/context';
 
-import { colors } from 'lib/theme'
+import { colors } from 'lib/theme';
 
-import { PixelatedButton } from 'components/pixelated/pixelated-components'
-import { GamePopup } from 'screens/shared/popups/game-popup-template'
+import { PixelatedButton } from 'components/pixelated/pixelated-components';
+import { GamePopup } from 'screens/shared/popups/game-popup-template';
 
-import { useGamePlayStore } from '../screen'
+import { useGamePlayStore } from '../screen';
 
 export const GamePauseMenu: FC = observer(() => {
-  const { appStore } = useStore()
-  const gamePlayStore = useGamePlayStore()
+  const { appStore } = useStore();
+  const gamePlayStore = useGamePlayStore();
 
-  const { pauseMenu, settingsMenu } = gamePlayStore.popups
-  const { quitInMainMenuConfirm, quitGameConfirm } = appStore.popups
+  const { pauseMenu, settingsMenu } = gamePlayStore.popups;
+  const { quitInMainMenuConfirm, quitGameConfirm } = appStore.popups;
 
   const resumeGame = (): void => {
-    pauseMenu.close()
-  }
+    pauseMenu.close();
+  };
 
   const openSettings = (): void => {
-    settingsMenu.open({ config: { forwardedFrom: { popup: pauseMenu, onClose: { fn: null } } } })
-  }
+    settingsMenu.open({ config: { forwardedFrom: { popup: pauseMenu, onClose: { fn: null } } } });
+  };
 
   const openQuitInMainMenuConfirm = (): void => {
-    quitInMainMenuConfirm.open()
-  }
+    quitInMainMenuConfirm.open();
+  };
 
   const openQuitGameConfirm = (): void => {
-    quitGameConfirm.open()
-  }
+    quitGameConfirm.open();
+  };
 
   return (
     <GamePopup
@@ -60,8 +60,8 @@ export const GamePauseMenu: FC = observer(() => {
         </Sections>
       </List>
     </GamePopup>
-  )
-})
+  );
+});
 
 const List = styled.menu`
   flex: 1 0 auto;
@@ -70,18 +70,18 @@ const List = styled.menu`
   align-items: center;
   justify-content: space-between;
   padding: 7px;
-`
+`;
 const Sections = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-`
+`;
 const Section = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-`
+`;
 const Item = styled(PixelatedButton).attrs({
   pixelsSize: 'medium',
   backgroundColor: colors.mainMedium,
@@ -94,4 +94,4 @@ const Item = styled(PixelatedButton).attrs({
   &:last-child {
     margin-bottom: 0;
   }
-`
+`;

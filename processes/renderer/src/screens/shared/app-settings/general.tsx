@@ -1,15 +1,15 @@
-import { observer } from 'mobx-react-lite'
-import React from 'react'
-import styled from 'styled-components'
+import { observer } from 'mobx-react-lite';
+import React from 'react';
+import styled from 'styled-components';
 
-import { useStore } from 'stores/root-store/context'
+import { useStore } from 'stores/root-store/context';
 
-import { FlagSetting } from 'components/settings/flag-setting'
+import { FlagSetting } from 'components/settings/flag-setting';
 
 export const GeneralAppSettings = observer(() => {
-  const { appSettingsStore } = useStore()
+  const { appSettingsStore } = useStore();
 
-  const { isGetUpdateNotifications } = appSettingsStore.editable
+  const { isGetUpdateNotifications } = appSettingsStore.editable;
 
   return (
     <Container>
@@ -18,16 +18,16 @@ export const GeneralAppSettings = observer(() => {
         <FlagSetting setting={isGetUpdateNotifications} checkboxSize={31} />
       </Setting>
     </Container>
-  )
-})
+  );
+});
 
-const Container = styled.div``
+const Container = styled.div``;
 const Setting = styled.div`
   display: flex;
   justify-content: space-between;
-`
+`;
 const SettingTitle = styled.div`
   display: flex;
   align-items: center;
   font-size: 23px;
-`
+`;

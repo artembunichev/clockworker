@@ -1,13 +1,13 @@
-import { merge } from 'shared/lib/objects'
+import { merge } from 'shared/lib/objects';
 
-import { ImageContainer, ImageContainerOptions, ImageSrcs } from 'stores/entities/image-container'
+import { ImageContainer, ImageContainerOptions, ImageSrcs } from 'stores/entities/image-container';
 
-import { Body, BodyConfig } from '../body'
-import { AnimationRegulatorsType } from '../entities/animation'
-import { AnimationConfigsForController, AnimationController } from '../entities/animation-controller'
-import { Sprite } from '../entities/sprite'
-import { SpriteSheet, SpriteSheetConfig } from '../entities/sprite-sheet'
-import { GameScreen } from '../screen'
+import { Body, BodyConfig } from '../body';
+import { AnimationRegulatorsType } from '../entities/animation';
+import { AnimationConfigsForController, AnimationController } from '../entities/animation-controller';
+import { Sprite } from '../entities/sprite';
+import { SpriteSheet, SpriteSheetConfig } from '../entities/sprite-sheet';
+import { GameScreen } from '../screen';
 import {
   CharacterAnimationController,
   CharacterAnimationName,
@@ -15,49 +15,49 @@ import {
   CharacterAnimationRegulatorName,
   DefaultCharacterAnimationController,
   defaultCharacterAnimationRegulatorList,
-} from './animation'
-import { CharacterMovement, ConfigForCharacterMovement } from './movement'
+} from './animation';
+import { CharacterMovement, ConfigForCharacterMovement } from './movement';
 
-export type AnyCharacter = Character<any, any, any>
-export type AnyCharacterConfig = CharacterConfig<any, any, any>
+export type AnyCharacter = Character<any, any, any>;
+export type AnyCharacterConfig = CharacterConfig<any, any, any>;
 
-type BaseCharacterConfig = BodyConfig & { name: string; screen: GameScreen }
+type BaseCharacterConfig = BodyConfig & { name: string; screen: GameScreen };
 
-type CharacterImageSrcs = ImageSrcs & { spriteSheet: string }
+type CharacterImageSrcs = ImageSrcs & { spriteSheet: string };
 type ImageContainerCharacterConfig<Srcs extends CharacterImageSrcs> = {
-  srcs: Srcs
-  options?: ImageContainerOptions
-}
+  srcs: Srcs;
+  options?: ImageContainerOptions;
+};
 
 type AnimationCharacterConfig<Name extends string, RegulatorName extends string> = {
-  spriteSheetConfig: Omit<SpriteSheetConfig, 'image'>
-  configs: AnimationConfigsForController<Name>
-  regulators?: AnimationRegulatorsType<RegulatorName>
-}
+  spriteSheetConfig: Omit<SpriteSheetConfig, 'image'>;
+  configs: AnimationConfigsForController<Name>;
+  regulators?: AnimationRegulatorsType<RegulatorName>;
+};
 
-type MovementCharacterConfig = Omit<ConfigForCharacterMovement, 'position' | 'animationController'>
+type MovementCharacterConfig = Omit<ConfigForCharacterMovement, 'position' | 'animationController'>;
 
 export type CharacterConfig<
   ImageSrcs extends CharacterImageSrcs,
   AnimationName extends string,
   AnimationRegulatorName extends string,
 > = BaseCharacterConfig & {
-  images: ImageContainerCharacterConfig<ImageSrcs>
-  animation: AnimationCharacterConfig<AnimationName, AnimationRegulatorName>
-  movement: MovementCharacterConfig
-}
+  images: ImageContainerCharacterConfig<ImageSrcs>;
+  animation: AnimationCharacterConfig<AnimationName, AnimationRegulatorName>;
+  movement: MovementCharacterConfig;
+};
 
 export class Character<
   ImageSrcs extends CharacterImageSrcs,
   AnimationName extends string,
   AnimationRegulatorName extends string = never,
 > extends Body {
-  name: string
-  screen: GameScreen
-  imageContainer: ImageContainer<ImageSrcs>
-  spriteSheet: SpriteSheet
-  animationController: CharacterAnimationController<AnimationName, AnimationRegulatorName>
-  movement: CharacterMovement
+  name: string;
+  screen: GameScreen;
+  imageContainer: ImageContainer<ImageSrcs>;
+  spriteSheet: SpriteSheet;
+  animationController: CharacterAnimationController<AnimationName, AnimationRegulatorName>;
+  movement: CharacterMovement;
 
   constructor(
     config: CharacterConfig<
@@ -66,19 +66,19 @@ export class Character<
       CharacterAnimationRegulatorName<AnimationRegulatorName>
     >,
   ) {
-    const { is, name, screen, images, animation, movement } = config
+    const { is, name, screen, images, animation, movement } = config;
 
-    super({ is: is })
+    super({ is: is });
 
-    this.name = name
-    this.screen = screen
+    this.name = name;
+    this.screen = screen;
 
-    this.imageContainer = new ImageContainer(images.srcs, images.options)
+    this.imageContainer = new ImageContainer(images.srcs, images.options);
 
     this.spriteSheet = new SpriteSheet({
       ...animation.spriteSheetConfig,
       image: this.imageContainer.list.spriteSheet.imageElement,
-    })
+    });
 
     this.animationController = new AnimationController<
       CharacterAnimationName<AnimationName>,
@@ -91,28 +91,28 @@ export class Character<
         defaultCharacterAnimationRegulatorList,
         animation.regulators ?? {},
       ) as CharacterAnimationRegulatorList<AnimationRegulatorName>,
-    })
+    });
 
-    this.setSpriteScale(this.animationController.currentSprite.scale)
+    this.setSpriteScale(this.animationController.currentSprite.scale);
 
     this.movement = new CharacterMovement({
       position: this.position,
       animationController: this.animationController as DefaultCharacterAnimationController,
       initialMovementStateConfig: movement.initialMovementStateConfig,
-    })
+    });
   }
 
   setSpriteScale = (scale: number): void => {
-    this.animationController.setScale(scale)
-    this.setSize({ width: this.currentSprite.scaledWidth, height: this.currentSprite.scaledHeight })
-  }
+    this.animationController.setScale(scale);
+    this.setSize({ width: this.currentSprite.scaledWidth, height: this.currentSprite.scaledHeight });
+  };
 
   update = (): void => {
-    this.animationController.currentAnimation.update()
-    this.screen.drawSprite(this.currentSprite, this.position)
-  }
+    this.animationController.currentAnimation.update();
+    this.screen.drawSprite(this.currentSprite, this.position);
+  };
 
   get currentSprite(): Sprite {
-    return this.animationController.currentSprite
+    return this.animationController.currentSprite;
   }
 }

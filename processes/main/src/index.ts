@@ -1,9 +1,9 @@
-import { handleAppEvents } from './app-events'
-import { handleAppSettings } from './app-settings'
-import { handleUpdater } from './updater'
+import { handleAppEvents } from './app-events';
+import { handleAppSettings } from './app-settings';
+import { handleUpdater } from './updater';
 
-handleAppEvents()
+handleAppEvents();
 
-handleAppSettings()
+handleAppSettings();
 
-handleUpdater()
+handleUpdater();

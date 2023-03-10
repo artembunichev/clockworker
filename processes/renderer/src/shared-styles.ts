@@ -1,6 +1,6 @@
-import { css } from 'styled-components'
+import { css } from 'styled-components';
 
-import { colors, theme } from 'lib/theme'
+import { colors, theme } from 'lib/theme';
 
 export const doubleBorderStyle = css`
   border: 6.5px solid ${colors.mainDark};
@@ -16,4 +16,4 @@ export const doubleBorderStyle = css`
     background-color: ${colors.mainMedium};
     border-radius: ${theme.borderRadius}px;
   }
-`
+`;

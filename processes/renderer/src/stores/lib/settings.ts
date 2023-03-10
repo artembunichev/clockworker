@@ -1,10 +1,10 @@
-import { objectMapAll } from 'shared/lib/objects'
+import { objectMapAll } from 'shared/lib/objects';
 
-import { AnyEditableSetting, EditableSettingVariant } from 'stores/entities/editable-settings/types'
+import { AnyEditableSetting, EditableSettingVariant } from 'stores/entities/editable-settings/types';
 
-export type SettingType<T> = { values: T }
+export type SettingType<T> = { values: T };
 
-export type EditableSettings<T extends object> = { [K in keyof T]: AnyEditableSetting }
+export type EditableSettings<T extends object> = { [K in keyof T]: AnyEditableSetting };
 
 export const getConvertedEditableSettings = <
   K extends keyof T,
@@ -12,5 +12,5 @@ export const getConvertedEditableSettings = <
 >(
   editableSettings: T,
 ): { [K in keyof T]: T[K]['value'] } => {
-  return objectMapAll(editableSettings, ({ value }) => value)
-}
+  return objectMapAll(editableSettings, ({ value }) => value);
+};

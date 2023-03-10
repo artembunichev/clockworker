@@ -1,28 +1,28 @@
-import { observer } from 'mobx-react-lite'
-import React from 'react'
+import { observer } from 'mobx-react-lite';
+import React from 'react';
 
-import { FC } from 'basic-utility-types'
-import { Callback } from 'shared/types/basic-utility-types'
+import { FC } from 'basic-utility-types';
+import { Callback } from 'shared/types/basic-utility-types';
 
-import { Popup as PopupStore } from 'stores/entities/popup'
+import { Popup as PopupStore } from 'stores/entities/popup';
 
-import { Popup, PopupProps } from 'components/popup/popup-template'
+import { Popup, PopupProps } from 'components/popup/popup-template';
 
 export const closeGamePopup = (popup: PopupStore): void => {
-  popup.close()
-}
+  popup.close();
+};
 
 export type GamePopupProps = {
-  popup: PopupStore
-} & Omit<PopupProps, 'isOpened' | 'fnForClosing'>
+  popup: PopupStore;
+} & Omit<PopupProps, 'isOpened' | 'fnForClosing'>;
 
 export const GamePopup: FC<GamePopupProps> = observer(
   ({ popup, width, height, styles, title, titleStyles, withCloseButton, onClose, children }) => {
-    const isOpened = popup.isOpened
+    const isOpened = popup.isOpened;
     const fnForClosing: Callback = (): void => {
-      closeGamePopup(popup)
-      onClose?.()
-    }
+      closeGamePopup(popup);
+      onClose?.();
+    };
 
     return (
       <Popup
@@ -37,6 +37,6 @@ export const GamePopup: FC<GamePopupProps> = observer(
       >
         {children}
       </Popup>
-    )
+    );
   },
-)
+);

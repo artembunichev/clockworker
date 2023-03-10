@@ -1,29 +1,29 @@
-import { observer } from 'mobx-react-lite'
-import React from 'react'
-import styled from 'styled-components'
+import { observer } from 'mobx-react-lite';
+import React from 'react';
+import styled from 'styled-components';
 
-import { FC } from 'basic-utility-types'
+import { FC } from 'basic-utility-types';
 
-import { useStore } from 'stores/root-store/context'
+import { useStore } from 'stores/root-store/context';
 
-import { colors } from 'lib/theme'
+import { colors } from 'lib/theme';
 
-import { PixelatedButton } from 'components/pixelated/pixelated-components'
-import { QuitGameConfirm } from 'screens/shared/popups/confirms/quit-game-confirm'
+import { PixelatedButton } from 'components/pixelated/pixelated-components';
+import { QuitGameConfirm } from 'screens/shared/popups/confirms/quit-game-confirm';
 
-import { version as gameVersion } from '../../../../../package.json'
-import { MainMenu } from './main-menu'
-import { UpdateChecker } from './update-notification/update-checker'
-import { useMainScreenEsc } from './use-esc'
+import { version as gameVersion } from '../../../../../package.json';
+import { MainMenu } from './main-menu';
+import { UpdateChecker } from './update-notification/update-checker';
+import { useMainScreenEsc } from './use-esc';
 
 export const MainScreen: FC = observer(() => {
-  const { quitGameConfirm } = useStore().appStore.popups
+  const { quitGameConfirm } = useStore().appStore.popups;
 
-  useMainScreenEsc()
+  useMainScreenEsc();
 
   const openQuitGameConfirm = (): void => {
-    quitGameConfirm.open()
-  }
+    quitGameConfirm.open();
+  };
 
   return (
     <>
@@ -39,8 +39,8 @@ export const MainScreen: FC = observer(() => {
         <GameVersion>v{gameVersion}</GameVersion>
       </Container>
     </>
-  )
-})
+  );
+});
 
 const Container = styled.div`
   position: relative;
@@ -50,17 +50,17 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   padding: 25px;
-`
+`;
 const Title = styled.div`
   font-size: 72px;
   color: ${colors.mainMedium};
-`
+`;
 const Body = styled.div`
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
-`
+`;
 const QuitGameButton = styled(PixelatedButton).attrs({
   pixelsSize: 'medium',
   backgroundColor: colors.mainLight,
@@ -70,10 +70,10 @@ const QuitGameButton = styled(PixelatedButton).attrs({
   right: 25px;
   font-size: 24px;
   padding: 10px;
-`
+`;
 const GameVersion = styled.span`
   position: absolute;
   bottom: 3px;
   left: 5px;
   font-size: 20px;
-`
+`;

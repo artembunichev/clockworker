@@ -1,23 +1,23 @@
-import { observer } from 'mobx-react-lite'
-import React from 'react'
+import { observer } from 'mobx-react-lite';
+import React from 'react';
 
-import { FC } from 'basic-utility-types'
-import { Callback } from 'shared/types/basic-utility-types'
+import { FC } from 'basic-utility-types';
+import { Callback } from 'shared/types/basic-utility-types';
 
-import { useStore } from 'stores/root-store/context'
+import { useStore } from 'stores/root-store/context';
 
-import { colors } from 'lib/theme'
+import { colors } from 'lib/theme';
 
-import { GameConfirmPopup } from '../game-confirm-popup'
+import { GameConfirmPopup } from '../game-confirm-popup';
 
 type Props = {
-  question?: string
-  onAccept?: Callback
-}
+  question?: string;
+  onAccept?: Callback;
+};
 
 export const QuitInMainMenuConfirm: FC<Props> = observer(({ question, onAccept }) => {
-  const { appStore } = useStore()
-  const { quitInMainMenuConfirm } = appStore.popups
+  const { appStore } = useStore();
+  const { quitInMainMenuConfirm } = appStore.popups;
 
   return (
     <GameConfirmPopup
@@ -33,8 +33,8 @@ export const QuitInMainMenuConfirm: FC<Props> = observer(({ question, onAccept }
       }}
       acceptText={'Да'}
       onAccept={() => {
-        onAccept?.()
-        appStore.setScreen('main')
+        onAccept?.();
+        appStore.setScreen('main');
       }}
       rejectText={'Нет'}
       onReject={null}
@@ -44,5 +44,5 @@ export const QuitInMainMenuConfirm: FC<Props> = observer(({ question, onAccept }
         backgroundColor: colors.mainMedium,
       }}
     />
-  )
-})
+  );
+});

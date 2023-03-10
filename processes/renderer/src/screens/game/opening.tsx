@@ -1,17 +1,17 @@
-import { observer } from 'mobx-react-lite'
-import React from 'react'
-import styled from 'styled-components'
+import { observer } from 'mobx-react-lite';
+import React from 'react';
+import styled from 'styled-components';
 
-import { animated, useSpring } from '@react-spring/web'
-import { FC } from 'basic-utility-types'
+import { animated, useSpring } from '@react-spring/web';
+import { FC } from 'basic-utility-types';
 
-import { colors } from 'lib/theme'
+import { colors } from 'lib/theme';
 
-import { useGamePlayStore } from './screen'
+import { useGamePlayStore } from './screen';
 
 export const GameOpening: FC = observer(() => {
-  const gamePlayStore = useGamePlayStore()
-  const { opening } = gamePlayStore
+  const gamePlayStore = useGamePlayStore();
+  const { opening } = gamePlayStore;
 
   const containerStyles = useSpring({
     from: { opacity: 1 },
@@ -21,7 +21,7 @@ export const GameOpening: FC = observer(() => {
     config: {
       duration: opening.disappearanceMs,
     },
-  })
+  });
 
   const contentStyles = useSpring({
     from: { opacity: 0 },
@@ -31,7 +31,7 @@ export const GameOpening: FC = observer(() => {
     config: {
       duration: 1700,
     },
-  })
+  });
 
   return (
     <>
@@ -41,8 +41,8 @@ export const GameOpening: FC = observer(() => {
         </Container>
       )}
     </>
-  )
-})
+  );
+});
 
 const Container = styled(animated.div)<{ background: string }>`
   position: fixed;
@@ -56,8 +56,8 @@ const Container = styled(animated.div)<{ background: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 const Content = styled(animated.div)`
   font-size: 110px;
   color: ${colors.mainMedium};
-`
+`;

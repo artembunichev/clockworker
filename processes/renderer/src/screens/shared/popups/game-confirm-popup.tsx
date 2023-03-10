@@ -1,25 +1,25 @@
-import { observer } from 'mobx-react-lite'
-import React, { CSSProperties } from 'react'
-import styled from 'styled-components'
+import { observer } from 'mobx-react-lite';
+import React, { CSSProperties } from 'react';
+import styled from 'styled-components';
 
-import { FC } from 'basic-utility-types'
-import { Callback, RequiredBy } from 'shared/types/basic-utility-types'
+import { FC } from 'basic-utility-types';
+import { Callback, RequiredBy } from 'shared/types/basic-utility-types';
 
-import { PixelatedButton } from 'components/pixelated/pixelated-components'
+import { PixelatedButton } from 'components/pixelated/pixelated-components';
 
-import { GamePopup, GamePopupProps, closeGamePopup } from './game-popup-template'
+import { GamePopup, GamePopupProps, closeGamePopup } from './game-popup-template';
 
 type ExtraProps = {
-  question: string
-  questionStyles?: CSSProperties
-  acceptText: string
-  onAccept: Callback | null
-  rejectText: string
-  onReject: Callback | null
-  buttonsStyles: RequiredBy<CSSProperties, 'backgroundColor'>
-}
+  question: string;
+  questionStyles?: CSSProperties;
+  acceptText: string;
+  onAccept: Callback | null;
+  rejectText: string;
+  onReject: Callback | null;
+  buttonsStyles: RequiredBy<CSSProperties, 'backgroundColor'>;
+};
 
-export type GameConfirmPopupProps = Omit<GamePopupProps, 'withCloseButton'> & ExtraProps
+export type GameConfirmPopupProps = Omit<GamePopupProps, 'withCloseButton'> & ExtraProps;
 
 export const GameConfirmPopup: FC<GameConfirmPopupProps> = observer(
   ({
@@ -37,21 +37,21 @@ export const GameConfirmPopup: FC<GameConfirmPopupProps> = observer(
     onReject,
     buttonsStyles,
   }) => {
-    const { backgroundColor, ...buttonsStylesWithoutBackgroundColor } = buttonsStyles
+    const { backgroundColor, ...buttonsStylesWithoutBackgroundColor } = buttonsStyles;
 
     const close = (): void => {
-      closeGamePopup(popup)
-    }
+      closeGamePopup(popup);
+    };
 
     const accept = (): void => {
-      close()
-      onAccept?.()
-    }
+      close();
+      onAccept?.();
+    };
 
     const reject = (): void => {
-      close()
-      onReject?.()
-    }
+      close();
+      onReject?.();
+    };
 
     return (
       <GamePopup
@@ -83,9 +83,9 @@ export const GameConfirmPopup: FC<GameConfirmPopupProps> = observer(
           </Buttons>
         </Container>
       </GamePopup>
-    )
+    );
   },
-)
+);
 
 const Container = styled.div`
   flex: 1 0 auto;
@@ -93,19 +93,19 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`
+`;
 const Question = styled.div`
   text-align: center;
   font-size: 36px;
-`
+`;
 const Buttons = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-around;
   margin-top: 16px;
-`
+`;
 const Button = styled(PixelatedButton).attrs({
   pixelsSize: 'medium',
 })`
   font-size: 32px;
-`
+`;

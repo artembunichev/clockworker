@@ -1,18 +1,18 @@
-import { PickKeyof } from 'shared/types/basic-utility-types'
+import { PickKeyof } from 'shared/types/basic-utility-types';
 
-import { RegulatorList, RegulatorTargetsInitialValues } from '../../entities/regulators'
-import { CharacterMovementState } from './state'
+import { RegulatorList, RegulatorTargetsInitialValues } from '../../entities/regulators';
+import { CharacterMovementState } from './state';
 
-export type CharacterMovementRegulatorName = 'sprint'
+export type CharacterMovementRegulatorName = 'sprint';
 
-type CharacterMovementRegulatorTarget = PickKeyof<CharacterMovementState, 'currentStepSize'>
+type CharacterMovementRegulatorTarget = PickKeyof<CharacterMovementState, 'currentStepSize'>;
 
 export const characterMovementRegulatorTargetsInitialValues: RegulatorTargetsInitialValues<
   CharacterMovementState,
   CharacterMovementRegulatorTarget
 > = {
   currentStepSize: 'baseStepSize',
-}
+};
 
 export const characterMovementRegulatorList: RegulatorList<
   CharacterMovementState,
@@ -22,4 +22,4 @@ export const characterMovementRegulatorList: RegulatorList<
   sprint: {
     currentStepSize: (prev) => prev * 2.1,
   },
-}
+};

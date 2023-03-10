@@ -1,27 +1,27 @@
-import { observer } from 'mobx-react-lite'
-import React, { CSSProperties, useEffect } from 'react'
-import styled from 'styled-components'
+import { observer } from 'mobx-react-lite';
+import React, { CSSProperties, useEffect } from 'react';
+import styled from 'styled-components';
 
-import { FC } from 'basic-utility-types'
-import { doubleBorderStyle } from 'shared-styles'
-import { Callback, RequiredBy } from 'shared/types/basic-utility-types'
+import { FC } from 'basic-utility-types';
+import { doubleBorderStyle } from 'shared-styles';
+import { Callback, RequiredBy } from 'shared/types/basic-utility-types';
 
-import { colors } from 'lib/theme'
+import { colors } from 'lib/theme';
 
-import { ButtonWithCross } from 'components/buttons/button-with-cross'
-import { PortalToBody } from 'components/utility/portal-to-body'
+import { ButtonWithCross } from 'components/buttons/button-with-cross';
+import { PortalToBody } from 'components/utility/portal-to-body';
 
 export type PopupProps = {
-  width: string
-  height: string
-  styles: RequiredBy<CSSProperties, 'backgroundColor'>
-  title?: string
-  titleStyles?: CSSProperties
-  isOpened: boolean
-  withCloseButton?: boolean
-  fnForClosing?: Callback
-  onClose?: Callback
-}
+  width: string;
+  height: string;
+  styles: RequiredBy<CSSProperties, 'backgroundColor'>;
+  title?: string;
+  titleStyles?: CSSProperties;
+  isOpened: boolean;
+  withCloseButton?: boolean;
+  fnForClosing?: Callback;
+  onClose?: Callback;
+};
 
 export const Popup: FC<PopupProps> = observer(
   ({
@@ -40,13 +40,13 @@ export const Popup: FC<PopupProps> = observer(
       return () => {
         // закрытие попапа
         if (isOpened === true) {
-          onClose?.()
+          onClose?.();
         }
-      }
-    }, [isOpened])
+      };
+    }, [isOpened]);
 
     if (!isOpened) {
-      return null
+      return null;
     }
 
     return (
@@ -63,9 +63,9 @@ export const Popup: FC<PopupProps> = observer(
           </Block>
         </Container>
       </PortalToBody>
-    )
+    );
   },
-)
+);
 
 const Container = styled.div`
   position: fixed;
@@ -78,7 +78,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #00000083;
-`
+`;
 const Block = styled.div<{ width: string; height: string; color?: string }>`
   display: flex;
   flex-direction: column;
@@ -89,23 +89,23 @@ const Block = styled.div<{ width: string; height: string; color?: string }>`
   margin: 30px;
   box-shadow: 0px 0px 25px 8px ${colors.shadow};
   ${doubleBorderStyle}
-`
+`;
 const Heading = styled.div`
   min-height: 32px;
   position: relative;
   margin-bottom: 15px;
-`
+`;
 const Title = styled.h2`
   font-size: 36px;
   text-align: center;
-`
+`;
 const CloseButton = styled(ButtonWithCross)`
   position: absolute;
   right: 0;
   top: 0;
-`
+`;
 const Body = styled.div`
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
-`
+`;

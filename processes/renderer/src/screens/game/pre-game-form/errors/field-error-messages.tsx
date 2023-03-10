@@ -1,16 +1,16 @@
-import { observer } from 'mobx-react-lite'
-import React from 'react'
-import styled from 'styled-components'
+import { observer } from 'mobx-react-lite';
+import React from 'react';
+import styled from 'styled-components';
 
-import { FC } from 'basic-utility-types'
+import { FC } from 'basic-utility-types';
 
-import { colors } from 'lib/theme'
+import { colors } from 'lib/theme';
 
-import { FieldErrors } from './get-errors'
+import { FieldErrors } from './get-errors';
 
 type Props = {
-  errors: FieldErrors
-}
+  errors: FieldErrors;
+};
 
 export const FieldErrorMessages: FC<Props> = observer(({ errors }) => {
   return (
@@ -21,8 +21,8 @@ export const FieldErrorMessages: FC<Props> = observer(({ errors }) => {
         <FormErrorMessage>{errors.isSpecSymbols.message}</FormErrorMessage>
       )}
     </>
-  )
-})
+  );
+});
 
 const FormErrorMessage = styled.div`
   position: absolute;
@@ -33,4 +33,4 @@ const FormErrorMessage = styled.div`
   margin-top: 6px;
   color: ${colors.error};
   text-align: center;
-`
+`;

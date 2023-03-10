@@ -1,12 +1,12 @@
-import { GameScene, GameSceneConfig, GameSceneMapConfig } from './scene'
+import { GameScene, GameSceneConfig, GameSceneMapConfig } from './scene';
 
-export type SceneCreatorConfig = Pick<GameSceneConfig<any>, 'screen' | 'characterList'>
+export type SceneCreatorConfig = Pick<GameSceneConfig<any>, 'screen' | 'characterList'>;
 
 export class GameSceneCreator {
-  private config: SceneCreatorConfig
+  private config: SceneCreatorConfig;
 
   constructor(config: SceneCreatorConfig) {
-    this.config = config
+    this.config = config;
   }
 
   createScene = <Name extends string>(name: Name, map: GameSceneMapConfig): GameScene<Name> => {
@@ -15,6 +15,6 @@ export class GameSceneCreator {
       map,
       screen: this.config.screen,
       characterList: this.config.characterList,
-    })
-  }
+    });
+  };
 }

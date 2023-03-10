@@ -1,27 +1,27 @@
-import { observer } from 'mobx-react-lite'
-import React from 'react'
-import styled from 'styled-components'
+import { observer } from 'mobx-react-lite';
+import React from 'react';
+import styled from 'styled-components';
 
-import { FC } from 'basic-utility-types'
+import { FC } from 'basic-utility-types';
 
-import { useStore } from 'stores/root-store/context'
+import { useStore } from 'stores/root-store/context';
 
-import { colors } from 'lib/theme'
+import { colors } from 'lib/theme';
 
-import { PixelatedButton } from 'components/pixelated/pixelated-components'
-import { AppSettingsMenu } from 'screens/shared/app-settings/menu'
+import { PixelatedButton } from 'components/pixelated/pixelated-components';
+import { AppSettingsMenu } from 'screens/shared/app-settings/menu';
 
 export const MainMenu: FC = observer(() => {
-  const { appStore } = useStore()
-  const { settingsMenu } = appStore.popups
+  const { appStore } = useStore();
+  const { settingsMenu } = appStore.popups;
 
   const createNewGame = (): void => {
-    appStore.setScreen('game')
-  }
+    appStore.setScreen('game');
+  };
 
   const openAppSettings = (): void => {
-    settingsMenu.open()
-  }
+    settingsMenu.open();
+  };
 
   return (
     <MainMenuButtons>
@@ -30,13 +30,13 @@ export const MainMenu: FC = observer(() => {
       <Button onClick={createNewGame}>Новая игра</Button>
       <Button onClick={openAppSettings}>Настройки</Button>
     </MainMenuButtons>
-  )
-})
+  );
+});
 
 const MainMenuButtons = styled.menu`
   display: flex;
   flex-direction: column;
-`
+`;
 const Button = styled(PixelatedButton).attrs({
   pixelsSize: 'medium',
   backgroundColor: colors.mainLight,
@@ -47,4 +47,4 @@ const Button = styled(PixelatedButton).attrs({
   &:first-child {
     margin-top: 0;
   }
-`
+`;

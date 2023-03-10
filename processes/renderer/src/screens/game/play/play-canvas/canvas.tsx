@@ -1,23 +1,23 @@
-import { observer } from 'mobx-react-lite'
-import React, { useEffect, useRef } from 'react'
-import styled from 'styled-components'
+import { observer } from 'mobx-react-lite';
+import React, { useEffect, useRef } from 'react';
+import styled from 'styled-components';
 
-import { FC } from 'basic-utility-types'
+import { FC } from 'basic-utility-types';
 
-import { useGamePlayStore } from 'screens/game/screen'
+import { useGamePlayStore } from 'screens/game/screen';
 
-import { PlayCanvasOverlay } from './overlay'
+import { PlayCanvasOverlay } from './overlay';
 
 export const PlayCanvas: FC = observer(() => {
-  const gamePlayStore = useGamePlayStore()
+  const gamePlayStore = useGamePlayStore();
 
-  const containerRef = useRef<HTMLDivElement | null>(null)
+  const containerRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     if (gamePlayStore.isGameInitialized && gamePlayStore.screen.canvas && containerRef.current) {
       // "рендер" канваса, созданного в сторе
-      containerRef.current.appendChild(gamePlayStore.screen.canvas)
+      containerRef.current.appendChild(gamePlayStore.screen.canvas);
     }
-  }, [gamePlayStore.isGameInitialized])
+  }, [gamePlayStore.isGameInitialized]);
 
   return (
     <>
@@ -25,11 +25,11 @@ export const PlayCanvas: FC = observer(() => {
         <PlayCanvasOverlay />
       </Container>
     </>
-  )
-})
+  );
+});
 
 const Container = styled.div`
   position: relative;
   flex: 1 0 auto;
   display: flex;
-`
+`;

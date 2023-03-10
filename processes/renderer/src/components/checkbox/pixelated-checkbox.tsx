@@ -1,36 +1,36 @@
-import { observer } from 'mobx-react-lite'
-import React from 'react'
-import styled from 'styled-components'
+import { observer } from 'mobx-react-lite';
+import React from 'react';
+import styled from 'styled-components';
 
-import { FC } from 'basic-utility-types'
-import { Callback } from 'shared/types/basic-utility-types'
+import { FC } from 'basic-utility-types';
+import { Callback } from 'shared/types/basic-utility-types';
 
-import { PixelatedDiv } from 'components/pixelated/pixelated-components'
+import { PixelatedDiv } from 'components/pixelated/pixelated-components';
 
-import { CheckMarkIcon } from 'assets/icons/check-mark'
+import { CheckMarkIcon } from 'assets/icons/check-mark';
 
 export type PixelatedCheckboxProps = {
-  size: number
-  checked?: boolean
-  onSelect?: Callback
-  onUnselect?: Callback
-  backgroundColor: string
-  checkedBackgroundColor: string
-}
+  size: number;
+  checked?: boolean;
+  onSelect?: Callback;
+  onUnselect?: Callback;
+  backgroundColor: string;
+  checkedBackgroundColor: string;
+};
 
 export const PixelatedCheckbox: FC<PixelatedCheckboxProps> = observer(
   ({ size, checked, onSelect, onUnselect, backgroundColor, checkedBackgroundColor }) => {
     const onClick = (): void => {
       if (!checked) {
-        onSelect?.()
+        onSelect?.();
       } else {
-        onUnselect?.()
+        onUnselect?.();
       }
-    }
+    };
 
-    const background = checked ? checkedBackgroundColor : backgroundColor
+    const background = checked ? checkedBackgroundColor : backgroundColor;
 
-    const checkMarkSize = size + 4
+    const checkMarkSize = size + 4;
 
     return (
       <StyledPixelatedCheckbox size={size} onClick={onClick} backgroundColor={background}>
@@ -40,9 +40,9 @@ export const PixelatedCheckbox: FC<PixelatedCheckboxProps> = observer(
           </CheckMarkContainer>
         )}
       </StyledPixelatedCheckbox>
-    )
+    );
   },
-)
+);
 
 export const StyledPixelatedCheckbox = styled(PixelatedDiv).attrs({
   pixelsSize: 'small',
@@ -52,8 +52,8 @@ export const StyledPixelatedCheckbox = styled(PixelatedDiv).attrs({
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 const CheckMarkContainer = styled.div`
   position: absolute;
   top: -5px;
-`
+`;

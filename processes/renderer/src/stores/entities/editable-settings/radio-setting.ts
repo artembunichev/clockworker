@@ -1,8 +1,8 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable } from 'mobx';
 
-import { isEqual } from 'shared/lib/is-equal'
+import { isEqual } from 'shared/lib/is-equal';
 
-import { EditableSettingVariants } from './types'
+import { EditableSettingVariants } from './types';
 
 export const getVariantsWithInitialValue = <T>(
   variants: EditableSettingVariants<T>,
@@ -13,53 +13,53 @@ export const getVariantsWithInitialValue = <T>(
       return {
         ...variant,
         isSelected: true,
-      }
+      };
     } else {
       return {
         ...variant,
         isSelected: false,
-      }
+      };
     }
-  })
-}
+  });
+};
 
 type Config<Value> = {
-  id: string
-  variants: EditableSettingVariants<Value>
-  initialValue?: Value
-}
+  id: string;
+  variants: EditableSettingVariants<Value>;
+  initialValue?: Value;
+};
 
 // можно выбрать только один вариант
 export class RadioSetting<Value> {
-  id: string
-  variants: EditableSettingVariants<Value>
+  id: string;
+  variants: EditableSettingVariants<Value>;
 
   constructor(config: Config<Value>) {
-    const { id, variants, initialValue } = config
+    const { id, variants, initialValue } = config;
 
-    this.id = id
+    this.id = id;
 
     if (initialValue) {
-      const variantsWithInitialValue = getVariantsWithInitialValue(variants, initialValue)
-      this.variants = variantsWithInitialValue
+      const variantsWithInitialValue = getVariantsWithInitialValue(variants, initialValue);
+      this.variants = variantsWithInitialValue;
     } else {
-      this.variants = variants
+      this.variants = variants;
     }
 
-    makeAutoObservable(this)
+    makeAutoObservable(this);
   }
 
   selectVariant = (variantId: string): void => {
     this.variants.forEach((variant) => {
       if (variant.id === variantId) {
-        variant.isSelected = true
+        variant.isSelected = true;
       } else {
-        variant.isSelected = false
+        variant.isSelected = false;
       }
-    })
-  }
+    });
+  };
 
   get value(): Value {
-    return this.variants.find((v) => v.isSelected)!.value
+    return this.variants.find((v) => v.isSelected)!.value;
   }
 }

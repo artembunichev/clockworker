@@ -1,71 +1,71 @@
-import { observer } from 'mobx-react-lite'
-import React, { useEffect, useRef, useState } from 'react'
-import styled, { css, keyframes } from 'styled-components'
+import { observer } from 'mobx-react-lite';
+import React, { useEffect, useRef, useState } from 'react';
+import styled, { css, keyframes } from 'styled-components';
 
-import { FC } from 'basic-utility-types'
-import { doubleBorderStyle } from 'shared-styles'
+import { FC } from 'basic-utility-types';
+import { doubleBorderStyle } from 'shared-styles';
 
-import { useWindowClick } from 'hooks/use-window-click'
+import { useWindowClick } from 'hooks/use-window-click';
 
-import { colors } from 'lib/theme'
+import { colors } from 'lib/theme';
 
-import { AutoPrintedText } from 'components/auto-printed-text'
-import { ButtonWithCross } from 'components/buttons/button-with-cross'
-import { useGamePlayStore } from 'screens/game/screen'
+import { AutoPrintedText } from 'components/auto-printed-text';
+import { ButtonWithCross } from 'components/buttons/button-with-cross';
+import { useGamePlayStore } from 'screens/game/screen';
 
-type AutoprintStatus = 'none' | 'inProgress' | 'end'
+type AutoprintStatus = 'none' | 'inProgress' | 'end';
 
 type Props = {
-  text: string | undefined | null
-  isOpened: boolean
-}
+  text: string | undefined | null;
+  isOpened: boolean;
+};
 export const Textbox: FC<Props> = observer(({ isOpened, text }) => {
-  const gamePlayStore = useGamePlayStore()
+  const gamePlayStore = useGamePlayStore();
 
-  const [autoprintStatus, setAutoprintStatus] = useState<AutoprintStatus>('none')
+  const [autoprintStatus, setAutoprintStatus] = useState<AutoprintStatus>('none');
 
-  const [isOpeningAnimationSkipped, setIsOpeningAnimationSkipped] = useState(false)
+  const [isOpeningAnimationSkipped, setIsOpeningAnimationSkipped] = useState(false);
 
-  const containerRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const onAnimationEnd = (): void => {
-      setAutoprintStatus('inProgress')
-    }
+      setAutoprintStatus('inProgress');
+    };
     if (containerRef.current) {
-      containerRef.current.addEventListener('animationend', onAnimationEnd)
+      containerRef.current.addEventListener('animationend', onAnimationEnd);
     }
-    return () => containerRef.current?.removeEventListener('animationend', onAnimationEnd)
-  }, [containerRef.current])
+    return () => containerRef.current?.removeEventListener('animationend', onAnimationEnd);
+  }, [containerRef.current]);
 
-  const [isAutoprintSkipped, setIsAutoprintSkipped] = useState(false)
+  const [isAutoprintSkipped, setIsAutoprintSkipped] = useState(false);
 
   const onAutoprintEnd = (): void => {
-    setAutoprintStatus('end')
-  }
+    setAutoprintStatus('end');
+  };
 
   const close = (): void => {
-    gamePlayStore.textboxController.closeCurrentTextbox()
-  }
+    gamePlayStore.textboxController.closeCurrentTextbox();
+  };
 
   useWindowClick(() => {
     if (isOpened) {
       if (autoprintStatus === 'none') {
-        setIsOpeningAnimationSkipped(true)
+        setIsOpeningAnimationSkipped(true);
       }
       if (autoprintStatus === 'inProgress') {
-        setIsAutoprintSkipped(true)
+        setIsAutoprintSkipped(true);
       }
       if (autoprintStatus === 'end') {
-        close()
+        close();
       }
     }
-  })
+  });
 
   useEffect(() => {
-    setAutoprintStatus('none')
-    setIsOpeningAnimationSkipped(false)
-    setIsAutoprintSkipped(false)
-  }, [isOpened])
+    setAutoprintStatus('none');
+    setIsOpeningAnimationSkipped(false);
+    setIsAutoprintSkipped(false);
+  }, [isOpened]);
 
   return (
     <Wrapper>
@@ -90,12 +90,12 @@ export const Textbox: FC<Props> = observer(({ isOpened, text }) => {
         )}
       </Container>
     </Wrapper>
-  )
-})
+  );
+});
 
 const Wrapper = styled.div`
   width: 100%;
-`
+`;
 const textboxOpening = keyframes`
   from {
     bottom:-20px;
@@ -105,7 +105,7 @@ const textboxOpening = keyframes`
     bottom:15px;
     transform:scale(1)
   }
-`
+`;
 const Container = styled.div<{ isOpened: boolean; isOpeningAnimationSkipped: boolean }>`
   width: 100%;
   position: absolute;
@@ -121,12 +121,12 @@ const Container = styled.div<{ isOpened: boolean; isOpeningAnimationSkipped: boo
     css`
       ${textboxOpening} ${props.isOpeningAnimationSkipped ? 0 : 230}ms forwards
     `};
-`
+`;
 const CloseButton = styled(ButtonWithCross)`
   position: absolute;
   right: 18px;
   top: 15.5px;
-`
+`;
 const Box = styled.div`
   position: relative;
   max-width: 680px;
@@ -134,7 +134,7 @@ const Box = styled.div`
   font-size: 24px;
   background-color: ${colors.mainLight};
   ${doubleBorderStyle}
-`
+`;
 const InvisibleText = styled.div`
   opacity: 0;
-`
+`;

@@ -1,16 +1,16 @@
-import { observer } from 'mobx-react-lite'
-import React, { useEffect } from 'react'
+import { observer } from 'mobx-react-lite';
+import React, { useEffect } from 'react';
 
-import { FC } from 'basic-utility-types'
+import { FC } from 'basic-utility-types';
 
-import { UpdateStore } from 'stores/update.store'
+import { UpdateStore } from 'stores/update.store';
 
-import { DownloadProgress } from './download-progress'
-import { UpdateNotification } from './update-notification'
+import { DownloadProgress } from './download-progress';
+import { UpdateNotification } from './update-notification';
 
 type Props = {
-  updateStore: UpdateStore
-}
+  updateStore: UpdateStore;
+};
 
 export const UpdatePopup: FC<Props> = observer(({ updateStore }) => {
   const {
@@ -23,13 +23,13 @@ export const UpdatePopup: FC<Props> = observer(({ updateStore }) => {
     updateGame,
     openNotification,
     closeNotification,
-  } = updateStore
+  } = updateStore;
 
   useEffect(() => {
     if (isShowingNotificationAllowed && version !== null && releaseNotes !== null) {
-      openNotification()
+      openNotification();
     }
-  }, [version, releaseNotes])
+  }, [version, releaseNotes]);
 
   return (
     <>
@@ -47,5 +47,5 @@ export const UpdatePopup: FC<Props> = observer(({ updateStore }) => {
           <DownloadProgress percentage={currentPercentage} />
         ))}
     </>
-  )
-})
+  );
+});

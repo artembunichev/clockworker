@@ -1,26 +1,26 @@
-import { observer } from 'mobx-react-lite'
-import React, { useEffect } from 'react'
-import styled, { createGlobalStyle } from 'styled-components'
+import { observer } from 'mobx-react-lite';
+import React, { useEffect } from 'react';
+import styled, { createGlobalStyle } from 'styled-components';
 
-import { FC } from 'basic-utility-types'
+import { FC } from 'basic-utility-types';
 
-import { useStore } from 'stores/root-store/context'
+import { useStore } from 'stores/root-store/context';
 
-import { colors } from 'lib/theme'
+import { colors } from 'lib/theme';
 
-import { GameScreen } from 'screens/game/screen'
-import { MainScreen } from 'screens/main/screen'
+import { GameScreen } from 'screens/game/screen';
+import { MainScreen } from 'screens/main/screen';
 
 export const App: FC = observer(() => {
-  const { appStore } = useStore()
+  const { appStore } = useStore();
 
   useEffect(() => {
     window.addEventListener('beforeunload', () => {
       if (!appStore.isQuit) {
-        appStore.quitGame()
+        appStore.quitGame();
       }
-    })
-  }, [])
+    });
+  }, []);
 
   return (
     <>
@@ -31,8 +31,8 @@ export const App: FC = observer(() => {
         {appStore.screen === 'game' && <GameScreen />}
       </Container>
     </>
-  )
-})
+  );
+});
 
 const GlobalStyles = createGlobalStyle`
   * {
@@ -77,9 +77,9 @@ const GlobalStyles = createGlobalStyle`
     border-radius: 10px;
     background-color:${colors.mainDark}
   }
-`
+`;
 const Container = styled.div`
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
-`
+`;
