@@ -67,3 +67,7 @@ export const objectMapAll = <T extends object, R>(
     return result
   }, {} as OverwriteProperties<T, R>)
 }
+
+export const objectLength = (obj: object): number => {
+  return objectKeys(obj).length
+}

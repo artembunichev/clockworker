@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 
-import { objectKeys, objectValues } from 'shared/lib/objects'
+import { objectKeys, objectLength, objectValues } from 'shared/lib/objects'
 
 export type ImageContainerOptions = {
   loadImmediately?: boolean
@@ -50,7 +50,7 @@ export class ImageContainer<Srcs extends ImageSrcs> {
 
   loadAll = (): Promise<void> => {
     return new Promise((resolve) => {
-      const promises: Array<Promise<void>> = []
+      const promises: Array<Promise<void>> = Array(objectLength(this.list))
       objectKeys(this.list).forEach((imageName) => {
         promises.push(this.loadImage(imageName))
       })
