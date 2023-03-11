@@ -15,15 +15,15 @@ import { useGameStore } from '../screen';
 import { PreGameForm } from './form';
 import { usePreGameFormScreenEsc } from './use-esc';
 
-export const PreGameFormScreen: FC = observer(() => {
+export const PreGameFormScreen: FC = observer( () => {
   const { appStore } = useStore();
   const gameStore = useGameStore();
   const gamePlayStore = gameStore.playStore;
 
-  usePreGameFormScreenEsc({ gamePlayStore });
+  usePreGameFormScreenEsc( { gamePlayStore } );
 
   const goBack = (): void => {
-    appStore.setScreen('main');
+    appStore.setScreen( 'main' );
   };
 
   return (
@@ -37,7 +37,7 @@ export const PreGameFormScreen: FC = observer(() => {
       </Body>
     </Container>
   );
-});
+} );
 
 const Container = styled.div`
   position: relative;
@@ -46,10 +46,10 @@ const Container = styled.div`
   flex-direction: column;
   padding: 25px;
 `;
-const BackButton = styled(PixelatedButton).attrs({
+const BackButton = styled( PixelatedButton ).attrs( {
   pixelsSize: 'medium',
   backgroundColor: colors.mainLight,
-})`
+} )`
   position: absolute;
   bottom: 10px;
   left: 19px;

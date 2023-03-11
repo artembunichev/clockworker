@@ -7,14 +7,14 @@ export class PreGameForm {
   marketName = '';
 
   constructor() {
-    makeAutoObservable(this);
+    makeAutoObservable( this );
   }
 
-  setPlayerCharacterName = (name: string): void => {
+  setPlayerCharacterName = ( name: string ): void => {
     this.playerCharacterName = name;
   };
 
-  setMarketName = (name: string): void => {
+  setMarketName = ( name: string ): void => {
     this.marketName = name;
   };
 }

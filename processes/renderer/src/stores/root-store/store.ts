@@ -10,15 +10,15 @@ import { UpdateStore } from 'stores/update.store';
 export class RootStore {
   appSettingsStore = new AppSettingsStore();
   popupHistory = new PopupHistory();
-  appStore = new AppStore({ appSettings: this.appSettingsStore, popupHistory: this.popupHistory });
+  appStore = new AppStore( { appSettings: this.appSettingsStore, popupHistory: this.popupHistory } );
   updateStore: UpdateStore | null = isElectron()
-    ? new UpdateStore({ settings: this.appSettingsStore })
+    ? new UpdateStore( { settings: this.appSettingsStore } )
     : null;
   keyboardStore = new KeyboardStore();
   createGameStore = (): GameStore => {
-    return new GameStore({
+    return new GameStore( {
       popupHistory: this.popupHistory,
       keyboard: this.keyboardStore,
-    });
+    } );
   };
 }

@@ -23,30 +23,30 @@ export class AppStore {
   screen: AppScreen = 'main';
   isQuit = false;
 
-  constructor(config: Config) {
+  constructor( config: Config ) {
     const { appSettings, popupHistory } = config;
 
     this.appSettings = appSettings;
     this.popupHistory = popupHistory;
-    this.popups = new AppPopups(this.popupHistory);
+    this.popups = new AppPopups( this.popupHistory );
 
-    makeAutoObservable(this);
+    makeAutoObservable( this );
   }
 
-  setScreen = (screen: AppScreen): void => {
-    closeAllUnclosedPopups(this.popupHistory);
+  setScreen = ( screen: AppScreen ): void => {
+    closeAllUnclosedPopups( this.popupHistory );
     this.screen = screen;
   };
 
-  setIsQuit = (value: boolean): void => {
+  setIsQuit = ( value: boolean ): void => {
     this.isQuit = value;
   };
   quitGame = async (): Promise<void> => {
-    this.setIsQuit(true);
-    if (isElectron()) {
+    this.setIsQuit( true );
+    if ( isElectron() ) {
       await this.appSettings.saveSettingsToFile();
     }
-    closeAllUnclosedPopups(this.popupHistory);
+    closeAllUnclosedPopups( this.popupHistory );
     window.close();
   };
 }

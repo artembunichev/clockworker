@@ -16,37 +16,37 @@ type Props = {
   checkboxSize: number;
 };
 
-export const SettingVariants: FC<Props> = observer(({ setting, checkboxSize }) => {
-  const onSelect = (variantId: string): void => {
-    setting.selectVariant(variantId);
+export const SettingVariants: FC<Props> = observer( ( { setting, checkboxSize } ) => {
+  const onSelect = ( variantId: string ): void => {
+    setting.selectVariant( variantId );
   };
 
-  const onUnselect = (variantId: string): void => {
-    if (setting instanceof CheckboxSetting) {
-      setting.unselectVariant(variantId);
+  const onUnselect = ( variantId: string ): void => {
+    if ( setting instanceof CheckboxSetting ) {
+      setting.unselectVariant( variantId );
     }
   };
 
   return (
     <Variants>
-      {setting.variants.map((variant) => {
+      {setting.variants.map( ( variant ) => {
         return (
           <Variant key={variant.id}>
             <Label>{variant.label}</Label>
             <PixelatedCheckbox
               size={checkboxSize}
               checked={variant.isSelected}
-              onSelect={() => onSelect(variant.id)}
-              onUnselect={() => onUnselect(variant.id)}
+              onSelect={() => onSelect( variant.id )}
+              onUnselect={() => onUnselect( variant.id )}
               backgroundColor={colors.mainMedium}
               checkedBackgroundColor={colors.mainMediumWell}
             />
           </Variant>
         );
-      })}
+      } )}
     </Variants>
   );
-});
+} );
 
 const Variants = styled.div`
   flex: 1 0 auto;

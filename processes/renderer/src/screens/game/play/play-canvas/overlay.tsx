@@ -5,6 +5,6 @@ import { FC } from 'basic-utility-types';
 
 import { GameTextbox } from 'screens/game/game-textbox';
 
-export const PlayCanvasOverlay: FC = observer(() => {
+export const PlayCanvasOverlay: FC = observer( () => {
   return <GameTextbox />;
-});
+} );

@@ -7,7 +7,7 @@ export type EditableGameSettingsType = Partial<EditableSettings<GameSettingsValu
 
 // настройки, которые могут изменяться пользователем
 export class EditableGameSettings implements EditableGameSettingsType {
-  movementControllers = new RadioSetting<MovementControllersKeys>({
+  movementControllers = new RadioSetting<MovementControllersKeys>( {
     id: 'movementControllers',
     variants: [
       {
@@ -33,5 +33,5 @@ export class EditableGameSettings implements EditableGameSettingsType {
         isSelected: false,
       },
     ],
-  });
+  } );
 }

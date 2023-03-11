@@ -21,7 +21,7 @@ type GetFormErrorsReturn = {
 export const getFormErrors = (
   errors: FieldErrorsImpl<DeepRequired<PreGameFormFields>>,
 ): GetFormErrorsReturn => {
-  const isPlayerCharacterNameError = Boolean(errors.playerCharacterName);
+  const isPlayerCharacterNameError = Boolean( errors.playerCharacterName );
   const isPlayerCharacterNameEmpty = errors.playerCharacterName?.type === 'required';
   const playerCharacterNameEmptyMessage = 'Вы не указали имя своего персонажа';
   const isPlayerCharacterNameShort = errors.playerCharacterName?.type === 'minLength';
@@ -29,7 +29,7 @@ export const getFormErrors = (
   const isPlayerCharacterNameSpecSymbols = errors.playerCharacterName?.type === 'validate';
   const playerCharacterNameSpecSymbolsMessage = 'Имя персонажа содержит недопустимые символы';
 
-  const isMarketNameError = Boolean(errors.marketName);
+  const isMarketNameError = Boolean( errors.marketName );
   const isMarketNameEmpty = errors.marketName?.type === 'required';
   const marketNameEmptyMessage = 'Вы не указали название магазина';
   const isMarketNameShort = errors.marketName?.type === 'minLength';

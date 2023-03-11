@@ -20,73 +20,73 @@ export class AppSettingsStore {
 
   constructor() {
     this.initialize();
-    makeAutoObservable(this);
+    makeAutoObservable( this );
   }
 
   private initialize = (): void => {
-    if (isElectron()) {
+    if ( isElectron() ) {
       const isSettingsFileExists = window.ipcRenderer.sendSync<undefined, boolean>(
         'checkIfAppSettingsFileExists',
       );
-      if (!isSettingsFileExists) {
-        this.createSettingsFile(this.values);
+      if ( !isSettingsFileExists ) {
+        this.createSettingsFile( this.values );
       } else {
         this.syncSettingsWithFile();
       }
     }
   };
 
-  setSettingsToFileSync = (settings: AppSettingsValues): void => {
-    window.ipcRenderer.sendSync('setAppSettingsToFileSync', settings);
+  setSettingsToFileSync = ( settings: AppSettingsValues ): void => {
+    window.ipcRenderer.sendSync( 'setAppSettingsToFileSync', settings );
   };
-  setSettingsToFileAsync = (settings: AppSettingsValues): Promise<void> => {
-    return window.ipcRenderer.invoke<AppSettingsValues, void>('setAppSettingsToFileAsync', settings);
+  setSettingsToFileAsync = ( settings: AppSettingsValues ): Promise<void> => {
+    return window.ipcRenderer.invoke<AppSettingsValues, void>( 'setAppSettingsToFileAsync', settings );
   };
 
-  private createSettingsFile = (settings: AppSettingsValues): void => {
-    return this.setSettingsToFileSync(settings);
+  private createSettingsFile = ( settings: AppSettingsValues ): void => {
+    return this.setSettingsToFileSync( settings );
   };
 
   private getSettingsFromFile = (): AppSettingsValues => {
-    return window.ipcRenderer.sendSync<undefined, AppSettingsValues>('getAppSettings');
+    return window.ipcRenderer.sendSync<undefined, AppSettingsValues>( 'getAppSettings' );
   };
 
   saveSettingsToFile = (): Promise<void> => {
-    return this.setSettingsToFileAsync(this.values);
+    return this.setSettingsToFileAsync( this.values );
   };
 
   // читаем значения из файла и устанавливаем их в editable
   private syncSettingsWithFile = (): void => {
     const values = this.getSettingsFromFile();
 
-    objectEntries(values).forEach(([name, value]) => {
+    objectEntries( values ).forEach( ( [ name, value ] ) => {
       const thisEditableSetting = this.editable[name];
 
-      if (thisEditableSetting instanceof SingleValueSetting) {
-        thisEditableSetting.setValue(value);
+      if ( thisEditableSetting instanceof SingleValueSetting ) {
+        thisEditableSetting.setValue( value );
       }
 
-      if (thisEditableSetting instanceof CheckboxSetting) {
-        thisEditableSetting.variants.forEach((v) => {
-          if (isEqual(v, value)) {
-            thisEditableSetting.selectVariant(v.id);
+      if ( thisEditableSetting instanceof CheckboxSetting ) {
+        thisEditableSetting.variants.forEach( ( v ) => {
+          if ( isEqual( v, value ) ) {
+            thisEditableSetting.selectVariant( v.id );
           } else {
-            thisEditableSetting.unselectVariant(v.id);
+            thisEditableSetting.unselectVariant( v.id );
           }
-        });
+        } );
       }
 
-      if (thisEditableSetting instanceof RadioSetting) {
-        thisEditableSetting.variants.forEach((v) => {
-          if (isEqual(v, value)) {
-            thisEditableSetting.selectVariant(v.id);
+      if ( thisEditableSetting instanceof RadioSetting ) {
+        thisEditableSetting.variants.forEach( ( v ) => {
+          if ( isEqual( v, value ) ) {
+            thisEditableSetting.selectVariant( v.id );
           }
-        });
+        } );
       }
-    });
+    } );
   };
 
   get values(): AppSettingsValues {
-    return getConvertedEditableSettings(this.editable);
+    return getConvertedEditableSettings( this.editable );
   }
 }

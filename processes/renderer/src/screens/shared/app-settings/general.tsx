@@ -6,7 +6,7 @@ import { useStore } from 'stores/root-store/context';
 
 import { FlagSetting } from 'components/settings/flag-setting';
 
-export const GeneralAppSettings = observer(() => {
+export const GeneralAppSettings = observer( () => {
   const { appSettingsStore } = useStore();
 
   const { isGetUpdateNotifications } = appSettingsStore.editable;
@@ -19,7 +19,7 @@ export const GeneralAppSettings = observer(() => {
       </Setting>
     </Container>
   );
-});
+} );
 
 const Container = styled.div``;
 const Setting = styled.div`

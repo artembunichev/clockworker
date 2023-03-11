@@ -21,7 +21,7 @@ export class TransitionScreen {
 
   isOpened = false;
 
-  constructor(config: TransitionScreenConfig) {
+  constructor( config: TransitionScreenConfig ) {
     const { appearanceMs, disappearanceMs, durationMs, background, sharedPlayMethods } = config;
 
     this.appearanceMs = appearanceMs;
@@ -30,23 +30,23 @@ export class TransitionScreen {
     this.background = background;
     this.sharedPlayMethods = sharedPlayMethods;
 
-    makeAutoObservable(this);
+    makeAutoObservable( this );
   }
 
   open = async (): Promise<void> => {
-    this.sharedPlayMethods.playerCharacter.addMovementKeysProhibitor('transitionScreen');
+    this.sharedPlayMethods.playerCharacter.addMovementKeysProhibitor( 'transitionScreen' );
     this.isOpened = true;
-    await delay(this.appearanceMs);
+    await delay( this.appearanceMs );
   };
   close = async (): Promise<void> => {
-    await delay(this.disappearanceMs);
+    await delay( this.disappearanceMs );
     this.isOpened = false;
-    this.sharedPlayMethods.playerCharacter.removeMovementKeysProhibitor('transitionScreen');
+    this.sharedPlayMethods.playerCharacter.removeMovementKeysProhibitor( 'transitionScreen' );
   };
 
   run = async (): Promise<void> => {
     await this.open();
-    await delay(this.durationMs);
+    await delay( this.durationMs );
     await this.close();
   };
 }

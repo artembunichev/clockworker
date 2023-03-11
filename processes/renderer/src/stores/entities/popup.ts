@@ -49,21 +49,21 @@ export class Popup {
 
   isOpened = false;
 
-  constructor(config: Config) {
+  constructor( config: Config ) {
     const { name, onOpen, onClose, history } = config ?? {};
 
     this.name = name;
-    this.setOnOpen(onOpen ?? null);
-    this.setOnClose(onClose ?? null);
+    this.setOnOpen( onOpen ?? null );
+    this.setOnClose( onClose ?? null );
     this.history = history;
 
-    makeAutoObservable(this);
+    makeAutoObservable( this );
   }
 
-  setOnOpen = (onOpen: PopupCallback): void => {
+  setOnOpen = ( onOpen: PopupCallback ): void => {
     this.onOpen = onOpen;
   };
-  setOnClose = (onClose: PopupCallback): void => {
+  setOnClose = ( onClose: PopupCallback ): void => {
     this.onClose = onClose;
   };
 
@@ -76,8 +76,8 @@ export class Popup {
 
     const internalCallback = callbackType === 'open' ? this.onOpen : this.onClose;
 
-    if (callback !== undefined) {
-      if (overwrite) {
+    if ( callback !== undefined ) {
+      if ( overwrite ) {
         callback?.();
       } else {
         const mergedCallback = (): void => {
@@ -91,57 +91,57 @@ export class Popup {
     }
   };
 
-  private openDirectly = (onOpen?: PopupCallback, options?: PopupCallbackOptions): void => {
+  private openDirectly = ( onOpen?: PopupCallback, options?: PopupCallbackOptions ): void => {
     this.isOpened = true;
-    this.handleCallback('open', onOpen, options);
+    this.handleCallback( 'open', onOpen, options );
   };
 
   // если onOpen / onClose === null - значит пустая функция,
   // а если undefined - значит будет использоваться функция по умолчанию
-  open = (params?: PopupOpenParams): void => {
+  open = ( params?: PopupOpenParams ): void => {
     const { onOpen, config } = params ?? {};
 
     const { forwardedFrom } = config ?? {};
 
-    if (forwardedFrom) {
+    if ( forwardedFrom ) {
       const { fn, options } = forwardedFrom.onClose;
-      forwardedFrom.popup.close(fn, options);
+      forwardedFrom.popup.close( fn, options );
     }
 
     const { fn, options } = onOpen ?? {};
-    this.openDirectly(fn, options);
+    this.openDirectly( fn, options );
 
-    this.history.createOpenNote({ popup: this, forwardedFrom: forwardedFrom?.popup ?? null });
+    this.history.createOpenNote( { popup: this, forwardedFrom: forwardedFrom?.popup ?? null } );
   };
 
-  private closeDirectly = (onClose?: PopupCallback, options?: PopupCallbackOptions): void => {
+  private closeDirectly = ( onClose?: PopupCallback, options?: PopupCallbackOptions ): void => {
     this.isOpened = false;
-    this.handleCallback('close', onClose, options);
+    this.handleCallback( 'close', onClose, options );
   };
 
-  close = (onClose?: PopupCallback, options?: PopupCallbackOptions): void => {
-    this.closeDirectly(onClose, options);
+  close = ( onClose?: PopupCallback, options?: PopupCallbackOptions ): void => {
+    this.closeDirectly( onClose, options );
 
-    const lastNoteAboutPopupOpen: OpenHistoryNote = this.history.notes.findLast((note) => {
+    const lastNoteAboutPopupOpen: OpenHistoryNote = this.history.notes.findLast( ( note ) => {
       return note.event === 'open' && note.popup.name === this.name;
-    }) as OpenHistoryNote;
+    } ) as OpenHistoryNote;
 
     const { event, forwardedFrom = null } = lastNoteAboutPopupOpen;
 
-    if (event === 'open' && forwardedFrom !== null) {
+    if ( event === 'open' && forwardedFrom !== null ) {
       forwardedFrom.open();
     }
 
-    this.history.createCloseNote({ popup: this });
+    this.history.createCloseNote( { popup: this } );
   };
 
-  toggle = (config?: PopupToggleConfig): void => {
+  toggle = ( config?: PopupToggleConfig ): void => {
     const { onOpen, onClose } = config ?? {};
 
-    if (!this.isOpened) {
-      this.open({ onOpen });
+    if ( !this.isOpened ) {
+      this.open( { onOpen } );
     } else {
-      this.close(onClose?.fn, onClose?.options);
+      this.close( onClose?.fn, onClose?.options );
     }
   };
 }

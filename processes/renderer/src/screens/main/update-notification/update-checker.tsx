@@ -7,12 +7,12 @@ import { useStore } from 'stores/root-store/context';
 
 import { UpdatePopup } from './update-popup';
 
-export const UpdateChecker: FC = observer(() => {
+export const UpdateChecker: FC = observer( () => {
   const { updateStore } = useStore();
 
-  if (!updateStore) {
+  if ( !updateStore ) {
     return null;
   }
 
   return <UpdatePopup updateStore={updateStore} />;
-});
+} );

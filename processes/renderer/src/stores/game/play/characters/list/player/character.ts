@@ -32,10 +32,10 @@ export class PlayerCharacter extends Character<
   private keyboard: KeyboardStore;
   movement: PlayerCharacterMovement;
 
-  constructor(config: PlayerCharacterConfig) {
+  constructor( config: PlayerCharacterConfig ) {
     const { name, screen, settings, keyboard } = config;
 
-    super({
+    super( {
       is: 'player',
       name,
       screen,
@@ -59,18 +59,18 @@ export class PlayerCharacter extends Character<
         configs: playerCharacterAnimationConfigs,
       },
       movement: { initialMovementStateConfig: initialPlayerCharacterMovementStateConfig },
-    });
+    } );
 
     this.settings = settings;
     this.keyboard = keyboard;
 
-    this.movement = new PlayerCharacterMovement({
+    this.movement = new PlayerCharacterMovement( {
       position: this.position,
       settings: this.settings,
       animationController: this.animationController,
       initialMovementStateConfig: initialPlayerCharacterMovementStateConfig,
       keyboard: this.keyboard,
-    });
+    } );
 
     const superUpdate = this.update;
     this.update = (): void => {

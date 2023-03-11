@@ -12,7 +12,7 @@ type Props = {
   errors: FieldErrors;
 };
 
-export const FieldErrorMessages: FC<Props> = observer(({ errors }) => {
+export const FieldErrorMessages: FC<Props> = observer( ( { errors } ) => {
   return (
     <>
       {errors.isEmpty.value && <FormErrorMessage>{errors.isEmpty.message}</FormErrorMessage>}
@@ -22,7 +22,7 @@ export const FieldErrorMessages: FC<Props> = observer(({ errors }) => {
       )}
     </>
   );
-});
+} );
 
 const FormErrorMessage = styled.div`
   position: absolute;

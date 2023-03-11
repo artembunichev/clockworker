@@ -16,9 +16,9 @@ export type SettingsMenuTemplateProps = Omit<
   Pick<GamePopupProps, 'onClose'>;
 
 export const SettingsMenuTemplate: FC<SettingsMenuTemplateProps> = observer(
-  ({ popup, onClose, children }) => {
+  ( { popup, onClose, children } ) => {
     const close = (): void => {
-      closeGamePopup(popup);
+      closeGamePopup( popup );
     };
 
     return (
@@ -56,10 +56,10 @@ const List = styled.ul`
 const OKButtonContainer = styled.div`
   text-align: right;
 `;
-const OKButton = styled(PixelatedButton).attrs({
+const OKButton = styled( PixelatedButton ).attrs( {
   pixelsSize: 'medium',
   backgroundColor: colors.mainMedium,
-})`
+} )`
   font-size: 30px;
   padding: 5px;
 `;

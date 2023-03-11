@@ -13,7 +13,7 @@ import { PlayCanvas } from './play-canvas/canvas';
 import { GameSettingsMenu } from './settings/menu';
 import { useGamePlayScreenEsc } from './use-esc';
 
-export const GamePlayScreen: FC = observer(() => {
+export const GamePlayScreen: FC = observer( () => {
   const gameStore = useGameStore();
 
   useGamePlayScreenEsc();
@@ -29,4 +29,4 @@ export const GamePlayScreen: FC = observer(() => {
       <PlayCanvas />
     </>
   );
-});
+} );

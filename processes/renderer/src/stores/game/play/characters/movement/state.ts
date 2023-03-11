@@ -17,27 +17,27 @@ export class CharacterMovementState {
   currentStepSize: number;
   config: CharacterMovementStateConfig;
 
-  regulators = new Regulators(this, characterMovementRegulatorList, {
+  regulators = new Regulators( this, characterMovementRegulatorList, {
     targetsInitialValues: characterMovementRegulatorTargetsInitialValues,
-  });
+  } );
 
-  constructor(initialConfig: CharacterMovementStateConfig) {
-    this.setConfig(initialConfig);
+  constructor( initialConfig: CharacterMovementStateConfig ) {
+    this.setConfig( initialConfig );
   }
 
-  setBaseStepSize = (stepSize: number): void => {
+  setBaseStepSize = ( stepSize: number ): void => {
     this.baseStepSize = stepSize;
-    if (!this.currentStepSize) {
+    if ( !this.currentStepSize ) {
       this.currentStepSize = this.baseStepSize;
     }
     this.regulators.modifyAllRegulatorTargets();
   };
 
-  setConfig = (config: CharacterMovementStateConfig): void => {
-    if (!this.config || !isEqual(this.config, config)) {
+  setConfig = ( config: CharacterMovementStateConfig ): void => {
+    if ( !this.config || !isEqual( this.config, config ) ) {
       this.config = config;
       const { baseStepSize } = config;
-      this.setBaseStepSize(baseStepSize);
+      this.setBaseStepSize( baseStepSize );
     }
   };
 

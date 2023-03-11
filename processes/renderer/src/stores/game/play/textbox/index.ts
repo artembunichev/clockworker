@@ -13,16 +13,16 @@ export class Textbox<TextboxName extends string> {
   onOpen?: Callback;
   onClose?: Callback;
 
-  constructor(config: TextboxConfig<TextboxName>) {
+  constructor( config: TextboxConfig<TextboxName> ) {
     const { name, text, onOpen, onClose } = config;
 
     this.name = name;
     this.text = text;
 
-    this.setCallbacks({ onOpen, onClose });
+    this.setCallbacks( { onOpen, onClose } );
   }
 
-  setCallbacks = ({ onOpen, onClose }: { onOpen?: Callback; onClose?: Callback }): void => {
+  setCallbacks = ( { onOpen, onClose }: { onOpen?: Callback; onClose?: Callback } ): void => {
     this.onOpen = onOpen;
     this.onClose = onClose;
   };

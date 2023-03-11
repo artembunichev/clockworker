@@ -18,7 +18,7 @@ type Props = NonNullableProperties<Pick<UpdateStore, 'version' | 'releaseNotes' 
 };
 
 export const UpdateNotification: FC<Props> = observer(
-  ({ isOpened, version, releaseNotes, updateGame, fnForClosing }) => {
+  ( { isOpened, version, releaseNotes, updateGame, fnForClosing } ) => {
     const update = (): void => {
       updateGame();
       fnForClosing();
@@ -100,10 +100,10 @@ const UpdateGameButtonContainer = styled.div`
   display: flex;
   justify-content: center;
 `;
-const UpdateGameButton = styled(PixelatedButton).attrs({
+const UpdateGameButton = styled( PixelatedButton ).attrs( {
   pixelsSize: 'medium',
   backgroundColor: colors.mainMedium,
-})`
+} )`
   padding: 7px;
   font-size: 24px;
 `;

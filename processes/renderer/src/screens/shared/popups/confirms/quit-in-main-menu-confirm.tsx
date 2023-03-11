@@ -15,7 +15,7 @@ type Props = {
   onAccept?: Callback;
 };
 
-export const QuitInMainMenuConfirm: FC<Props> = observer(({ question, onAccept }) => {
+export const QuitInMainMenuConfirm: FC<Props> = observer( ( { question, onAccept } ) => {
   const { appStore } = useStore();
   const { quitInMainMenuConfirm } = appStore.popups;
 
@@ -34,7 +34,7 @@ export const QuitInMainMenuConfirm: FC<Props> = observer(({ question, onAccept }
       acceptText={'Да'}
       onAccept={() => {
         onAccept?.();
-        appStore.setScreen('main');
+        appStore.setScreen( 'main' );
       }}
       rejectText={'Нет'}
       onReject={null}
@@ -45,4 +45,4 @@ export const QuitInMainMenuConfirm: FC<Props> = observer(({ question, onAccept }
       }}
     />
   );
-});
+} );

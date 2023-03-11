@@ -52,22 +52,22 @@ export class Animation<RegulatorName extends string = never> {
   isPlaying = false;
   isPaused = false;
 
-  constructor(config: AnimationConfig<RegulatorName>) {
+  constructor( config: AnimationConfig<RegulatorName> ) {
     const { name, spriteSheet, sequence, framesPerSprite, initialScale, startFrom, regulators } =
       config;
 
     this.name = name;
     this.spriteSheet = spriteSheet;
     this.sequence = sequence;
-    this.setBaseFramesPerSprite(framesPerSprite);
-    this.setScale(initialScale);
+    this.setBaseFramesPerSprite( framesPerSprite );
+    this.setScale( initialScale );
 
     this.startFrom = startFrom ?? 0;
 
-    if (regulators) {
-      this.regulators = new Regulators(this as Animation, regulators, {
+    if ( regulators ) {
+      this.regulators = new Regulators( this as Animation, regulators, {
         targetsInitialValues: regulatorTargetsInitialValues,
-      }) as AnimationRegulatorsType<RegulatorName> | null;
+      } ) as AnimationRegulatorsType<RegulatorName> | null;
     } else {
       this.regulators = null;
     }
@@ -75,61 +75,61 @@ export class Animation<RegulatorName extends string = never> {
     this.currentSpriteIndex = this.startFrom;
   }
 
-  setScale = (scale: number): void => {
+  setScale = ( scale: number ): void => {
     this.scale = scale;
   };
 
-  setCurrentSpriteIndex = (value: number): void => {
+  setCurrentSpriteIndex = ( value: number ): void => {
     this.currentSpriteIndex = value;
   };
   updateCurrentSpriteIndex = (): void => {
-    if (this.currentSpriteIndex === this.sequence.length - 1) {
-      this.setCurrentSpriteIndex(0);
+    if ( this.currentSpriteIndex === this.sequence.length - 1 ) {
+      this.setCurrentSpriteIndex( 0 );
     } else {
       this.currentSpriteIndex += 1;
     }
   };
 
-  private setFrameCount = (value: number): void => {
+  private setFrameCount = ( value: number ): void => {
     this.frameCount = value;
   };
   private updateFrameCount = (): void => {
     this.frameCount += 1;
   };
   private toFirstSprite = (): void => {
-    this.setFrameCount(0);
-    this.setCurrentSpriteIndex(0);
+    this.setFrameCount( 0 );
+    this.setCurrentSpriteIndex( 0 );
   };
 
-  setBaseFramesPerSprite = (value: number): void => {
+  setBaseFramesPerSprite = ( value: number ): void => {
     this.baseFramesPerSprite = value;
-    if (!this.framesPerSprite) {
+    if ( !this.framesPerSprite ) {
       this.framesPerSprite = this.baseFramesPerSprite;
     }
     this.regulators?.modifyAllRegulatorTargets();
   };
 
   update = (): void => {
-    if (!this.isPlaying) {
+    if ( !this.isPlaying ) {
       return;
     }
-    if (!this.isPaused) {
-      if (this.frameCount === 0) {
-        this.setCurrentSpriteIndex(this.startFrom);
+    if ( !this.isPaused ) {
+      if ( this.frameCount === 0 ) {
+        this.setCurrentSpriteIndex( this.startFrom );
       }
-      if (this.frameCount > this.framesPerSprite) {
+      if ( this.frameCount > this.framesPerSprite ) {
         this.updateCurrentSpriteIndex();
-        this.setFrameCount(0);
+        this.setFrameCount( 0 );
       }
       this.updateFrameCount();
     }
   };
 
-  run = (options?: RunAnimationOptions<RegulatorName>): void => {
+  run = ( options?: RunAnimationOptions<RegulatorName> ): void => {
     const { framesPerSprite } = options ?? {};
 
-    if (framesPerSprite) {
-      this.setBaseFramesPerSprite(framesPerSprite);
+    if ( framesPerSprite ) {
+      this.setBaseFramesPerSprite( framesPerSprite );
     }
 
     this.isPlaying = true;
@@ -147,7 +147,7 @@ export class Animation<RegulatorName extends string = never> {
   };
 
   get currentSprite(): Sprite {
-    const [row, column] = this.sequence[this.currentSpriteIndex];
-    return this.spriteSheet.getSprite(row, column, { scale: this.scale });
+    const [ row, column ] = this.sequence[this.currentSpriteIndex];
+    return this.spriteSheet.getSprite( row, column, { scale: this.scale } );
   }
 }

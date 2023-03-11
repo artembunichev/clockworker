@@ -12,13 +12,13 @@ type Props = {
   percentage: number;
 };
 
-export const DownloadProgress: FC<Props> = observer(({ percentage }) => {
+export const DownloadProgress: FC<Props> = observer( ( { percentage } ) => {
   const downloadLineWidth = 400;
   const totalPiecesCount = 10;
   const gap = 0.95;
-  const pieceWidth = (downloadLineWidth - (totalPiecesCount - 1) * gap) / totalPiecesCount;
+  const pieceWidth = ( downloadLineWidth - ( totalPiecesCount - 1 ) * gap ) / totalPiecesCount;
 
-  const piecesCount = Math.floor((percentage / 100) * totalPiecesCount);
+  const piecesCount = Math.floor( ( percentage / 100 ) * totalPiecesCount );
 
   return (
     <Popup
@@ -33,16 +33,16 @@ export const DownloadProgress: FC<Props> = observer(({ percentage }) => {
       <Container>
         <DownloadLine width={downloadLineWidth}>
           <Pieces>
-            {[...Array(piecesCount)].map((_, index) => (
+            {[ ...Array( piecesCount ) ].map( ( _, index ) => (
               <Piece key={index} width={pieceWidth} gap={gap} />
-            ))}
+            ) )}
           </Pieces>
         </DownloadLine>
-        <Percentage>{Math.trunc(percentage)}%</Percentage>
+        <Percentage>{Math.trunc( percentage )}%</Percentage>
       </Container>
     </Popup>
   );
-});
+} );
 
 const Container = styled.div`
   flex: 1 0 auto;
@@ -51,7 +51,7 @@ const Container = styled.div`
   align-items: center;
 `;
 const DownloadLine = styled.div<{ width: number }>`
-  min-width: ${(props) => props.width}px;
+  min-width: ${( props ) => props.width}px;
   height: 40px;
   border-radius: ${theme.borderRadius}px;
   background-color: ${colors.mainMedium};
@@ -62,8 +62,8 @@ const Pieces = styled.div`
   height: 100%;
 `;
 const Piece = styled.div<{ width: number; gap: number }>`
-  width: ${(props) => props.width}px;
-  margin-right: ${(props) => props.gap}px;
+  width: ${( props ) => props.width}px;
+  margin-right: ${( props ) => props.gap}px;
   height: 100%;
   background-color: ${colors.mainDarkWell};
   &:last-child {

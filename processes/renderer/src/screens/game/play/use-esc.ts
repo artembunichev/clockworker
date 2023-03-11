@@ -5,8 +5,8 @@ import { useGamePlayStore } from '../screen';
 export const useGamePlayScreenEsc = (): void => {
   const gamePlayStore = useGamePlayStore();
 
-  useEsc({
+  useEsc( {
     fn: gamePlayStore.popups.pauseMenu.toggle,
-    ignoreWhen: [gamePlayStore.opening.isOpened, gamePlayStore.textboxController.isTextboxOpened],
-  });
+    ignoreWhen: [ gamePlayStore.opening.isOpened, gamePlayStore.textboxController.isTextboxOpened ],
+  } );
 };

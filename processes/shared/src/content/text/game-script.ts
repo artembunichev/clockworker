@@ -12,7 +12,7 @@ type GetParsedScriptConfig = {
   marketName: string;
 };
 
-export const getParsedGameScript = (config: GetParsedScriptConfig): GameScript => {
+export const getParsedGameScript = ( config: GetParsedScriptConfig ): GameScript => {
   const { playerCharacterName, marketName } = config;
 
   const replacers: Array<Replacer> = [
@@ -22,14 +22,14 @@ export const getParsedGameScript = (config: GetParsedScriptConfig): GameScript =
     { key: '#', value: marketName },
   ];
 
-  const parsedScript = deepClone(script);
-  objectKeys(parsedScript.content).forEach((contentKey) => {
-    replacers.forEach((replacer) => {
+  const parsedScript = deepClone( script );
+  objectKeys( parsedScript.content ).forEach( ( contentKey ) => {
+    replacers.forEach( ( replacer ) => {
       parsedScript.content[contentKey] = parsedScript.content[contentKey]
-        .split(replacer.key)
-        .join(replacer.value);
-    });
-  });
+        .split( replacer.key )
+        .join( replacer.value );
+    } );
+  } );
 
   return parsedScript;
 };

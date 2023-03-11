@@ -21,46 +21,46 @@ import { useGameStore } from '../screen';
 import { FieldErrorMessages } from './errors/field-error-messages';
 import { getFormErrors } from './errors/get-errors';
 
-export const PreGameForm: FC = observer(() => {
+export const PreGameForm: FC = observer( () => {
   const gameStore = useGameStore();
   const { preGameForm } = gameStore;
 
   const { register, handleSubmit, getValues, setValue, formState } = useForm<PreGameFormFields>();
 
-  const errors = getFormErrors(formState.errors);
+  const errors = getFormErrors( formState.errors );
 
   const trimPlayerCharacterName = (): void => {
     const { playerCharacterName } = getValues();
-    setValue('playerCharacterName', playerCharacterName.trim());
+    setValue( 'playerCharacterName', playerCharacterName.trim() );
   };
   const trimMarketName = (): void => {
     const { marketName } = getValues();
-    setValue('marketName', marketName.trim());
+    setValue( 'marketName', marketName.trim() );
   };
 
-  const validateNoSpecialSymbols = (value: string): boolean => {
+  const validateNoSpecialSymbols = ( value: string ): boolean => {
     return value
-      .split('')
-      .every((symbol) => isLetter(symbol) || isNumber(symbol) || symbol === ' ' || symbol === '-');
+      .split( '' )
+      .every( ( symbol ) => isLetter( symbol ) || isNumber( symbol ) || symbol === ' ' || symbol === '-' );
   };
 
-  const startGame: SubmitHandler<PreGameFormFields> = ({ playerCharacterName, marketName }) => {
-    preGameForm.setPlayerCharacterName(playerCharacterName);
-    preGameForm.setMarketName(marketName);
+  const startGame: SubmitHandler<PreGameFormFields> = ( { playerCharacterName, marketName } ) => {
+    preGameForm.setPlayerCharacterName( playerCharacterName );
+    preGameForm.setMarketName( marketName );
     gameStore.startGame();
   };
 
   return (
     <FormBlock>
-      <Form onSubmit={handleSubmit(startGame)}>
+      <Form onSubmit={handleSubmit( startGame )}>
         <InputContainer>
           <Input
-            {...register('playerCharacterName', {
+            {...register( 'playerCharacterName', {
               required: true,
               validate: validateNoSpecialSymbols,
               onBlur: trimPlayerCharacterName,
               minLength: 2,
-            })}
+            } )}
             maxLength={20}
             placeholder={'Имя персонажа'}
           />
@@ -73,12 +73,12 @@ export const PreGameForm: FC = observer(() => {
         </InputContainer>
         <InputContainer>
           <Input
-            {...register('marketName', {
+            {...register( 'marketName', {
               required: true,
               validate: validateNoSpecialSymbols,
               onBlur: trimMarketName,
               minLength: 2,
-            })}
+            } )}
             maxLength={20}
             placeholder={'Название магазина'}
           />
@@ -95,7 +95,7 @@ export const PreGameForm: FC = observer(() => {
       </Form>
     </FormBlock>
   );
-});
+} );
 
 const FormBlock = styled.div`
   position: relative;
@@ -114,21 +114,21 @@ const InputContainer = styled.div`
   position: relative;
   margin-bottom: 50px;
 `;
-const Input = styled(PixelatedInput).attrs({
+const Input = styled( PixelatedInput ).attrs( {
   pixelsSize: 'medium',
   backgroundColor: colors.mainMedium,
   containerStyles: {
     width: '92%',
   },
-})`
+} )`
   padding: 7px 5px;
   font-size: 28px;
   font-weight: bold;
 `;
-const ExclamationMarkContainer = styled(PixelatedDiv).attrs({
+const ExclamationMarkContainer = styled( PixelatedDiv ).attrs( {
   pixelsSize: 'small',
   backgroundColor: colors.error,
-})`
+} )`
   position: absolute;
   right: 0;
   top: 3px;
@@ -147,10 +147,10 @@ const StartGameButtonContainer = styled.div`
   bottom: 5px;
   right: 5px;
 `;
-const StartGameButton = styled(PixelatedButton).attrs({
+const StartGameButton = styled( PixelatedButton ).attrs( {
   pixelsSize: 'medium',
   backgroundColor: colors.mainMedium,
-})`
+} )`
   font-size: 26px;
   padding: 8px;
   margin-top: 10px;

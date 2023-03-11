@@ -19,53 +19,53 @@ type Props = {
   text: string | undefined | null;
   isOpened: boolean;
 };
-export const Textbox: FC<Props> = observer(({ isOpened, text }) => {
+export const Textbox: FC<Props> = observer( ( { isOpened, text } ) => {
   const gamePlayStore = useGamePlayStore();
 
-  const [autoprintStatus, setAutoprintStatus] = useState<AutoprintStatus>('none');
+  const [ autoprintStatus, setAutoprintStatus ] = useState<AutoprintStatus>( 'none' );
 
-  const [isOpeningAnimationSkipped, setIsOpeningAnimationSkipped] = useState(false);
+  const [ isOpeningAnimationSkipped, setIsOpeningAnimationSkipped ] = useState( false );
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
+  const containerRef = useRef<HTMLDivElement>( null );
+  useEffect( () => {
     const onAnimationEnd = (): void => {
-      setAutoprintStatus('inProgress');
+      setAutoprintStatus( 'inProgress' );
     };
-    if (containerRef.current) {
-      containerRef.current.addEventListener('animationend', onAnimationEnd);
+    if ( containerRef.current ) {
+      containerRef.current.addEventListener( 'animationend', onAnimationEnd );
     }
-    return () => containerRef.current?.removeEventListener('animationend', onAnimationEnd);
-  }, [containerRef.current]);
+    return () => containerRef.current?.removeEventListener( 'animationend', onAnimationEnd );
+  }, [ containerRef.current ] );
 
-  const [isAutoprintSkipped, setIsAutoprintSkipped] = useState(false);
+  const [ isAutoprintSkipped, setIsAutoprintSkipped ] = useState( false );
 
   const onAutoprintEnd = (): void => {
-    setAutoprintStatus('end');
+    setAutoprintStatus( 'end' );
   };
 
   const close = (): void => {
     gamePlayStore.textboxController.closeCurrentTextbox();
   };
 
-  useWindowClick(() => {
-    if (isOpened) {
-      if (autoprintStatus === 'none') {
-        setIsOpeningAnimationSkipped(true);
+  useWindowClick( () => {
+    if ( isOpened ) {
+      if ( autoprintStatus === 'none' ) {
+        setIsOpeningAnimationSkipped( true );
       }
-      if (autoprintStatus === 'inProgress') {
-        setIsAutoprintSkipped(true);
+      if ( autoprintStatus === 'inProgress' ) {
+        setIsAutoprintSkipped( true );
       }
-      if (autoprintStatus === 'end') {
+      if ( autoprintStatus === 'end' ) {
         close();
       }
     }
-  });
+  } );
 
-  useEffect(() => {
-    setAutoprintStatus('none');
-    setIsOpeningAnimationSkipped(false);
-    setIsAutoprintSkipped(false);
-  }, [isOpened]);
+  useEffect( () => {
+    setAutoprintStatus( 'none' );
+    setIsOpeningAnimationSkipped( false );
+    setIsAutoprintSkipped( false );
+  }, [ isOpened ] );
 
   return (
     <Wrapper>
@@ -91,7 +91,7 @@ export const Textbox: FC<Props> = observer(({ isOpened, text }) => {
       </Container>
     </Wrapper>
   );
-});
+} );
 
 const Wrapper = styled.div`
   width: 100%;
@@ -115,14 +115,14 @@ const Container = styled.div<{ isOpened: boolean; isOpeningAnimationSkipped: boo
   display: flex;
   justify-content: center;
   margin: 0 auto;
-  pointer-events: ${(props) => (props.isOpened ? 'all' : 'none')};
-  animation: ${(props) =>
+  pointer-events: ${( props ) => ( props.isOpened ? 'all' : 'none' )};
+  animation: ${( props ) =>
     props.isOpened &&
     css`
       ${textboxOpening} ${props.isOpeningAnimationSkipped ? 0 : 230}ms forwards
     `};
 `;
-const CloseButton = styled(ButtonWithCross)`
+const CloseButton = styled( ButtonWithCross )`
   position: absolute;
   right: 18px;
   top: 15.5px;

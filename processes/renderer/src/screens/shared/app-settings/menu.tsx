@@ -9,7 +9,7 @@ import { SettingsMenuTemplate } from 'components/settings/settings-menu-template
 
 import { GeneralAppSettings } from './general';
 
-export const AppSettingsMenu: FC = observer(() => {
+export const AppSettingsMenu: FC = observer( () => {
   const { appStore } = useStore();
 
   const { settingsMenu } = appStore.popups;
@@ -19,4 +19,4 @@ export const AppSettingsMenu: FC = observer(() => {
       <GeneralAppSettings />
     </SettingsMenuTemplate>
   );
-});
+} );

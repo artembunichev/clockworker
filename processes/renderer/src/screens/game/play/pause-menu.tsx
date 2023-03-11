@@ -13,7 +13,7 @@ import { GamePopup } from 'screens/shared/popups/game-popup-template';
 
 import { useGamePlayStore } from '../screen';
 
-export const GamePauseMenu: FC = observer(() => {
+export const GamePauseMenu: FC = observer( () => {
   const { appStore } = useStore();
   const gamePlayStore = useGamePlayStore();
 
@@ -25,7 +25,7 @@ export const GamePauseMenu: FC = observer(() => {
   };
 
   const openSettings = (): void => {
-    settingsMenu.open({ config: { forwardedFrom: { popup: pauseMenu, onClose: { fn: null } } } });
+    settingsMenu.open( { config: { forwardedFrom: { popup: pauseMenu, onClose: { fn: null } } } } );
   };
 
   const openQuitInMainMenuConfirm = (): void => {
@@ -61,7 +61,7 @@ export const GamePauseMenu: FC = observer(() => {
       </List>
     </GamePopup>
   );
-});
+} );
 
 const List = styled.menu`
   flex: 1 0 auto;
@@ -82,10 +82,10 @@ const Section = styled.div`
   flex-direction: column;
   justify-content: center;
 `;
-const Item = styled(PixelatedButton).attrs({
+const Item = styled( PixelatedButton ).attrs( {
   pixelsSize: 'medium',
   backgroundColor: colors.mainMedium,
-})`
+} )`
   display: block;
   margin-bottom: 16px;
   padding: 10px;

@@ -9,11 +9,11 @@ import { colors } from 'lib/theme';
 
 import { useGamePlayStore } from './screen';
 
-export const GameOpening: FC = observer(() => {
+export const GameOpening: FC = observer( () => {
   const gamePlayStore = useGamePlayStore();
   const { opening } = gamePlayStore;
 
-  const containerStyles = useSpring({
+  const containerStyles = useSpring( {
     from: { opacity: 1 },
     to: { opacity: 0 },
     delay: opening.appearanceMs + opening.durationMs,
@@ -21,9 +21,9 @@ export const GameOpening: FC = observer(() => {
     config: {
       duration: opening.disappearanceMs,
     },
-  });
+  } );
 
-  const contentStyles = useSpring({
+  const contentStyles = useSpring( {
     from: { opacity: 0 },
     to: { opacity: 1 },
     delay: opening.appearanceMs + 270,
@@ -31,7 +31,7 @@ export const GameOpening: FC = observer(() => {
     config: {
       duration: 1700,
     },
-  });
+  } );
 
   return (
     <>
@@ -42,22 +42,22 @@ export const GameOpening: FC = observer(() => {
       )}
     </>
   );
-});
+} );
 
-const Container = styled(animated.div)<{ background: string }>`
+const Container = styled( animated.div )<{ background: string }>`
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 9999;
-  background-color: ${(props) => props.background};
+  background-color: ${( props ) => props.background};
 
   display: flex;
   justify-content: center;
   align-items: center;
 `;
-const Content = styled(animated.div)`
+const Content = styled( animated.div )`
   font-size: 110px;
   color: ${colors.mainMedium};
 `;

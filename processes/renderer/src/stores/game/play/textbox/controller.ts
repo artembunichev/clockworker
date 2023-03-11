@@ -34,39 +34,39 @@ export class TextboxController {
   textboxes: Textboxes = {} as Textboxes;
   currentTextbox: TextboxInController | null = null;
 
-  constructor(config: TextboxControllerConfig) {
+  constructor( config: TextboxControllerConfig ) {
     const { gameScript, pauseController } = config;
 
     this.gameScript = gameScript;
     this.pauseController = pauseController;
 
-    this.internalOnOpen = () => this.pauseController.onPause({ prohibitorName: 'textbox' });
-    this.internalOnClose = () => this.pauseController.onResume({ prohibitorName: 'textbox' });
+    this.internalOnOpen = () => this.pauseController.onPause( { prohibitorName: 'textbox' } );
+    this.internalOnClose = () => this.pauseController.onResume( { prohibitorName: 'textbox' } );
 
-    makeObservable(this, {
+    makeObservable( this, {
       textboxes: observable,
       currentTextbox: observable,
       isTextboxOpened: computed,
-    });
+    } );
   }
 
-  createTextbox = (name: TextboxName): void => {
-    this.textboxes[name] = new this.refList[name]({ gameScript: this.gameScript });
+  createTextbox = ( name: TextboxName ): void => {
+    this.textboxes[name] = new this.refList[name]( { gameScript: this.gameScript } );
   };
 
-  setCurrentTextbox = ({ name, onOpen, onClose }: SetTextboxConfig): void => {
-    if (!this.textboxes[name]) {
-      this.createTextbox(name);
+  setCurrentTextbox = ( { name, onOpen, onClose }: SetTextboxConfig ): void => {
+    if ( !this.textboxes[name] ) {
+      this.createTextbox( name );
     }
 
     this.currentTextbox = this.textboxes[name];
     this.internalOnOpen();
-    this.currentTextbox.setCallbacks({ onOpen, onClose });
+    this.currentTextbox.setCallbacks( { onOpen, onClose } );
     this.currentTextbox.onOpen?.();
   };
 
   closeCurrentTextbox = (): void => {
-    if (this.currentTextbox) {
+    if ( this.currentTextbox ) {
       this.internalOnClose();
       this.currentTextbox.onClose?.();
     }
@@ -74,6 +74,6 @@ export class TextboxController {
   };
 
   get isTextboxOpened(): boolean {
-    return Boolean(this.currentTextbox);
+    return Boolean( this.currentTextbox );
   }
 }

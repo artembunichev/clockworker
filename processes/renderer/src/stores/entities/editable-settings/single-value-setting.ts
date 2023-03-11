@@ -5,14 +5,14 @@ export class SingleValueSetting<Value> {
   id: string;
   value: Value;
 
-  constructor(id: string, initialValue: Value) {
+  constructor( id: string, initialValue: Value ) {
     this.id = id;
-    this.setValue(initialValue);
+    this.setValue( initialValue );
 
-    makeAutoObservable(this);
+    makeAutoObservable( this );
   }
 
-  setValue = (value: Value): void => {
+  setValue = ( value: Value ): void => {
     this.value = value;
   };
 }

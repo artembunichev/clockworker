@@ -20,7 +20,7 @@ export class Sprite {
   private sourceY: number;
   scale: number;
 
-  constructor(config: SpriteConfig) {
+  constructor( config: SpriteConfig ) {
     const { image, width, height, sourceX, sourceY, scale } = config;
 
     this.image = image;
@@ -31,15 +31,15 @@ export class Sprite {
     this.scale = scale;
   }
 
-  draw = (ctx: Ctx, position: XY): void => {
-    drawImage(ctx, this.image, {
+  draw = ( ctx: Ctx, position: XY ): void => {
+    drawImage( ctx, this.image, {
       width: this.width,
       height: this.height,
       sourceX: this.sourceX,
       sourceY: this.sourceY,
       scale: this.scale,
       position,
-    });
+    } );
   };
 
   get scaledWidth(): number {

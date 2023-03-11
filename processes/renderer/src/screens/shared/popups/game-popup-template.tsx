@@ -8,7 +8,7 @@ import { Popup as PopupStore } from 'stores/entities/popup';
 
 import { Popup, PopupProps } from 'components/popup/popup-template';
 
-export const closeGamePopup = (popup: PopupStore): void => {
+export const closeGamePopup = ( popup: PopupStore ): void => {
   popup.close();
 };
 
@@ -17,10 +17,10 @@ export type GamePopupProps = {
 } & Omit<PopupProps, 'isOpened' | 'fnForClosing'>;
 
 export const GamePopup: FC<GamePopupProps> = observer(
-  ({ popup, width, height, styles, title, titleStyles, withCloseButton, onClose, children }) => {
+  ( { popup, width, height, styles, title, titleStyles, withCloseButton, onClose, children } ) => {
     const isOpened = popup.isOpened;
     const fnForClosing: Callback = (): void => {
-      closeGamePopup(popup);
+      closeGamePopup( popup );
       onClose?.();
     };
 

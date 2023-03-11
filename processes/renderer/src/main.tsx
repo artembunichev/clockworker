@@ -11,7 +11,7 @@ configureMobx();
 
 addIconsToDist();
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.createRoot( document.getElementById( 'root' ) as HTMLElement ).render(
   <RootStoreProvider>
     <App />
   </RootStoreProvider>,

@@ -20,6 +20,6 @@ export const characterMovementRegulatorList: RegulatorList<
   CharacterMovementRegulatorTarget
 > = {
   sprint: {
-    currentStepSize: (prev) => prev * 2.1,
+    currentStepSize: ( prev ) => prev * 2.1,
   },
 };

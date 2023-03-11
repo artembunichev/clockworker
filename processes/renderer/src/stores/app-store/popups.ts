@@ -9,18 +9,18 @@ export class AppPopups {
   quitInMainMenuConfirm: Popup;
   settingsMenu: Popup;
 
-  constructor(popupHistory: PopupHistory) {
+  constructor( popupHistory: PopupHistory ) {
     this.history = popupHistory;
 
-    this.quitGameConfirm = new Popup({ name: 'app_quitGameConfirm', history: this.history });
+    this.quitGameConfirm = new Popup( { name: 'app_quitGameConfirm', history: this.history } );
 
-    this.quitInMainMenuConfirm = new Popup({
+    this.quitInMainMenuConfirm = new Popup( {
       name: 'app_quitInMainMenuConfirm',
       history: this.history,
-    });
+    } );
 
-    this.settingsMenu = new Popup({ name: 'app_settingsMenu', history: this.history });
+    this.settingsMenu = new Popup( { name: 'app_settingsMenu', history: this.history } );
 
-    makeAutoObservable(this);
+    makeAutoObservable( this );
   }
 }

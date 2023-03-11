@@ -38,57 +38,57 @@ export class GamePlayStore {
   popups: GamePopups;
 
   isPlay = true;
-  screen = new GameScreen({ width: screen.width, height: screen.height });
+  screen = new GameScreen( { width: screen.width, height: screen.height } );
   player: Player = new Player();
   sharedMethods = new SharedPlayMethods();
   characterController = new CharacterController();
   settings = new GameSettings();
-  sceneController = new GameSceneController({
+  sceneController = new GameSceneController( {
     screen: this.screen,
     characterList: this.characterController.characters,
-  });
-  pauseController = new GamePauseController({
+  } );
+  pauseController = new GamePauseController( {
     characterController: this.characterController,
     sharedMethods: this.sharedMethods,
-  });
-  collider = new Collider({ screen: this.screen });
+  } );
+  collider = new Collider( { screen: this.screen } );
   isGameInitialized = false;
-  opening = new TransitionScreen({
+  opening = new TransitionScreen( {
     sharedPlayMethods: this.sharedMethods,
     appearanceMs: 1500,
     disappearanceMs: 1500,
     durationMs: 3500,
     background: '#000000',
-  });
+  } );
 
-  constructor(config: GamePlayStoreConfig) {
+  constructor( config: GamePlayStoreConfig ) {
     const { popupHistory, keyboard, dataFromPreGameForm } = config;
 
     this.popupHistory = popupHistory;
     this.keyboard = keyboard;
     this.dataFromPreGameForm = dataFromPreGameForm;
 
-    this.script = getParsedGameScript({
+    this.script = getParsedGameScript( {
       playerCharacterName: this.dataFromPreGameForm.playerCharacterName,
       marketName: this.dataFromPreGameForm.marketName,
-    });
+    } );
 
-    this.market = new Market({ name: this.dataFromPreGameForm.marketName });
+    this.market = new Market( { name: this.dataFromPreGameForm.marketName } );
 
-    this.textboxController = new TextboxController({
+    this.textboxController = new TextboxController( {
       gameScript: this.script,
       pauseController: this.pauseController,
-    });
+    } );
 
-    this.popups = new GamePopups({
+    this.popups = new GamePopups( {
       popupHistory: this.popupHistory,
       pauseController: this.pauseController,
-    });
+    } );
 
-    makeAutoObservable(this);
+    makeAutoObservable( this );
   }
 
-  setIsPlay = (value: boolean): void => {
+  setIsPlay = ( value: boolean ): void => {
     this.isPlay = value;
   };
 
@@ -100,57 +100,57 @@ export class GamePlayStore {
       keyboard: this.keyboard,
     };
 
-    return this.player.createCharacter({
+    return this.player.createCharacter( {
       characterController: this.characterController,
       characterConfig: playerCharacterConfig,
-    });
+    } );
   };
 
-  addActiveCharacter = (characterName: CharacterName): void => {
-    this.characterController.addActiveCharacter(characterName);
+  addActiveCharacter = ( characterName: CharacterName ): void => {
+    this.characterController.addActiveCharacter( characterName );
     const character = this.characterController.characters[characterName];
-    this.collider.collision.bodyList.addOne(character);
+    this.collider.collision.bodyList.addOne( character );
   };
-  removeActiveCharacter = (characterName: CharacterName): void => {
+  removeActiveCharacter = ( characterName: CharacterName ): void => {
     const character = this.characterController.characters[characterName];
-    this.collider.collision.bodyList.removeOne(character.id);
-    this.characterController.removeActiveCharacter(characterName);
+    this.collider.collision.bodyList.removeOne( character.id );
+    this.characterController.removeActiveCharacter( characterName );
   };
 
-  setScene = (sceneName: SceneName): Promise<void> => {
-    return this.sceneController.setScene(sceneName).then(() => {
+  setScene = ( sceneName: SceneName ): Promise<void> => {
+    return this.sceneController.setScene( sceneName ).then( () => {
       this.characterController.clearActiveCharacters();
       this.collider.clear();
       this.collider.collision.staticObstacleList.addMany(
         this.sceneController.currentScene.map.hitboxes,
       );
-    });
+    } );
   };
 
-  setIsGameInitialized = (value: boolean): void => {
+  setIsGameInitialized = ( value: boolean ): void => {
     this.isGameInitialized = value;
   };
   initializeGame = (): Promise<void> => {
-    return this.setScene('marketMain').then(() => {
-      return this.createPlayerCharacter().then(() => {
-        if (this.player.character) {
-          this.sharedMethods.playerCharacter.setPlayerCharacter(this.player.character);
-          this.addActiveCharacter('player');
-          this.sceneController.currentScene.charactersManipulator.positionCharacter('player', {
+    return this.setScene( 'marketMain' ).then( () => {
+      return this.createPlayerCharacter().then( () => {
+        if ( this.player.character ) {
+          this.sharedMethods.playerCharacter.setPlayerCharacter( this.player.character );
+          this.addActiveCharacter( 'player' );
+          this.sceneController.currentScene.charactersManipulator.positionCharacter( 'player', {
             x: 'center',
             y: 'center',
-          });
-          this.setIsGameInitialized(true);
+          } );
+          this.setIsGameInitialized( true );
         }
-      });
-    });
+      } );
+    } );
   };
 
   // игровые циклы
   private updateActiveCharacters = (): void => {
-    this.characterController.activeCharacters.forEach((character) => {
+    this.characterController.activeCharacters.forEach( ( character ) => {
       character.update();
-    });
+    } );
   };
 
   update = (): void => {
@@ -166,18 +166,18 @@ export class GamePlayStore {
 
   private mainLoop = (): void => {
     this.gameLoop();
-    const id = window.requestAnimationFrame(this.mainLoop);
-    if (!this.isPlay) {
-      window.cancelAnimationFrame(id);
+    const id = window.requestAnimationFrame( this.mainLoop );
+    if ( !this.isPlay ) {
+      window.cancelAnimationFrame( id );
     }
   };
 
   run = (): void => {
-    this.initializeGame().then(() => {
+    this.initializeGame().then( () => {
       this.mainLoop();
-      this.opening.run().then(() => {
-        this.textboxController.setCurrentTextbox({ name: 'welcome' });
-      });
-    });
+      this.opening.run().then( () => {
+        this.textboxController.setCurrentTextbox( { name: 'welcome' } );
+      } );
+    } );
   };
 }

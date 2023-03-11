@@ -19,7 +19,7 @@ export type MoveConfig = {
   stateConfig?: CharacterMovementStateConfig;
 };
 
-export type MoveFn = (moveConfig: MoveConfig) => void;
+export type MoveFn = ( moveConfig: MoveConfig ) => void;
 
 type AnimationBinds = Partial<
   Record<CharacterMovementRegulatorName, DefaultCharacterAnimationRegulatorName>
@@ -48,15 +48,15 @@ export class CharacterMovement {
     sprint: 'speedup',
   };
 
-  constructor(config: ConfigForCharacterMovement) {
+  constructor( config: ConfigForCharacterMovement ) {
     const { position, animationController, initialMovementStateConfig } = config;
 
     this.position = position;
     this.animationController = animationController;
 
-    this.movementState = new CharacterMovementState(initialMovementStateConfig);
+    this.movementState = new CharacterMovementState( initialMovementStateConfig );
 
-    this.automove = new CharacterAutomove({
+    this.automove = new CharacterAutomove( {
       position: this.position,
       movementState: this.movementState,
       movementProhibitorsController: this.movementProhibitorsController,
@@ -65,30 +65,30 @@ export class CharacterMovement {
       stopMove: this.stopMove,
       animationController: this.animationController,
       clearRegulators: this.clearRegulators,
-    });
+    } );
   }
 
   getPositionOnNextStep = (): XY => {
     const { stepSize } = this.movementState.currentValue;
 
     // длина шага по диагонали должна быть равна длине шага по прямой
-    const diagonalStepSize = Math.sqrt(Math.pow(stepSize, 2) / 2);
+    const diagonalStepSize = Math.sqrt( Math.pow( stepSize, 2 ) / 2 );
 
     const { x, y } = this.position;
 
-    if (this.direction === 'down') {
+    if ( this.direction === 'down' ) {
       return { x, y: y + stepSize };
-    } else if (this.direction === 'downright') {
+    } else if ( this.direction === 'downright' ) {
       return { x: x + diagonalStepSize, y: y + diagonalStepSize };
-    } else if (this.direction === 'right') {
+    } else if ( this.direction === 'right' ) {
       return { x: x + stepSize, y };
-    } else if (this.direction === 'upright') {
+    } else if ( this.direction === 'upright' ) {
       return { x: x + diagonalStepSize, y: y - diagonalStepSize };
-    } else if (this.direction === 'up') {
+    } else if ( this.direction === 'up' ) {
       return { x, y: y - stepSize };
-    } else if (this.direction === 'upleft') {
+    } else if ( this.direction === 'upleft' ) {
       return { x: x - diagonalStepSize, y: y - diagonalStepSize };
-    } else if (this.direction === 'left') {
+    } else if ( this.direction === 'left' ) {
       return { x: x - stepSize, y };
     } else {
       // downleft
@@ -96,58 +96,58 @@ export class CharacterMovement {
     }
   };
 
-  setDirection = (direction: ExpandedDirection | null): void => {
+  setDirection = ( direction: ExpandedDirection | null ): void => {
     this.direction = direction;
   };
 
-  setIsMoving = (value: boolean): void => {
+  setIsMoving = ( value: boolean ): void => {
     this.isMoving = value;
   };
 
-  setIsStuck = (value: boolean): void => {
+  setIsStuck = ( value: boolean ): void => {
     this.isStuck = value;
-    this.automove.setIsStuck(value);
+    this.automove.setIsStuck( value );
   };
 
-  setIsSliding = (value: boolean): void => {
+  setIsSliding = ( value: boolean ): void => {
     this.isSliding = value;
   };
 
-  move: MoveFn = ({ direction, stateConfig }): void => {
-    this.setDirection(direction);
+  move: MoveFn = ( { direction, stateConfig } ): void => {
+    this.setDirection( direction );
 
-    if (stateConfig) {
-      this.movementState.setConfig(stateConfig);
+    if ( stateConfig ) {
+      this.movementState.setConfig( stateConfig );
     }
 
-    if (this.movementState.currentValue) {
+    if ( this.movementState.currentValue ) {
       const positionOnNextStep = this.getPositionOnNextStep();
-      this.position.setXY(positionOnNextStep.x, positionOnNextStep.y);
+      this.position.setXY( positionOnNextStep.x, positionOnNextStep.y );
     }
   };
 
-  moveWithAnimation: MoveFn = (moveConfig): void => {
-    this.move(moveConfig);
+  moveWithAnimation: MoveFn = ( moveConfig ): void => {
+    this.move( moveConfig );
 
-    if (this.isSliding) {
-      this.applyAnimationRegulator('slowdown');
+    if ( this.isSliding ) {
+      this.applyAnimationRegulator( 'slowdown' );
     } else {
-      this.removeAnimationRegulator('slowdown');
+      this.removeAnimationRegulator( 'slowdown' );
     }
 
-    if (this.direction) {
-      const animationName: CharacterMovementAnimationName = ('walk' +
+    if ( this.direction ) {
+      const animationName: CharacterMovementAnimationName = ( 'walk' +
         capitalizeFirstSymbol(
-          convertExpandedDirectionToPrimitiveDirection(this.direction),
-        )) as CharacterMovementAnimationName;
+          convertExpandedDirectionToPrimitiveDirection( this.direction ),
+        ) ) as CharacterMovementAnimationName;
 
-      this.animationController.run(animationName);
+      this.animationController.run( animationName );
     }
   };
 
   stopMove = (): void => {
-    this.setIsMoving(false);
-    this.setDirection(null);
+    this.setIsMoving( false );
+    this.setDirection( null );
     this.animationController.stop();
   };
 
@@ -165,28 +165,28 @@ export class CharacterMovement {
         ? this.animationController.currentAnimation.regulators?.applyRegulator
         : this.animationController.currentAnimation.regulators?.removeRegulator;
 
-    objectEntries(this.animationBinds).forEach(([mrName, arName]) => {
-      if (mrName === movementRegulatorName) {
-        movementFn(mrName);
-        if (arName) {
-          animationFn?.(arName);
+    objectEntries( this.animationBinds ).forEach( ( [ mrName, arName ] ) => {
+      if ( mrName === movementRegulatorName ) {
+        movementFn( mrName );
+        if ( arName ) {
+          animationFn?.( arName );
         }
       }
-    });
+    } );
   };
 
-  applyAnimationRegulator = (regulatorName: DefaultCharacterAnimationRegulatorName): void => {
-    this.animationController.currentAnimation.regulators?.applyRegulator(regulatorName);
+  applyAnimationRegulator = ( regulatorName: DefaultCharacterAnimationRegulatorName ): void => {
+    this.animationController.currentAnimation.regulators?.applyRegulator( regulatorName );
   };
-  removeAnimationRegulator = (regulatorName: DefaultCharacterAnimationRegulatorName): void => {
-    this.animationController.currentAnimation.regulators?.removeRegulator(regulatorName);
+  removeAnimationRegulator = ( regulatorName: DefaultCharacterAnimationRegulatorName ): void => {
+    this.animationController.currentAnimation.regulators?.removeRegulator( regulatorName );
   };
 
-  applyRegulator = (regulatorName: CharacterMovementRegulatorName): void => {
-    this.makeActionWithRegulator(regulatorName, 'apply');
+  applyRegulator = ( regulatorName: CharacterMovementRegulatorName ): void => {
+    this.makeActionWithRegulator( regulatorName, 'apply' );
   };
-  removeRegulator = (regulatorName: CharacterMovementRegulatorName): void => {
-    this.makeActionWithRegulator(regulatorName, 'remove');
+  removeRegulator = ( regulatorName: CharacterMovementRegulatorName ): void => {
+    this.makeActionWithRegulator( regulatorName, 'remove' );
   };
   clearRegulators = (): void => {
     this.movementState.regulators.clearRegulators();
@@ -194,10 +194,10 @@ export class CharacterMovement {
   };
 
   startSprint = (): void => {
-    this.applyRegulator('sprint');
+    this.applyRegulator( 'sprint' );
   };
   endSprint = (): void => {
-    this.removeRegulator('sprint');
+    this.removeRegulator( 'sprint' );
   };
 
   get isMovementProhibited(): boolean {

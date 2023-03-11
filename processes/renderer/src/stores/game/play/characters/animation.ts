@@ -25,10 +25,10 @@ export type CharacterAnimationRegulatorList<RegulatorName extends string> = Regu
 
 export const defaultCharacterAnimationRegulatorList: DefaultCharacterAnimationRL = {
   speedup: {
-    framesPerSprite: (prev) => Math.round(prev * 0.55),
+    framesPerSprite: ( prev ) => Math.round( prev * 0.55 ),
   },
   slowdown: {
-    framesPerSprite: (prev) => Math.round(prev * 1.3),
+    framesPerSprite: ( prev ) => Math.round( prev * 1.3 ),
   },
 };
 
@@ -37,15 +37,15 @@ export type ShortCharacterMovementAnimationConfig = Omit<
   'sequence' | 'startFrom'
 >;
 
-const getCharacterMovementAnimationSequence = (direction: ViewDirections): AnimationSequence => {
-  return getRowSequence(direction, 4);
+const getCharacterMovementAnimationSequence = ( direction: ViewDirections ): AnimationSequence => {
+  return getRowSequence( direction, 4 );
 };
 
 const getCharacterMovementAnimationConfigForController = (
   direction: ViewDirections,
   shortConfig: ShortCharacterMovementAnimationConfig,
 ): AnimationConfigForController => {
-  const sequence: AnimationSequence = getCharacterMovementAnimationSequence(direction);
+  const sequence: AnimationSequence = getCharacterMovementAnimationSequence( direction );
 
   const configForController: AnimationConfigForController = {
     ...shortConfig,
@@ -65,10 +65,10 @@ export const getCharacterMovementAnimationConfigsForController = (
   config: ShortCharacterMovementAnimationConfig,
 ): CharacterAnimationConfigsForController => {
   return {
-    walkDown: getCharacterMovementAnimationConfigForController(ViewDirections.DOWN, config),
-    walkRight: getCharacterMovementAnimationConfigForController(ViewDirections.RIGHT, config),
-    walkUp: getCharacterMovementAnimationConfigForController(ViewDirections.UP, config),
-    walkLeft: getCharacterMovementAnimationConfigForController(ViewDirections.LEFT, config),
+    walkDown: getCharacterMovementAnimationConfigForController( ViewDirections.DOWN, config ),
+    walkRight: getCharacterMovementAnimationConfigForController( ViewDirections.RIGHT, config ),
+    walkUp: getCharacterMovementAnimationConfigForController( ViewDirections.UP, config ),
+    walkLeft: getCharacterMovementAnimationConfigForController( ViewDirections.LEFT, config ),
   };
 };
 

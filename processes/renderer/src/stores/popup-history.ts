@@ -25,7 +25,7 @@ export class PopupHistory {
   private notesForClear = 100;
 
   constructor() {
-    makeAutoObservable(this);
+    makeAutoObservable( this );
   }
 
   clearNotes = (): void => {
@@ -33,51 +33,51 @@ export class PopupHistory {
   };
 
   checkForClear = (): void => {
-    if (!this.unclosedPopups.length && this.notes.length >= this.notesForClear) {
+    if ( !this.unclosedPopups.length && this.notes.length >= this.notesForClear ) {
       this.clearNotes();
     }
   };
 
-  createOpenNote = ({ popup, forwardedFrom }: CreateOpenNoteConfig): void => {
-    this.notes.push({
+  createOpenNote = ( { popup, forwardedFrom }: CreateOpenNoteConfig ): void => {
+    this.notes.push( {
       popup,
       event: 'open',
       forwardedFrom,
-    });
+    } );
   };
 
-  createCloseNote = ({ popup }: CreateCloseNoteConfig): void => {
-    this.notes.push({
+  createCloseNote = ( { popup }: CreateCloseNoteConfig ): void => {
+    this.notes.push( {
       popup,
       event: 'close',
-    });
+    } );
     this.checkForClear();
   };
 
   get unclosedPopups(): Array<Popup> {
-    return this.notes.reduce((acc, note) => {
+    return this.notes.reduce( ( acc, note ) => {
       const openedCount = countOf(
         this.notes,
-        ({ event, popup }) => popup.name === note.popup.name && event === 'open',
+        ( { event, popup } ) => popup.name === note.popup.name && event === 'open',
       );
       const closedCount = countOf(
         this.notes,
-        ({ event, popup }) => popup.name === note.popup.name && event === 'close',
+        ( { event, popup } ) => popup.name === note.popup.name && event === 'close',
       );
-      if (acc.every((p) => p.name !== note.popup.name) && openedCount > closedCount) {
-        acc.push(note.popup);
+      if ( acc.every( ( p ) => p.name !== note.popup.name ) && openedCount > closedCount ) {
+        acc.push( note.popup );
       }
       return acc;
-    }, [] as Array<Popup>);
+    }, [] as Array<Popup> );
   }
 
   get lastUnclosedPopup(): Popup | null {
-    return last(this.unclosedPopups) ?? null;
+    return last( this.unclosedPopups ) ?? null;
   }
 
   get isOpenedPopups(): boolean {
-    const openNoteCount = countOf(this.notes, ({ event }) => event === 'open');
-    const closeNoteCount = countOf(this.notes, ({ event }) => event === 'close');
+    const openNoteCount = countOf( this.notes, ( { event } ) => event === 'open' );
+    const closeNoteCount = countOf( this.notes, ( { event } ) => event === 'close' );
     return openNoteCount !== closeNoteCount;
   }
 }

@@ -14,7 +14,7 @@ export class GameScreen {
   canvas: Canvas;
   ctx: Ctx;
 
-  constructor(config: GameScreenConfig) {
+  constructor( config: GameScreenConfig ) {
     const { width, height } = config;
 
     this.width = width;
@@ -24,19 +24,19 @@ export class GameScreen {
   }
 
   initializeCanvasAndCtx = (): void => {
-    const canvas = document.createElement('canvas');
+    const canvas = document.createElement( 'canvas' );
     canvas.width = this.width;
     canvas.height = this.height;
 
     this.canvas = canvas;
-    this.ctx = this.canvas.getContext('2d')!;
+    this.ctx = this.canvas.getContext( '2d' )!;
   };
 
   clear = (): void => {
-    this.ctx.clearRect(0, 0, this.width, this.height);
+    this.ctx.clearRect( 0, 0, this.width, this.height );
   };
 
-  drawSprite = (sprite: Sprite, position: XY): void => {
-    sprite.draw(this.ctx, position);
+  drawSprite = ( sprite: Sprite, position: XY ): void => {
+    sprite.draw( this.ctx, position );
   };
 }

@@ -8,16 +8,16 @@ import { useGamePlayStore } from 'screens/game/screen';
 
 import { PlayCanvasOverlay } from './overlay';
 
-export const PlayCanvas: FC = observer(() => {
+export const PlayCanvas: FC = observer( () => {
   const gamePlayStore = useGamePlayStore();
 
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  useEffect(() => {
-    if (gamePlayStore.isGameInitialized && gamePlayStore.screen.canvas && containerRef.current) {
+  const containerRef = useRef<HTMLDivElement | null>( null );
+  useEffect( () => {
+    if ( gamePlayStore.isGameInitialized && gamePlayStore.screen.canvas && containerRef.current ) {
       // "рендер" канваса, созданного в сторе
-      containerRef.current.appendChild(gamePlayStore.screen.canvas);
+      containerRef.current.appendChild( gamePlayStore.screen.canvas );
     }
-  }, [gamePlayStore.isGameInitialized]);
+  }, [ gamePlayStore.isGameInitialized ] );
 
   return (
     <>
@@ -26,7 +26,7 @@ export const PlayCanvas: FC = observer(() => {
       </Container>
     </>
   );
-});
+} );
 
 const Container = styled.div`
   position: relative;

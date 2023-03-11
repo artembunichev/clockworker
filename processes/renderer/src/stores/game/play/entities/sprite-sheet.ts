@@ -25,7 +25,7 @@ export class SpriteSheet {
   private skipY: number;
   defaultScale?: number;
 
-  constructor(config: SpriteSheetConfig) {
+  constructor( config: SpriteSheetConfig ) {
     const { image, spriteWidth, spriteHeight, firstSkipX, firstSkipY, skipX, skipY, defaultScale } =
       config;
 
@@ -39,18 +39,18 @@ export class SpriteSheet {
     this.defaultScale = defaultScale;
   }
 
-  getSprite = (row: number, column: number, options?: GetSpriteOptions): Sprite => {
-    const spriteSourceX = this.firstSkipX + (this.spriteWidth + this.skipX) * column;
-    const spriteSourceY = this.firstSkipY + (this.spriteHeight + this.skipY) * row;
+  getSprite = ( row: number, column: number, options?: GetSpriteOptions ): Sprite => {
+    const spriteSourceX = this.firstSkipX + ( this.spriteWidth + this.skipX ) * column;
+    const spriteSourceY = this.firstSkipY + ( this.spriteHeight + this.skipY ) * row;
     const spriteScale = options?.scale ?? this.defaultScale ?? 1;
 
-    return new Sprite({
+    return new Sprite( {
       image: this.image,
       width: this.spriteWidth,
       height: this.spriteHeight,
       sourceX: spriteSourceX,
       sourceY: spriteSourceY,
       scale: spriteScale,
-    });
+    } );
   };
 }

@@ -18,11 +18,11 @@ export class CharacterController {
   activeCharactersNames: Array<CharacterName> = [];
 
   constructor() {
-    makeObservable(this, {
+    makeObservable( this, {
       characters: observable,
       activeCharactersNames: observable,
       isAllActiveCharactersImagesLoaded: computed,
-    });
+    } );
   }
 
   createCharacter = async <
@@ -33,25 +33,25 @@ export class CharacterController {
     ...args: CharacterConfig extends never ? [undefined] : [CharacterConfig]
   ): Promise<void> => {
     const characterConfig = args[0];
-    this.characters[name] = new this.refList[name](characterConfig);
+    this.characters[name] = new this.refList[name]( characterConfig );
     await this.characters[name].imageContainer.loadAll();
   };
 
-  addActiveCharacter = (characterName: CharacterName): void => {
-    this.activeCharactersNames.push(characterName);
+  addActiveCharacter = ( characterName: CharacterName ): void => {
+    this.activeCharactersNames.push( characterName );
   };
-  addActiveCharacters = (charactersNames: Array<CharacterName>): void => {
-    charactersNames.forEach((characterName) => {
-      this.addActiveCharacter(characterName);
-    });
+  addActiveCharacters = ( charactersNames: Array<CharacterName> ): void => {
+    charactersNames.forEach( ( characterName ) => {
+      this.addActiveCharacter( characterName );
+    } );
   };
 
-  removeActiveCharacter = (characterName: CharacterName): void => {
-    this.activeCharactersNames = remove(this.activeCharactersNames, characterName);
+  removeActiveCharacter = ( characterName: CharacterName ): void => {
+    this.activeCharactersNames = remove( this.activeCharactersNames, characterName );
   };
-  removeActiveCharacters = (characterNames: Array<CharacterName>): void => {
-    this.activeCharactersNames = this.activeCharactersNames.filter((name) =>
-      characterNames.every((characterName) => name === characterName),
+  removeActiveCharacters = ( characterNames: Array<CharacterName> ): void => {
+    this.activeCharactersNames = this.activeCharactersNames.filter( ( name ) =>
+      characterNames.every( ( characterName ) => name === characterName ),
     );
   };
 
@@ -60,14 +60,14 @@ export class CharacterController {
   };
 
   get activeCharacters(): Array<Character> {
-    return this.activeCharactersNames.map((characterName) => {
+    return this.activeCharactersNames.map( ( characterName ) => {
       return this.characters[characterName];
-    });
+    } );
   }
 
   get isAllActiveCharactersImagesLoaded(): boolean {
-    return objectValues(this.characters).every(
-      (activeCharacter) => activeCharacter.imageContainer.isAllImagesLoaded,
+    return objectValues( this.characters ).every(
+      ( activeCharacter ) => activeCharacter.imageContainer.isAllImagesLoaded,
     );
   }
 }

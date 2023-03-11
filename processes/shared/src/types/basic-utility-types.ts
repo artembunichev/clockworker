@@ -20,7 +20,7 @@ export type NonNullableProperties<T, K extends keyof T = keyof T> = {
 };
 
 export type Merge<A, B> = A | B extends object
-  ? Omit<A, keyof B> & Omit<B, keyof A> & { [K in keyof (A | B)]: Merge<A[K], B[K]> }
+  ? Omit<A, keyof B> & Omit<B, keyof A> & { [K in keyof ( A | B )]: Merge<A[K], B[K]> }
   : B;
 
 export type DeepPartial<T> = T extends object ? { [K in keyof T]?: DeepPartial<T[K]> } : T;
@@ -39,7 +39,7 @@ export type NeverProperties<T> = { [_ in keyof T]?: never };
 export type Without<A, B> = Omit<A, keyof B>;
 
 export type XOR<A, B> = A | B extends object
-  ? (B & NeverProperties<Without<A, B>>) | (A & NeverProperties<Without<B, A>>)
+  ? ( B & NeverProperties<Without<A, B>> ) | ( A & NeverProperties<Without<B, A>> )
   : A | B;
 
 export type Entries<T> = Array<[keyof T, PropertyOf<T>]>;

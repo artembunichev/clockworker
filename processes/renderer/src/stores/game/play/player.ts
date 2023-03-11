@@ -8,8 +8,8 @@ type CreatePlayerCharacterConfig = {
 
 export class Player {
   character: PlayerCharacter | null = null;
-  createCharacter = async (config: CreatePlayerCharacterConfig): Promise<void> => {
-    await config.characterController.createCharacter('player', config.characterConfig);
+  createCharacter = async ( config: CreatePlayerCharacterConfig ): Promise<void> => {
+    await config.characterController.createCharacter( 'player', config.characterConfig );
     this.character = config.characterController.characters.player;
   };
 }

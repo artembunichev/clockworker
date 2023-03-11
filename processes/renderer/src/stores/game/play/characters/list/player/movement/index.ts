@@ -26,52 +26,52 @@ export class PlayerCharacterMovement extends CharacterMovement {
   private keyboard: KeyboardStore;
   keys: PlayerCharacterMovementKeys;
 
-  constructor(config: PlayerCharacterMovementConfig) {
+  constructor( config: PlayerCharacterMovementConfig ) {
     const { position, animationController, initialMovementStateConfig, settings, keyboard } = config;
 
-    super({
+    super( {
       position,
       animationController,
       initialMovementStateConfig,
-    });
+    } );
 
     this.settings = settings;
     this.keyboard = keyboard;
 
-    this.keys = new PlayerCharacterMovementKeys({ keyboard: this.keyboard, settings: this.settings });
+    this.keys = new PlayerCharacterMovementKeys( { keyboard: this.keyboard, settings: this.settings } );
 
     const superAutomoveRun = this.automove.run;
-    const runAutomove: RunAutomove = (config: any) => {
-      this.keys.prohibitorsController.add('automove');
-      return superAutomoveRun(config).then((response) => {
-        this.keys.prohibitorsController.remove('automove');
+    const runAutomove: RunAutomove = ( config: any ) => {
+      this.keys.prohibitorsController.add( 'automove' );
+      return superAutomoveRun( config ).then( ( response ) => {
+        this.keys.prohibitorsController.remove( 'automove' );
         return response;
-      });
+      } );
     };
 
     this.automove.run = runAutomove;
   }
 
   handleMovementKeys = (): void => {
-    if (!this.keys.prohibitorsController.isProhibited) {
+    if ( !this.keys.prohibitorsController.isProhibited ) {
       const prevPressedControllersLength = this.keys.pressedControllers.length;
 
       this.keys.updatePressedKeys();
 
       // остановить движение только в момент, когда была отпущена последняя клавиша движения
-      if (this.keys.pressedControllers.length === 0 && prevPressedControllersLength > 0) {
+      if ( this.keys.pressedControllers.length === 0 && prevPressedControllersLength > 0 ) {
         this.stopMove();
       } else {
-        if (this.keys.isControllerPressed) {
-          const movementDirection = getSingleMovementDirection(this.keys.pressedDirections);
+        if ( this.keys.isControllerPressed ) {
+          const movementDirection = getSingleMovementDirection( this.keys.pressedDirections );
 
-          if (movementDirection) {
-            if (!this.isMovementProhibited) {
+          if ( movementDirection ) {
+            if ( !this.isMovementProhibited ) {
               this.animationController.resume();
-              this.moveWithAnimation({
+              this.moveWithAnimation( {
                 direction: movementDirection,
                 stateConfig: initialPlayerCharacterMovementStateConfig,
-              });
+              } );
             }
           } else {
             this.stopMove();
@@ -81,13 +81,13 @@ export class PlayerCharacterMovement extends CharacterMovement {
     } else {
       if (
         this.keys.prohibitorsController.list.every(
-          (p) => p !== 'automove' && p !== 'pause' && p !== 'textbox',
+          ( p ) => p !== 'automove' && p !== 'pause' && p !== 'textbox',
         )
       ) {
         // когда клавиши заблокированы автомувом - анимация продолжается
         // всё, кроме паузы и текстбокса полностью прекращает анимацию
         this.animationController.stop();
-      } else if (this.keys.prohibitorsController.list.some((p) => p === 'pause' || p === 'textbox')) {
+      } else if ( this.keys.prohibitorsController.list.some( ( p ) => p === 'pause' || p === 'textbox' ) ) {
         // когда игра на паузе или открыт текстбокс - анимация замирает
         this.animationController.pause();
       }
@@ -95,7 +95,7 @@ export class PlayerCharacterMovement extends CharacterMovement {
   };
 
   handleRegulators = (): void => {
-    if (this.keys.isSprintKeyPressed) {
+    if ( this.keys.isSprintKeyPressed ) {
       this.startSprint();
     } else {
       this.endSprint();

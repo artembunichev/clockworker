@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { predicate } from 'shared/lib/boolean';
 import { Callback } from 'shared/types/basic-utility-types';
 
-const isWindow = (element: unknown): element is Window => {
+const isWindow = ( element: unknown ): element is Window => {
   return element === window;
 };
 
@@ -25,39 +25,39 @@ export const useKey = (
   deps?: Array<any>,
 ): void => {
   const fn: Callback = () => {
-    const isIgnore = Array.isArray(ignoreWhen) ? ignoreWhen.some(predicate) : predicate(ignoreWhen);
+    const isIgnore = Array.isArray( ignoreWhen ) ? ignoreWhen.some( predicate ) : predicate( ignoreWhen );
 
-    if (!isIgnore) {
+    if ( !isIgnore ) {
       var isVariantTriggered = false;
 
-      variants?.forEach((variant) => {
-        if (predicate(variant.when)) {
+      variants?.forEach( ( variant ) => {
+        if ( predicate( variant.when ) ) {
           variant.fn();
           isVariantTriggered = true;
         }
-      });
+      } );
 
-      if (!isVariantTriggered) {
+      if ( !isVariantTriggered ) {
         defaultFn();
       }
     }
   };
 
-  useEffect(() => {
-    const onKeyDown = (e: Event): void => {
+  useEffect( () => {
+    const onKeyDown = ( e: Event ): void => {
       const { code } = e as KeyboardEvent;
-      if (code === key) {
+      if ( code === key ) {
         fn();
       }
     };
 
-    if (element) {
-      if (!isWindow(element)) {
+    if ( element ) {
+      if ( !isWindow( element ) ) {
         element.tabIndex = 0;
       }
-      element.addEventListener('keydown', onKeyDown);
+      element.addEventListener( 'keydown', onKeyDown );
     }
 
-    return () => element?.removeEventListener('keydown', onKeyDown);
-  }, [element, fn, ...(deps ?? [])]);
+    return () => element?.removeEventListener( 'keydown', onKeyDown );
+  }, [ element, fn, ...( deps ?? [] ) ] );
 };

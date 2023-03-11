@@ -5,7 +5,7 @@ type MarketConfig = {
 export class Market {
   name: string;
 
-  constructor(config: MarketConfig) {
+  constructor( config: MarketConfig ) {
     const { name } = config;
     this.name = name;
   }

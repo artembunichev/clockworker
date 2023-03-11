@@ -7,12 +7,12 @@ type Config = {
 };
 
 export class WelcomeTextbox extends Textbox<'welcome'> {
-  constructor(config: Config) {
+  constructor( config: Config ) {
     const { gameScript } = config;
 
-    super({
+    super( {
       name: 'welcome',
       text: gameScript.content.welcome,
-    });
+    } );
   }
 }

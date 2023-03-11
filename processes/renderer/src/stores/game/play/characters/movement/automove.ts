@@ -16,19 +16,19 @@ type RunAutomoveDeltaX = BaseRunAutomoveConfig & { deltaX: number };
 type RunAutomoveDeltaY = BaseRunAutomoveConfig & { deltaY: number };
 
 export type RunAutomove = {
-  (config: RunAutomoveFromTo): Promise<boolean>;
-  (config: RunAutomoveDeltaX): Promise<boolean>;
-  (config: RunAutomoveDeltaY): Promise<boolean>;
+  ( config: RunAutomoveFromTo ): Promise<boolean>;
+  ( config: RunAutomoveDeltaX ): Promise<boolean>;
+  ( config: RunAutomoveDeltaY ): Promise<boolean>;
 };
 
-const isAutomoveFromToConfig = (config: any): config is RunAutomoveFromTo => {
-  return (config as RunAutomoveFromTo).to !== undefined;
+const isAutomoveFromToConfig = ( config: any ): config is RunAutomoveFromTo => {
+  return ( config as RunAutomoveFromTo ).to !== undefined;
 };
-const isAutomoveDeltaXConfig = (config: any): config is RunAutomoveDeltaX => {
-  return (config as RunAutomoveDeltaX).deltaX !== undefined;
+const isAutomoveDeltaXConfig = ( config: any ): config is RunAutomoveDeltaX => {
+  return ( config as RunAutomoveDeltaX ).deltaX !== undefined;
 };
-const isAutomoveDeltaYConfig = (config: any): config is RunAutomoveDeltaY => {
-  return (config as RunAutomoveDeltaY).deltaY !== undefined;
+const isAutomoveDeltaYConfig = ( config: any ): config is RunAutomoveDeltaY => {
+  return ( config as RunAutomoveDeltaY ).deltaY !== undefined;
 };
 
 type Config = {
@@ -55,7 +55,7 @@ export class CharacterAutomove {
   isAutomoving = false;
   isStuck = false;
 
-  constructor(config: Config) {
+  constructor( config: Config ) {
     const {
       position,
       movementState,
@@ -77,113 +77,113 @@ export class CharacterAutomove {
     this.animationController = animationController;
   }
 
-  setIsAutomoving = (value: boolean): void => {
+  setIsAutomoving = ( value: boolean ): void => {
     this.isAutomoving = value;
   };
 
-  setIsStuck = (value: boolean): void => {
+  setIsStuck = ( value: boolean ): void => {
     this.isStuck = value;
   };
 
-  run: RunAutomove = (config: any) => {
-    return new Promise((resolve) => {
+  run: RunAutomove = ( config: any ) => {
+    return new Promise( ( resolve ) => {
       if (
-        isAutomoveFromToConfig(config) ||
-        isAutomoveDeltaXConfig(config) ||
-        isAutomoveDeltaYConfig(config)
+        isAutomoveFromToConfig( config ) ||
+        isAutomoveDeltaXConfig( config ) ||
+        isAutomoveDeltaYConfig( config )
       ) {
         this.clearRegulators();
 
         const { stateConfig } = config;
 
-        if (stateConfig) {
-          this.movementState.setConfig(stateConfig);
+        if ( stateConfig ) {
+          this.movementState.setConfig( stateConfig );
         }
 
         const start: XY = { x: this.position.x, y: this.position.y };
         const end: XY = { x: this.position.x, y: this.position.y };
 
-        if (isAutomoveFromToConfig(config)) {
+        if ( isAutomoveFromToConfig( config ) ) {
           const { from, to } = config;
-          if (from) {
+          if ( from ) {
             start.x = from.x;
             start.y = from.y;
           }
           end.x = to.x;
           end.y = to.y;
-        } else if (isAutomoveDeltaXConfig(config)) {
+        } else if ( isAutomoveDeltaXConfig( config ) ) {
           const { deltaX } = config;
           end.x = start.x + deltaX;
-        } else if (isAutomoveDeltaYConfig(config)) {
+        } else if ( isAutomoveDeltaYConfig( config ) ) {
           const { deltaY } = config;
           end.y = start.y + deltaY;
         }
 
         // если движение НЕ по прямой
-        if ((start.x !== end.x && start.y !== end.y) || isEqual(start, end)) {
-          return resolve(false);
+        if ( ( start.x !== end.x && start.y !== end.y ) || isEqual( start, end ) ) {
+          return resolve( false );
         }
 
         const startAutoMoving = (): void => {
-          this.setIsAutomoving(true);
+          this.setIsAutomoving( true );
         };
         const stopAutomoving = (): void => {
           this.stopMove();
-          this.setIsAutomoving(false);
+          this.setIsAutomoving( false );
         };
 
         startAutoMoving();
 
         // перемещаем героя в стартовую позицию
-        this.position.setXY(start.x, start.y);
+        this.position.setXY( start.x, start.y );
 
         // условие выше гарантирует, стартовая и конечная позиции не совпадают
-        const direction = getMovementDirection(start, end)!;
+        const direction = getMovementDirection( start, end )!;
 
         // нужна, чтобы не вызывать move(), после того, как встали на конечную позицию
         var shouldMove = true;
 
         // двигаемся в текущем направлении, пока не дойдём до конечной позиции
         const automoveInDirection = (): void => {
-          if (this.isStuck) {
-            this.setIsAutomoving(false);
+          if ( this.isStuck ) {
+            this.setIsAutomoving( false );
           }
 
-          if (this.isAutomoving && !isEqual(this.position.value, end)) {
+          if ( this.isAutomoving && !isEqual( this.position.value, end ) ) {
             // остановка на конечной позиции, если следующим шагом уходим дальше
-            const setPositionToEndAndStopAutomoving = (x: number, y: number): void => {
-              this.position.setXY(x, y);
+            const setPositionToEndAndStopAutomoving = ( x: number, y: number ): void => {
+              this.position.setXY( x, y );
               shouldMove = false;
             };
 
             const positionOnNextStep = this.getPositionOnNextStep();
 
-            if (direction === 'down') {
-              if (positionOnNextStep.y > end.y) {
-                setPositionToEndAndStopAutomoving(this.position.x, end.y);
+            if ( direction === 'down' ) {
+              if ( positionOnNextStep.y > end.y ) {
+                setPositionToEndAndStopAutomoving( this.position.x, end.y );
               }
-            } else if (direction === 'right') {
-              if (positionOnNextStep.x > end.x) {
-                setPositionToEndAndStopAutomoving(end.x, this.position.y);
+            } else if ( direction === 'right' ) {
+              if ( positionOnNextStep.x > end.x ) {
+                setPositionToEndAndStopAutomoving( end.x, this.position.y );
               }
-            } else if (direction === 'up') {
-              if (positionOnNextStep.y < end.y) {
-                setPositionToEndAndStopAutomoving(this.position.x, end.y);
+            } else if ( direction === 'up' ) {
+              if ( positionOnNextStep.y < end.y ) {
+                setPositionToEndAndStopAutomoving( this.position.x, end.y );
               }
-            } else if (direction === 'left') {
-              if (positionOnNextStep.x < end.x) {
-                setPositionToEndAndStopAutomoving(end.x, this.position.y);
+            } else if ( direction === 'left' ) {
+              if ( positionOnNextStep.x < end.x ) {
+                setPositionToEndAndStopAutomoving( end.x, this.position.y );
               }
             }
 
-            if (shouldMove) {
-              if (!this.movementProhibitorsController.isProhibited) {
+            if ( shouldMove ) {
+              if ( !this.movementProhibitorsController.isProhibited ) {
                 this.animationController.resume();
-                this.move({ direction, stateConfig });
+                this.move( { direction, stateConfig } );
               } else {
                 if (
                   this.movementProhibitorsController.list.every(
-                    (p) => p !== 'pause' && p !== 'textbox',
+                    ( p ) => p !== 'pause' && p !== 'textbox',
                   )
                 ) {
                   // всё, кроме паузы и текстбокса прекращает анимацию
@@ -195,14 +195,14 @@ export class CharacterAutomove {
               }
             }
 
-            window.requestAnimationFrame(automoveInDirection);
+            window.requestAnimationFrame( automoveInDirection );
           } else {
             stopAutomoving();
-            resolve(true);
+            resolve( true );
           }
         };
         automoveInDirection();
       }
-    });
+    } );
   };
 }

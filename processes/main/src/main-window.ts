@@ -5,22 +5,22 @@ import { TypedBrowserWindow } from 'shared/types/typed-electron-api';
 
 export var mainWindow: TypedBrowserWindow<IpcEventName> | null;
 export const createWindow = (): void => {
-  mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow( {
     titleBarStyle: 'hidden',
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join( __dirname, 'preload.js' ),
     },
-    icon: path.join(__dirname, '../assets/clockworker-icon.ico'),
-  });
+    icon: path.join( __dirname, '../assets/clockworker-icon.ico' ),
+  } );
 
-  mainWindow.setFullScreen(true);
+  mainWindow.setFullScreen( true );
   mainWindow.removeMenu();
 
-  mainWindow.loadFile(path.join(__dirname, '../index.html'));
+  mainWindow.loadFile( path.join( __dirname, '../index.html' ) );
 
-  mainWindow.on('closed', () => {
+  mainWindow.on( 'closed', () => {
     mainWindow = null;
-  });
+  } );
 };

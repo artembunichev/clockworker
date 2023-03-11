@@ -16,55 +16,55 @@ export class GamePauseController {
 
   isGamePaused = false;
 
-  constructor(config: Config) {
+  constructor( config: Config ) {
     const { characterController, sharedMethods } = config;
 
     this.characterController = characterController;
     this.sharedMethods = sharedMethods;
 
-    makeAutoObservable(this);
+    makeAutoObservable( this );
   }
 
   // пауза
-  pauseCharactersMovement = (prohibitorName: string): void => {
-    this.characterController.activeCharacters.forEach((character) => {
-      character.movement.movementProhibitorsController.add(prohibitorName);
-    });
+  pauseCharactersMovement = ( prohibitorName: string ): void => {
+    this.characterController.activeCharacters.forEach( ( character ) => {
+      character.movement.movementProhibitorsController.add( prohibitorName );
+    } );
   };
-  pauseHandlingPlayerCharacterMovementKeys = (prohibitorName: string): void => {
-    this.sharedMethods.playerCharacter.addMovementKeysProhibitor(prohibitorName);
+  pauseHandlingPlayerCharacterMovementKeys = ( prohibitorName: string ): void => {
+    this.sharedMethods.playerCharacter.addMovementKeysProhibitor( prohibitorName );
   };
 
-  onPause = ({ prohibitorName }: PauseControlsConfig): void => {
-    this.pauseCharactersMovement(prohibitorName);
-    this.pauseHandlingPlayerCharacterMovementKeys(prohibitorName);
+  onPause = ( { prohibitorName }: PauseControlsConfig ): void => {
+    this.pauseCharactersMovement( prohibitorName );
+    this.pauseHandlingPlayerCharacterMovementKeys( prohibitorName );
   };
 
   // возобновление
-  resumeCharactersMovement = (prohibitorName: string): void => {
-    this.characterController.activeCharacters.forEach((character) => {
-      character.movement.movementProhibitorsController.remove(prohibitorName);
-    });
+  resumeCharactersMovement = ( prohibitorName: string ): void => {
+    this.characterController.activeCharacters.forEach( ( character ) => {
+      character.movement.movementProhibitorsController.remove( prohibitorName );
+    } );
   };
-  resumeHandlingPlayerCharacterMovementKeys = (prohibitorName: string): void => {
-    this.sharedMethods.playerCharacter.removeMovementKeysProhibitor(prohibitorName);
+  resumeHandlingPlayerCharacterMovementKeys = ( prohibitorName: string ): void => {
+    this.sharedMethods.playerCharacter.removeMovementKeysProhibitor( prohibitorName );
   };
 
-  onResume = ({ prohibitorName }: PauseControlsConfig): void => {
-    this.resumeCharactersMovement(prohibitorName);
-    this.resumeHandlingPlayerCharacterMovementKeys(prohibitorName);
+  onResume = ( { prohibitorName }: PauseControlsConfig ): void => {
+    this.resumeCharactersMovement( prohibitorName );
+    this.resumeHandlingPlayerCharacterMovementKeys( prohibitorName );
   };
 
   pauseGame = (): void => {
     this.isGamePaused = true;
-    this.onPause({ prohibitorName: 'pause' });
+    this.onPause( { prohibitorName: 'pause' } );
   };
   resumeGame = (): void => {
     this.isGamePaused = false;
-    this.onResume({ prohibitorName: 'pause' });
+    this.onResume( { prohibitorName: 'pause' } );
   };
   toggleGamePause = (): void => {
-    if (this.isGamePaused) {
+    if ( this.isGamePaused ) {
       this.resumeGame();
     } else {
       this.pauseGame();

@@ -16,7 +16,7 @@ import { MainMenu } from './main-menu';
 import { UpdateChecker } from './update-notification/update-checker';
 import { useMainScreenEsc } from './use-esc';
 
-export const MainScreen: FC = observer(() => {
+export const MainScreen: FC = observer( () => {
   const { quitGameConfirm } = useStore().appStore.popups;
 
   useMainScreenEsc();
@@ -40,7 +40,7 @@ export const MainScreen: FC = observer(() => {
       </Container>
     </>
   );
-});
+} );
 
 const Container = styled.div`
   position: relative;
@@ -61,10 +61,10 @@ const Body = styled.div`
   flex-direction: column;
   justify-content: center;
 `;
-const QuitGameButton = styled(PixelatedButton).attrs({
+const QuitGameButton = styled( PixelatedButton ).attrs( {
   pixelsSize: 'medium',
   backgroundColor: colors.mainLight,
-})`
+} )`
   position: absolute;
   bottom: 15px;
   right: 25px;

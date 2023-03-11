@@ -20,7 +20,7 @@ export class PlayerCharacterMovementKeys {
   pressedKeys: Array<string> = [];
   prohibitorsController = new ProhibitorsController();
 
-  constructor(config: Config) {
+  constructor( config: Config ) {
     const { keyboard, settings } = config;
 
     this.keyboard = keyboard;
@@ -31,12 +31,12 @@ export class PlayerCharacterMovementKeys {
     this.pressedKeys = this.keyboard.pressedKeysArray;
   };
 
-  isControllerKey = (key: string): boolean => {
-    return objectValues(this.controllerKeys).some((controller) => key === controller);
+  isControllerKey = ( key: string ): boolean => {
+    return objectValues( this.controllerKeys ).some( ( controller ) => key === controller );
   };
 
-  isRegulatorKey = (key: string): boolean => {
-    return objectValues(this.regulatorKeys).some((regulator) => key === regulator);
+  isRegulatorKey = ( key: string ): boolean => {
+    return objectValues( this.regulatorKeys ).some( ( regulator ) => key === regulator );
   };
 
   // контроллеры
@@ -44,10 +44,10 @@ export class PlayerCharacterMovementKeys {
     return this.settings.values.movementControllers;
   }
   get pressedControllers(): Array<string> {
-    return this.pressedKeys.slice().reverse().filter(this.isControllerKey);
+    return this.pressedKeys.slice().reverse().filter( this.isControllerKey );
   }
   get pressedDirections(): Array<PrimitiveDirection> {
-    return this.pressedControllers.map((controller) =>
+    return this.pressedControllers.map( ( controller ) =>
       controller === this.controllerKeys.down
         ? 'down'
         : controller === this.controllerKeys.right
@@ -62,16 +62,16 @@ export class PlayerCharacterMovementKeys {
     return this.pressedControllers.length !== 0;
   }
   get isMoveDownControllerPressed(): boolean {
-    return this.pressedControllers.includes(this.controllerKeys.down);
+    return this.pressedControllers.includes( this.controllerKeys.down );
   }
   get isMoveRightControllerPressed(): boolean {
-    return this.pressedControllers.includes(this.controllerKeys.right);
+    return this.pressedControllers.includes( this.controllerKeys.right );
   }
   get isMoveUpControllerPressed(): boolean {
-    return this.pressedControllers.includes(this.controllerKeys.up);
+    return this.pressedControllers.includes( this.controllerKeys.up );
   }
   get isMoveLeftControllerPressed(): boolean {
-    return this.pressedControllers.includes(this.controllerKeys.left);
+    return this.pressedControllers.includes( this.controllerKeys.left );
   }
 
   // регуляторы
@@ -80,10 +80,10 @@ export class PlayerCharacterMovementKeys {
   }
 
   get pressedRegulators(): Array<string> {
-    return this.pressedKeys.filter(this.isRegulatorKey);
+    return this.pressedKeys.filter( this.isRegulatorKey );
   }
   get lastPressedRegulator(): string {
-    return last(this.pressedRegulators);
+    return last( this.pressedRegulators );
   }
 
   get isSprintKeyPressed(): boolean {

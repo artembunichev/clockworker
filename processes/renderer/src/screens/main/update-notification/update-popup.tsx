@@ -12,7 +12,7 @@ type Props = {
   updateStore: UpdateStore;
 };
 
-export const UpdatePopup: FC<Props> = observer(({ updateStore }) => {
+export const UpdatePopup: FC<Props> = observer( ( { updateStore } ) => {
   const {
     isShowingNotificationAllowed,
     version,
@@ -25,17 +25,17 @@ export const UpdatePopup: FC<Props> = observer(({ updateStore }) => {
     closeNotification,
   } = updateStore;
 
-  useEffect(() => {
-    if (isShowingNotificationAllowed && version !== null && releaseNotes !== null) {
+  useEffect( () => {
+    if ( isShowingNotificationAllowed && version !== null && releaseNotes !== null ) {
       openNotification();
     }
-  }, [version, releaseNotes]);
+  }, [ version, releaseNotes ] );
 
   return (
     <>
       {version !== null &&
         releaseNotes !== null &&
-        (!isDownloading ? (
+        ( !isDownloading ? (
           <UpdateNotification
             isOpened={isNotificationOpened}
             version={version}
@@ -45,7 +45,7 @@ export const UpdatePopup: FC<Props> = observer(({ updateStore }) => {
           />
         ) : (
           <DownloadProgress percentage={currentPercentage} />
-        ))}
+        ) )}
     </>
   );
-});
+} );

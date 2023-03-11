@@ -12,16 +12,16 @@ export class Body {
   // показывает, чем является тело
   is: string;
 
-  readonly id = nanoid(6);
+  readonly id = nanoid( 6 );
   position = new Position();
   size: Size = { width: 0, height: 0 };
 
-  constructor(config: BodyConfig) {
+  constructor( config: BodyConfig ) {
     const { is } = config;
     this.is = is;
   }
 
-  protected setSize = (size: Size): void => {
+  protected setSize = ( size: Size ): void => {
     this.size = size;
   };
 

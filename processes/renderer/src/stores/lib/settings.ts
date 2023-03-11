@@ -12,5 +12,5 @@ export const getConvertedEditableSettings = <
 >(
   editableSettings: T,
 ): { [K in keyof T]: T[K]['value'] } => {
-  return objectMapAll(editableSettings, ({ value }) => value);
+  return objectMapAll( editableSettings, ( { value } ) => value );
 };

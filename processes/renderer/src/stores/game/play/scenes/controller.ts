@@ -26,35 +26,35 @@ export class GameSceneController {
   private sceneCreator: GameSceneCreator;
 
   // список сцен, использующихся в контроллере
-  private sceneConfigs = [marketMainSceneConfig];
+  private sceneConfigs = [ marketMainSceneConfig ];
   // список созданных сцен
   scenes: Scenes = {} as Scenes;
   currentScene: Scene = {} as Scene;
 
-  constructor(config: GameSceneControllerConfig) {
+  constructor( config: GameSceneControllerConfig ) {
     const { screen, characterList } = config;
 
-    this.sceneCreator = new GameSceneCreator({ screen, characterList });
+    this.sceneCreator = new GameSceneCreator( { screen, characterList } );
 
-    makeObservable(this, {
+    makeObservable( this, {
       scenes: observable,
       currentScene: observable,
       isAllCurrentSceneImagesLoaded: computed,
-    });
+    } );
   }
 
-  getSceneConfig = (name: SceneName): ControllerSceneConfig<any> => {
-    return this.sceneConfigs.find((config) => config.name === name)!;
+  getSceneConfig = ( name: SceneName ): ControllerSceneConfig<any> => {
+    return this.sceneConfigs.find( ( config ) => config.name === name )!;
   };
 
-  createScene = (name: SceneName): void => {
-    const mapConfig = this.getSceneConfig(name).map;
-    this.scenes[name] = this.sceneCreator.createScene(name, mapConfig);
+  createScene = ( name: SceneName ): void => {
+    const mapConfig = this.getSceneConfig( name ).map;
+    this.scenes[name] = this.sceneCreator.createScene( name, mapConfig );
   };
 
-  setScene = (sceneName: SceneName): Promise<void> => {
-    if (!this.scenes[sceneName]) {
-      this.createScene(sceneName);
+  setScene = ( sceneName: SceneName ): Promise<void> => {
+    if ( !this.scenes[sceneName] ) {
+      this.createScene( sceneName );
     }
 
     this.currentScene = this.scenes[sceneName];
@@ -64,8 +64,8 @@ export class GameSceneController {
       this.currentScene.drawMap();
     };
 
-    if (!this.isAllCurrentSceneImagesLoaded) {
-      return this.loadAllCurrentSceneImages().then(() => createAndDrawMap());
+    if ( !this.isAllCurrentSceneImagesLoaded ) {
+      return this.loadAllCurrentSceneImages().then( () => createAndDrawMap() );
     } else {
       createAndDrawMap();
       return resolvedPromise;

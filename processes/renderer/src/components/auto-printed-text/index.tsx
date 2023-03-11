@@ -17,17 +17,17 @@ type TextSymbol = { id: string; value: string; isVisible: boolean };
 type TextSymbols = Array<TextSymbol>;
 
 export const AutoPrintedText: FC<Props> = observer(
-  ({ text, interval = 50, onPrintEnd, isPrintSkipped = false }) => {
-    const [textSymbols, setTextSymbols] = useState<TextSymbols>(() => {
-      return text.split('').map((symbol) => ({ id: nanoid(), value: symbol, isVisible: false }));
-    });
+  ( { text, interval = 50, onPrintEnd, isPrintSkipped = false } ) => {
+    const [ textSymbols, setTextSymbols ] = useState<TextSymbols>( () => {
+      return text.split( '' ).map( ( symbol ) => ( { id: nanoid(), value: symbol, isVisible: false } ) );
+    } );
 
     const intervalIdRef = useRef<NodeJS.Timer>();
 
-    const makeSymbolVisible = (index: number): void => {
-      setTextSymbols((prev) => {
-        return prev.map((textSymbol, symbolIndex) => {
-          if (symbolIndex === index) {
+    const makeSymbolVisible = ( index: number ): void => {
+      setTextSymbols( ( prev ) => {
+        return prev.map( ( textSymbol, symbolIndex ) => {
+          if ( symbolIndex === index ) {
             return {
               ...textSymbol,
               isVisible: true,
@@ -36,45 +36,45 @@ export const AutoPrintedText: FC<Props> = observer(
           return {
             ...textSymbol,
           };
-        });
-      });
+        } );
+      } );
     };
 
     const setPrintEnds = (): void => {
-      clearInterval(intervalIdRef.current);
+      clearInterval( intervalIdRef.current );
       onPrintEnd?.();
     };
 
     const skipPrintAndShowEntireText = (): void => {
-      setTextSymbols((prev) => prev.map((textSymbol) => ({ ...textSymbol, isVisible: true })));
+      setTextSymbols( ( prev ) => prev.map( ( textSymbol ) => ( { ...textSymbol, isVisible: true } ) ) );
       setPrintEnds();
     };
 
-    useEffect(() => {
-      if (!isPrintSkipped) {
+    useEffect( () => {
+      if ( !isPrintSkipped ) {
         var currentSymbolIndex = 0;
-        intervalIdRef.current = setInterval(() => {
-          if (currentSymbolIndex <= text.length - 1) {
-            makeSymbolVisible(currentSymbolIndex);
+        intervalIdRef.current = setInterval( () => {
+          if ( currentSymbolIndex <= text.length - 1 ) {
+            makeSymbolVisible( currentSymbolIndex );
             currentSymbolIndex += 1;
           } else {
             setPrintEnds();
           }
-        }, interval);
+        }, interval );
       } else {
         skipPrintAndShowEntireText();
       }
-    }, [isPrintSkipped]);
+    }, [ isPrintSkipped ] );
 
     return (
       <Text>
-        {textSymbols.map((textSymbol) => {
+        {textSymbols.map( ( textSymbol ) => {
           return (
             <TextSymbol key={textSymbol.id} isVisible={textSymbol.isVisible}>
               {textSymbol.value}
             </TextSymbol>
           );
-        })}
+        } )}
       </Text>
     );
   },
@@ -82,5 +82,5 @@ export const AutoPrintedText: FC<Props> = observer(
 
 const Text = styled.div``;
 const TextSymbol = styled.span<{ isVisible: boolean }>`
-  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  opacity: ${( props ) => ( props.isVisible ? 1 : 0 )};
 `;

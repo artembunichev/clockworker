@@ -7,7 +7,7 @@ import { FC } from 'basic-utility-types';
 import { SettingVariants } from 'components/settings/setting-variants';
 import { useGamePlayStore } from 'screens/game/screen';
 
-export const ControlsSettingsSection: FC = observer(() => {
+export const ControlsSettingsSection: FC = observer( () => {
   const settings = useGamePlayStore().settings.editable;
 
   return (
@@ -19,7 +19,7 @@ export const ControlsSettingsSection: FC = observer(() => {
       </Setting>
     </Container>
   );
-});
+} );
 
 const Container = styled.div``;
 const Title = styled.div`

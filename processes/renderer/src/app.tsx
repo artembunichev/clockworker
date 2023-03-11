@@ -11,16 +11,16 @@ import { colors } from 'lib/theme';
 import { GameScreen } from 'screens/game/screen';
 import { MainScreen } from 'screens/main/screen';
 
-export const App: FC = observer(() => {
+export const App: FC = observer( () => {
   const { appStore } = useStore();
 
-  useEffect(() => {
-    window.addEventListener('beforeunload', () => {
-      if (!appStore.isQuit) {
+  useEffect( () => {
+    window.addEventListener( 'beforeunload', () => {
+      if ( !appStore.isQuit ) {
         appStore.quitGame();
       }
-    });
-  }, []);
+    } );
+  }, [] );
 
   return (
     <>
@@ -32,7 +32,7 @@ export const App: FC = observer(() => {
       </Container>
     </>
   );
-});
+} );
 
 const GlobalStyles = createGlobalStyle`
   * {

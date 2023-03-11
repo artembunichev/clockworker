@@ -22,7 +22,7 @@ type ExtraProps = {
 export type GameConfirmPopupProps = Omit<GamePopupProps, 'withCloseButton'> & ExtraProps;
 
 export const GameConfirmPopup: FC<GameConfirmPopupProps> = observer(
-  ({
+  ( {
     popup,
     width,
     height,
@@ -36,11 +36,11 @@ export const GameConfirmPopup: FC<GameConfirmPopupProps> = observer(
     rejectText,
     onReject,
     buttonsStyles,
-  }) => {
+  } ) => {
     const { backgroundColor, ...buttonsStylesWithoutBackgroundColor } = buttonsStyles;
 
     const close = (): void => {
-      closeGamePopup(popup);
+      closeGamePopup( popup );
     };
 
     const accept = (): void => {
@@ -104,8 +104,8 @@ const Buttons = styled.div`
   justify-content: space-around;
   margin-top: 16px;
 `;
-const Button = styled(PixelatedButton).attrs({
+const Button = styled( PixelatedButton ).attrs( {
   pixelsSize: 'medium',
-})`
+} )`
   font-size: 32px;
 `;

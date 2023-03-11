@@ -13,20 +13,20 @@ import { GamePlayScreen } from './play/screen';
 import { PreGameFormScreen } from './pre-game-form/screen';
 
 // контекст для GameStore
-const GameStoreContext = createContext<GameStore | null>(null);
+const GameStoreContext = createContext<GameStore | null>( null );
 export const useGameStore = (): GameStore => {
-  const gameStore = useContext(GameStoreContext);
-  if (!gameStore) {
-    throw new Error('You have forgotten to wrap game screen component with GameStoreProvider');
+  const gameStore = useContext( GameStoreContext );
+  if ( !gameStore ) {
+    throw new Error( 'You have forgotten to wrap game screen component with GameStoreProvider' );
   }
   return gameStore;
 };
 
 // контекст для GamePlayStore
-const GamePlayStoreContext = createContext<GamePlayStore | null>(null);
+const GamePlayStoreContext = createContext<GamePlayStore | null>( null );
 export const useGamePlayStore = (): GamePlayStore => {
-  const gamePlayStore = useContext(GamePlayStoreContext);
-  if (!gamePlayStore) {
+  const gamePlayStore = useContext( GamePlayStoreContext );
+  if ( !gamePlayStore ) {
     throw new Error(
       'You have forgotten to wrap game play screen component with GamePlayStoreProvider',
     );
@@ -34,23 +34,23 @@ export const useGamePlayStore = (): GamePlayStore => {
   return gamePlayStore;
 };
 
-export const GameScreen: FC = observer(() => {
+export const GameScreen: FC = observer( () => {
   const { createGameStore } = useStore();
-  const [gameStore] = useState(createGameStore);
+  const [ gameStore ] = useState( createGameStore );
   const { playStore } = gameStore;
 
-  const gameTransition = useTransition(gameStore.screen, {
+  const gameTransition = useTransition( gameStore.screen, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },
     config: {
       duration: playStore?.opening.appearanceMs ?? 0,
     },
-  });
+  } );
 
   return (
     <GameStoreContext.Provider value={gameStore}>
-      {gameTransition((styles, item) => {
+      {gameTransition( ( styles, item ) => {
         return item === 'preGameForm' ? (
           <GamePageContainer
             style={{
@@ -69,12 +69,12 @@ export const GameScreen: FC = observer(() => {
             </GamePageContainer>
           )
         );
-      })}
+      } )}
     </GameStoreContext.Provider>
   );
-});
+} );
 
-const GamePageContainer = styled(animated.div)`
+const GamePageContainer = styled( animated.div )`
   position: absolute;
   bottom: 0;
   right: 0;

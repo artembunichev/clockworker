@@ -49,12 +49,12 @@ export class AnimationController<AnimationName extends string, RegulatorName ext
   >;
   viewDirection: ViewDirections = ViewDirections.DOWN;
 
-  constructor(config: AnimationControllerConfig<AnimationName, RegulatorName>) {
+  constructor( config: AnimationControllerConfig<AnimationName, RegulatorName> ) {
     const { spriteSheet, configs, initialValue, regulators } = config;
 
     this.spriteSheet = spriteSheet;
     this.configs = configs;
-    if (regulators) {
+    if ( regulators ) {
       this.regulators = regulators;
     }
 
@@ -64,39 +64,39 @@ export class AnimationController<AnimationName extends string, RegulatorName ext
   }
 
   private createAnimations = (): void => {
-    objectEntries(this.configs).forEach(([animationName, animationConfig]) => {
-      this.list[animationName] = new Animation<RegulatorName>({
+    objectEntries( this.configs ).forEach( ( [ animationName, animationConfig ] ) => {
+      this.list[animationName] = new Animation<RegulatorName>( {
         name: animationName,
         spriteSheet: this.spriteSheet,
         regulators: this.regulators ?? undefined,
         ...animationConfig,
-      });
-    });
+      } );
+    } );
   };
 
-  setScale = (scale: number): void => {
-    objectValues(this.list).forEach((animation) => {
-      animation.setScale(scale);
-    });
+  setScale = ( scale: number ): void => {
+    objectValues( this.list ).forEach( ( animation ) => {
+      animation.setScale( scale );
+    } );
   };
 
-  setAnimation = (animationName: AnimationName): void => {
+  setAnimation = ( animationName: AnimationName ): void => {
     this.currentAnimation = this.list[animationName];
   };
 
-  start = (options?: RunAnimationOptions): void => {
-    this.currentAnimation.run(options);
+  start = ( options?: RunAnimationOptions ): void => {
+    this.currentAnimation.run( options );
   };
   stop = (): void => {
     this.currentAnimation.stop();
   };
 
-  run = (animationName: AnimationName, options?: RunAnimationOptions): void => {
-    if (this.currentAnimation.name !== animationName) {
-      this.setAnimation(animationName);
+  run = ( animationName: AnimationName, options?: RunAnimationOptions ): void => {
+    if ( this.currentAnimation.name !== animationName ) {
+      this.setAnimation( animationName );
     }
-    if (!this.currentAnimation.isPlaying) {
-      this.start(options);
+    if ( !this.currentAnimation.isPlaying ) {
+      this.start( options );
     }
   };
 
@@ -107,7 +107,7 @@ export class AnimationController<AnimationName extends string, RegulatorName ext
     this.currentAnimation.resume();
   };
 
-  setViewDirection = (direction: ViewDirections): void => {
+  setViewDirection = ( direction: ViewDirections ): void => {
     this.viewDirection = direction;
   };
 

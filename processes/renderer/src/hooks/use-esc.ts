@@ -15,7 +15,7 @@ export const useEsc = (
 
   const appPopupOpenedVariant: UseKeyVariant = {
     when: popupHistory.isOpenedPopups,
-    fn: () => closeLastUnclosedPopup(popupHistory),
+    fn: () => closeLastUnclosedPopup( popupHistory ),
   };
 
   useKey(
@@ -23,7 +23,7 @@ export const useEsc = (
       element,
       key: 'Escape',
       defaultFn: fn,
-      variants: [appPopupOpenedVariant, ...(variants ?? [])],
+      variants: [ appPopupOpenedVariant, ...( variants ?? [] ) ],
       ignoreWhen,
     },
     deps,

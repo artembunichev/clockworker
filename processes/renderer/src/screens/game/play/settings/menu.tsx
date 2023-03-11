@@ -8,7 +8,7 @@ import { useGamePlayStore } from 'screens/game/screen';
 
 import { ControlsSettingsSection } from './sections/controls';
 
-export const GameSettingsMenu: FC = observer(() => {
+export const GameSettingsMenu: FC = observer( () => {
   const gamePlayStore = useGamePlayStore();
 
   return (
@@ -16,4 +16,4 @@ export const GameSettingsMenu: FC = observer(() => {
       <ControlsSettingsSection />
     </SettingsMenuTemplate>
   );
-});
+} );

@@ -68,22 +68,22 @@ export class Character<
   ) {
     const { is, name, screen, images, animation, movement } = config;
 
-    super({ is: is });
+    super( { is: is } );
 
     this.name = name;
     this.screen = screen;
 
-    this.imageContainer = new ImageContainer(images.srcs, images.options);
+    this.imageContainer = new ImageContainer( images.srcs, images.options );
 
-    this.spriteSheet = new SpriteSheet({
+    this.spriteSheet = new SpriteSheet( {
       ...animation.spriteSheetConfig,
       image: this.imageContainer.list.spriteSheet.imageElement,
-    });
+    } );
 
     this.animationController = new AnimationController<
       CharacterAnimationName<AnimationName>,
       CharacterAnimationRegulatorName<AnimationRegulatorName>
-    >({
+    >( {
       spriteSheet: this.spriteSheet,
       configs: animation.configs,
       initialValue: 'walkDown',
@@ -91,25 +91,25 @@ export class Character<
         defaultCharacterAnimationRegulatorList,
         animation.regulators ?? {},
       ) as CharacterAnimationRegulatorList<AnimationRegulatorName>,
-    });
+    } );
 
-    this.setSpriteScale(this.animationController.currentSprite.scale);
+    this.setSpriteScale( this.animationController.currentSprite.scale );
 
-    this.movement = new CharacterMovement({
+    this.movement = new CharacterMovement( {
       position: this.position,
       animationController: this.animationController as DefaultCharacterAnimationController,
       initialMovementStateConfig: movement.initialMovementStateConfig,
-    });
+    } );
   }
 
-  setSpriteScale = (scale: number): void => {
-    this.animationController.setScale(scale);
-    this.setSize({ width: this.currentSprite.scaledWidth, height: this.currentSprite.scaledHeight });
+  setSpriteScale = ( scale: number ): void => {
+    this.animationController.setScale( scale );
+    this.setSize( { width: this.currentSprite.scaledWidth, height: this.currentSprite.scaledHeight } );
   };
 
   update = (): void => {
     this.animationController.currentAnimation.update();
-    this.screen.drawSprite(this.currentSprite, this.position);
+    this.screen.drawSprite( this.currentSprite, this.position );
   };
 
   get currentSprite(): Sprite {

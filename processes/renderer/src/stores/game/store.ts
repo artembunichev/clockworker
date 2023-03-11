@@ -22,16 +22,16 @@ export class GameStore {
   preGameForm = new PreGameForm();
   playStore: GamePlayStore | null = null;
 
-  constructor(config: GameStoreConfig) {
+  constructor( config: GameStoreConfig ) {
     const { popupHistory, keyboard } = config;
 
     this.popupHistory = popupHistory;
     this.keyboard = keyboard;
 
-    makeAutoObservable(this);
+    makeAutoObservable( this );
   }
 
-  setScreen = (screen: GameScreen): void => {
+  setScreen = ( screen: GameScreen ): void => {
     this.screen = screen;
   };
 
@@ -41,26 +41,26 @@ export class GameStore {
       marketName: this.preGameForm.marketName,
     };
 
-    const gamePlayStore = new GamePlayStore({
+    const gamePlayStore = new GamePlayStore( {
       popupHistory: this.popupHistory,
       keyboard: this.keyboard,
       dataFromPreGameForm,
-    });
+    } );
 
     this.playStore = gamePlayStore;
   };
 
   startGame = async (): Promise<void> => {
     this.createGamePlayStore();
-    if (this.playStore) {
+    if ( this.playStore ) {
       this.playStore.run();
-      this.setScreen('play');
+      this.setScreen( 'play' );
     }
   };
 
   endGame = (): void => {
-    closeAllUnclosedPopups(this.popupHistory);
-    this.playStore?.setIsPlay(false);
+    closeAllUnclosedPopups( this.popupHistory );
+    this.playStore?.setIsPlay( false );
     this.playStore = null;
   };
 }

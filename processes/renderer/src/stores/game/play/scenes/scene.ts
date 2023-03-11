@@ -42,7 +42,7 @@ export class GameScene<SceneName extends string> {
   imageContainer: ImageContainer<Record<'tileset', string>>;
   charactersManipulator: SceneCharactersManipulator;
 
-  constructor(config: GameSceneConfig<SceneName>) {
+  constructor( config: GameSceneConfig<SceneName> ) {
     const { screen, characterList, name, map } = config;
 
     this.screen = screen;
@@ -54,36 +54,36 @@ export class GameScene<SceneName extends string> {
       height: this.mapConfig.scheme.height * this.mapConfig.scheme.tileheight,
     };
 
-    this.imageContainer = new ImageContainer({ tileset: this.mapConfig.tilesetSrc });
+    this.imageContainer = new ImageContainer( { tileset: this.mapConfig.tilesetSrc } );
 
-    this.charactersManipulator = new SceneCharactersManipulator({
+    this.charactersManipulator = new SceneCharactersManipulator( {
       mapSize: this.mapSize,
       characterList: this.characterList,
-    });
+    } );
   }
 
   getMapHitboxes = (): Array<HitboxWithId> => {
-    return this.mapConfig.scheme.layers.reduce((acc, layer) => {
-      if (layer.type === 'objectgroup') {
-        layer.objects.forEach((object) => {
+    return this.mapConfig.scheme.layers.reduce( ( acc, layer ) => {
+      if ( layer.type === 'objectgroup' ) {
+        layer.objects.forEach( ( object ) => {
           const hitbox: PointPair = {
             x1: object.x,
             y1: object.y,
             x2: object.x + object.width,
             y2: object.y + object.height,
           };
-          const id = nanoid(6);
-          acc.push({ hitbox, id });
-        });
+          const id = nanoid( 6 );
+          acc.push( { hitbox, id } );
+        } );
       }
       return acc;
-    }, [] as Array<HitboxWithId>);
+    }, [] as Array<HitboxWithId> );
   };
 
   createMap = (): void => {
     this.map = {
       size: this.mapSize,
-      tileset: new SpriteSheet({
+      tileset: new SpriteSheet( {
         image: this.imageContainer.list.tileset.imageElement,
         firstSkipX: 0,
         firstSkipY: 0,
@@ -92,7 +92,7 @@ export class GameScene<SceneName extends string> {
         spriteWidth: this.mapConfig.scheme.tilewidth,
         spriteHeight: this.mapConfig.scheme.tileheight,
         defaultScale: 1,
-      }),
+      } ),
       scheme: this.mapConfig.scheme,
       hitboxes: this.getMapHitboxes(),
     };
@@ -100,13 +100,13 @@ export class GameScene<SceneName extends string> {
 
   drawMap = (): void => {
     // возвращает позицию тайла в тайлсете (строка и столбец)
-    const getSourceSpritePositionByIndex = (index: number): SheetPosition => {
+    const getSourceSpritePositionByIndex = ( index: number ): SheetPosition => {
       const tilesCountInTilesetRow = this.map.tileset.image.width / this.map.scheme.tilewidth;
 
-      const row = Math.floor((index - 1) / tilesCountInTilesetRow);
+      const row = Math.floor( ( index - 1 ) / tilesCountInTilesetRow );
       var column;
-      if (index % tilesCountInTilesetRow !== 0) {
-        column = (index % tilesCountInTilesetRow) - 1;
+      if ( index % tilesCountInTilesetRow !== 0 ) {
+        column = ( index % tilesCountInTilesetRow ) - 1;
       } else {
         column = tilesCountInTilesetRow - 1;
       }
@@ -124,7 +124,7 @@ export class GameScene<SceneName extends string> {
       const mapWidth = this.map.scheme.width * tileWidth;
       const mapHeight = this.map.scheme.height * tileHeight;
 
-      if (spritePosition.x === mapWidth && spritePosition.y === mapHeight) {
+      if ( spritePosition.x === mapWidth && spritePosition.y === mapHeight ) {
         return;
       }
 
@@ -132,27 +132,27 @@ export class GameScene<SceneName extends string> {
 
       const { x, y } = spritePosition;
 
-      if (isNextRow) {
+      if ( isNextRow ) {
         spritePosition = { x: 0, y: y + tileHeight };
       } else {
         spritePosition = { x: x + tileWidth, y };
       }
     };
 
-    this.map.scheme.layers.forEach((layer) => {
-      if (layer.type === 'tilelayer') {
-        if (typeof layer.data !== 'string') {
-          layer.data.forEach((spriteIndex) => {
-            const sourceSpritePosition = getSourceSpritePositionByIndex(spriteIndex);
+    this.map.scheme.layers.forEach( ( layer ) => {
+      if ( layer.type === 'tilelayer' ) {
+        if ( typeof layer.data !== 'string' ) {
+          layer.data.forEach( ( spriteIndex ) => {
+            const sourceSpritePosition = getSourceSpritePositionByIndex( spriteIndex );
             const currentSprite: Sprite = this.map.tileset.getSprite(
               sourceSpritePosition.row,
               sourceSpritePosition.column,
             );
-            this.screen.drawSprite(currentSprite, spritePosition);
+            this.screen.drawSprite( currentSprite, spritePosition );
             updatePositionForNextTile();
-          });
+          } );
         }
       }
-    });
+    } );
   };
 }

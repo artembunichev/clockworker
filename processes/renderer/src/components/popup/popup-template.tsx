@@ -24,7 +24,7 @@ export type PopupProps = {
 };
 
 export const Popup: FC<PopupProps> = observer(
-  ({
+  ( {
     width,
     height,
     styles,
@@ -35,17 +35,17 @@ export const Popup: FC<PopupProps> = observer(
     fnForClosing,
     onClose,
     children,
-  }) => {
-    useEffect(() => {
+  } ) => {
+    useEffect( () => {
       return () => {
         // закрытие попапа
-        if (isOpened === true) {
+        if ( isOpened === true ) {
           onClose?.();
         }
       };
-    }, [isOpened]);
+    }, [ isOpened ] );
 
-    if (!isOpened) {
+    if ( !isOpened ) {
       return null;
     }
 
@@ -53,7 +53,7 @@ export const Popup: FC<PopupProps> = observer(
       <PortalToBody>
         <Container>
           <Block width={width} height={height} style={styles}>
-            {(withCloseButton || title) && (
+            {( withCloseButton || title ) && (
               <Heading>
                 {title && <Title style={titleStyles}>{title}</Title>}
                 {withCloseButton && <CloseButton onClick={fnForClosing} />}
@@ -82,8 +82,8 @@ const Container = styled.div`
 const Block = styled.div<{ width: string; height: string; color?: string }>`
   display: flex;
   flex-direction: column;
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
+  width: ${( props ) => props.width};
+  height: ${( props ) => props.height};
   position: relative;
   padding: 20px;
   margin: 30px;
@@ -99,7 +99,7 @@ const Title = styled.h2`
   font-size: 36px;
   text-align: center;
 `;
-const CloseButton = styled(ButtonWithCross)`
+const CloseButton = styled( ButtonWithCross )`
   position: absolute;
   right: 0;
   top: 0;

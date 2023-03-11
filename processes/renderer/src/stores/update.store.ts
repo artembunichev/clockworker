@@ -20,22 +20,22 @@ export class UpdateStore {
   isDownloading = false;
   currentPercentage = 0;
 
-  constructor(config: Config) {
+  constructor( config: Config ) {
     const { settings } = config;
 
     this.settings = settings;
 
-    window.ipcRenderer.on<UpdateInfo>('updateAvailable', (_, updateInfo) => {
-      this.setUpdateInfo(updateInfo);
-    });
-    window.ipcRenderer.on<DownloadProgressInfo>('downloadProgress', (_, downloadProgressInfo) => {
-      this.setCurrentPercentage(downloadProgressInfo.percentage);
-    });
+    window.ipcRenderer.on<UpdateInfo>( 'updateAvailable', ( _, updateInfo ) => {
+      this.setUpdateInfo( updateInfo );
+    } );
+    window.ipcRenderer.on<DownloadProgressInfo>( 'downloadProgress', ( _, downloadProgressInfo ) => {
+      this.setCurrentPercentage( downloadProgressInfo.percentage );
+    } );
 
-    makeAutoObservable(this);
+    makeAutoObservable( this );
   }
 
-  setUpdateInfo = (updateInfo: UpdateInfo): void => {
+  setUpdateInfo = ( updateInfo: UpdateInfo ): void => {
     this.version = updateInfo.version;
     this.releaseNotes = updateInfo.releaseNotes;
   };
@@ -47,16 +47,16 @@ export class UpdateStore {
     this.isNotificationOpened = false;
   };
 
-  setIsDownloading = (value: boolean): void => {
+  setIsDownloading = ( value: boolean ): void => {
     this.isDownloading = value;
   };
 
   updateGame = (): void => {
-    this.setIsDownloading(true);
-    window.ipcRenderer.send('updateGame');
+    this.setIsDownloading( true );
+    window.ipcRenderer.send( 'updateGame' );
   };
 
-  setCurrentPercentage = (percentage: number): void => {
+  setCurrentPercentage = ( percentage: number ): void => {
     this.currentPercentage = percentage;
   };
 

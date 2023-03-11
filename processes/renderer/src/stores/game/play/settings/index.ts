@@ -27,14 +27,14 @@ export class GameSettings {
   editable = new EditableGameSettings();
 
   constructor() {
-    makeAutoObservable(this);
+    makeAutoObservable( this );
   }
 
   private get convertedEditableSettings(): Partial<GameSettingsValues> {
-    return getConvertedEditableSettings(this.editable);
+    return getConvertedEditableSettings( this.editable );
   }
 
   get values(): GameSettingsValues {
-    return merge(this.internal, this.convertedEditableSettings) as GameSettingsValues;
+    return merge( this.internal, this.convertedEditableSettings ) as GameSettingsValues;
   }
 }

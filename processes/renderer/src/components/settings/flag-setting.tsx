@@ -14,13 +14,13 @@ type Props = {
   checkboxSize: number;
 };
 
-export const FlagSetting: FC<Props> = observer(({ setting, checkboxSize }) => {
+export const FlagSetting: FC<Props> = observer( ( { setting, checkboxSize } ) => {
   const onSelect = (): void => {
-    setting.setValue(true);
+    setting.setValue( true );
   };
 
   const onUnselect = (): void => {
-    setting.setValue(false);
+    setting.setValue( false );
   };
 
   return (
@@ -33,4 +33,4 @@ export const FlagSetting: FC<Props> = observer(({ setting, checkboxSize }) => {
       checkedBackgroundColor={colors.mainMediumWell}
     />
   );
-});
+} );

@@ -19,9 +19,9 @@ export type PixelatedCheckboxProps = {
 };
 
 export const PixelatedCheckbox: FC<PixelatedCheckboxProps> = observer(
-  ({ size, checked, onSelect, onUnselect, backgroundColor, checkedBackgroundColor }) => {
+  ( { size, checked, onSelect, onUnselect, backgroundColor, checkedBackgroundColor } ) => {
     const onClick = (): void => {
-      if (!checked) {
+      if ( !checked ) {
         onSelect?.();
       } else {
         onUnselect?.();
@@ -44,11 +44,11 @@ export const PixelatedCheckbox: FC<PixelatedCheckboxProps> = observer(
   },
 );
 
-export const StyledPixelatedCheckbox = styled(PixelatedDiv).attrs({
+export const StyledPixelatedCheckbox = styled( PixelatedDiv ).attrs( {
   pixelsSize: 'small',
-})<{ size: number }>`
-  width: ${(props) => props.size}px;
-  height: ${(props) => props.size}px;
+} )<{ size: number }>`
+  width: ${( props ) => props.size}px;
+  height: ${( props ) => props.size}px;
   display: flex;
   justify-content: center;
   align-items: center;
