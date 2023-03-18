@@ -1,7 +1,7 @@
 import { FC } from 'basic-utility-types';
 import { colors } from 'lib/theme';
 import { observer } from 'mobx-react-lite';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { GameScreen } from 'screens/game/screen';
 import { MainScreen } from 'screens/main/screen';
 import { useStore } from 'stores/root-store/context';

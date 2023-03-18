@@ -1,7 +1,7 @@
 import { FC } from 'basic-utility-types';
 import { PixelatedButton } from 'components/pixelated/pixelated-components';
 import { observer } from 'mobx-react-lite';
-import React, { CSSProperties } from 'react';
+import { CSSProperties } from 'react';
 import { Callback, RequiredBy } from 'shared/types/basic-utility-types';
 import styled from 'styled-components';
 import { closeGamePopup, GamePopup, GamePopupProps } from './game-popup-template';

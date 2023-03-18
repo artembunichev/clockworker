@@ -2,7 +2,6 @@ import { animated, useSpring } from '@react-spring/web';
 import { FC } from 'basic-utility-types';
 import { colors } from 'lib/theme';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import styled from 'styled-components';
 import { useGamePlayStore } from './screen';
 

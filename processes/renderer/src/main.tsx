@@ -1,7 +1,6 @@
 import { addIconsToDist } from 'add-icons-to-dist';
 import { App } from 'app';
 import { configureMobx } from 'configure-mobx';
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RootStoreProvider } from 'stores/root-store/context';
 

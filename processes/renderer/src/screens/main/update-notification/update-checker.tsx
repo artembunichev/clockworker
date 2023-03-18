@@ -1,6 +1,5 @@
 import { FC } from 'basic-utility-types';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { useStore } from 'stores/root-store/context';
 import { UpdatePopup } from './update-popup';
 

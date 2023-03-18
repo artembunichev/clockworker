@@ -1,7 +1,6 @@
 import { FC } from 'basic-utility-types';
 import { SettingVariants } from 'components/settings/setting-variants';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { useGamePlayStore } from 'screens/game/screen';
 import styled from 'styled-components';
 

@@ -2,7 +2,6 @@ import { CheckMarkIcon } from 'assets/icons/check-mark';
 import { FC } from 'basic-utility-types';
 import { PixelatedDiv } from 'components/pixelated/pixelated-components';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { Callback } from 'shared/types/basic-utility-types';
 import styled from 'styled-components';
 

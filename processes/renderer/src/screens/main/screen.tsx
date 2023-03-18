@@ -2,7 +2,6 @@ import { FC } from 'basic-utility-types';
 import { PixelatedButton } from 'components/pixelated/pixelated-components';
 import { colors } from 'lib/theme';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { QuitGameConfirm } from 'screens/shared/popups/confirms/quit-game-confirm';
 import { useStore } from 'stores/root-store/context';
 import styled from 'styled-components';

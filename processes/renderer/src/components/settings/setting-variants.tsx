@@ -2,7 +2,6 @@ import { FC } from 'basic-utility-types';
 import { PixelatedCheckbox } from 'components/checkbox/pixelated-checkbox';
 import { colors } from 'lib/theme';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { CheckboxSetting } from 'stores/entities/editable-settings/checkbox-setting';
 import { RadioSetting } from 'stores/entities/editable-settings/radio-setting';
 import styled from 'styled-components';

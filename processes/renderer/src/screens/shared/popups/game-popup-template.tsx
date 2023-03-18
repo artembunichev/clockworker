@@ -1,7 +1,6 @@
 import { FC } from 'basic-utility-types';
 import { Popup, PopupProps } from 'components/popup/popup-template';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { Callback } from 'shared/types/basic-utility-types';
 import { Popup as PopupStore } from 'stores/entities/popup';
 

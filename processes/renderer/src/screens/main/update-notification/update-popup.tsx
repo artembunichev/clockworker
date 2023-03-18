@@ -1,6 +1,6 @@
 import { FC } from 'basic-utility-types';
 import { observer } from 'mobx-react-lite';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { UpdateStore } from 'stores/update.store';
 import { DownloadProgress } from './download-progress';
 import { UpdateNotification } from './update-notification';

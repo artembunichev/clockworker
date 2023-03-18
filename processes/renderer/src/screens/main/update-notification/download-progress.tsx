@@ -2,7 +2,6 @@ import { FC } from 'basic-utility-types';
 import { Popup } from 'components/popup/popup-template';
 import { colors, theme } from 'lib/theme';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import styled from 'styled-components';
 
 type Props = {

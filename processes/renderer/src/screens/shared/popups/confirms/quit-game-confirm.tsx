@@ -1,7 +1,6 @@
 import { FC } from 'basic-utility-types';
 import { colors } from 'lib/theme';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { Callback } from 'shared/types/basic-utility-types';
 import { useStore } from 'stores/root-store/context';
 import { GameConfirmPopup } from '../game-confirm-popup';

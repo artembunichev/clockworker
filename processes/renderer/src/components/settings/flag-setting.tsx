@@ -2,7 +2,6 @@ import { FC } from 'basic-utility-types';
 import { PixelatedCheckbox } from 'components/checkbox/pixelated-checkbox';
 import { colors } from 'lib/theme';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { SingleValueSetting } from 'stores/entities/editable-settings/single-value-setting';
 
 type Props = {

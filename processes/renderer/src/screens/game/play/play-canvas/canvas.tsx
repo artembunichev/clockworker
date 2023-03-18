@@ -1,6 +1,6 @@
 import { FC } from 'basic-utility-types';
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useGamePlayStore } from 'screens/game/screen';
 import styled from 'styled-components';
 import { PlayCanvasOverlay } from './overlay';

@@ -4,7 +4,7 @@ import { ButtonWithCross } from 'components/buttons/button-with-cross';
 import { useWindowClick } from 'hooks/use-window-click';
 import { colors } from 'lib/theme';
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useGamePlayStore } from 'screens/game/screen';
 import { doubleBorderStyle } from 'shared-styles';
 import styled, { css, keyframes } from 'styled-components';

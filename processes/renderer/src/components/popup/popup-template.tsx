@@ -3,7 +3,7 @@ import { ButtonWithCross } from 'components/buttons/button-with-cross';
 import { PortalToBody } from 'components/utility/portal-to-body';
 import { colors } from 'lib/theme';
 import { observer } from 'mobx-react-lite';
-import React, { CSSProperties, useEffect } from 'react';
+import { CSSProperties, useEffect } from 'react';
 import { doubleBorderStyle } from 'shared-styles';
 import { Callback, RequiredBy } from 'shared/types/basic-utility-types';
 import styled from 'styled-components';

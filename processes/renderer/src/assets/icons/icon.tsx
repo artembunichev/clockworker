@@ -1,6 +1,5 @@
 import { FC } from 'basic-utility-types';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 
 type IconProps = {
   src: string;

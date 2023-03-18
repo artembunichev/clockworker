@@ -1,6 +1,6 @@
 import { colors } from 'lib/theme';
 import { Side } from 'project-utility-types/plane';
-import React, { ButtonHTMLAttributes, CSSProperties, InputHTMLAttributes, useState } from 'react';
+import { ButtonHTMLAttributes, CSSProperties, forwardRef, InputHTMLAttributes, useState } from 'react';
 import styled from 'styled-components';
 
 type PixelsSize = 'small' | 'medium' | 'large';
@@ -77,7 +77,7 @@ type PixelatedButtonProps = PixelatedElementProps & { hoverColor?: string; } & {
   className?: string;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-export const PixelatedButton = React.forwardRef<HTMLButtonElement, PixelatedButtonProps>(
+export const PixelatedButton = forwardRef<HTMLButtonElement, PixelatedButtonProps>(
   ( { pixelsSize, backgroundColor, className, hoverColor, children, ...buttonProps }, ref ) => {
     const [ isHover, setIsHover ] = useState( false );
 
@@ -102,7 +102,7 @@ export const PixelatedButton = React.forwardRef<HTMLButtonElement, PixelatedButt
 PixelatedButton.displayName = 'PixelatedButton';
 
 // для инпута не работают :before и :after
-export const PixelatedInput = React.forwardRef<
+export const PixelatedInput = forwardRef<
   HTMLInputElement,
   PixelatedElementProps & { className?: string; } & {
     containerStyles?: CSSProperties;

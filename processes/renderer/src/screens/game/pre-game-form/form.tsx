@@ -6,7 +6,6 @@ import {
 } from 'components/pixelated/pixelated-components';
 import { colors } from 'lib/theme';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { doubleBorderStyle } from 'shared-styles';
 import { isLetter, isNumber } from 'shared/lib/strings';

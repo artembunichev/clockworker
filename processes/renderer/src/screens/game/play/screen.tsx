@@ -1,6 +1,5 @@
 import { FC } from 'basic-utility-types';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { QuitGameConfirm } from 'screens/shared/popups/confirms/quit-game-confirm';
 import { QuitInMainMenuConfirm } from 'screens/shared/popups/confirms/quit-in-main-menu-confirm';
 import { GameOpening } from '../opening';

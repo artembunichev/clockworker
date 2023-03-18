@@ -1,6 +1,5 @@
 import { Textbox } from 'components/textbox';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { useGamePlayStore } from 'screens/game/screen';
 
 export const GameTextbox = observer( () => {

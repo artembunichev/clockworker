@@ -1,7 +1,6 @@
 import { FC } from 'basic-utility-types';
 import { SettingsMenuTemplate } from 'components/settings/settings-menu-template';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { useGamePlayStore } from 'screens/game/screen';
 import { ControlsSettingsSection } from './sections/controls';
 

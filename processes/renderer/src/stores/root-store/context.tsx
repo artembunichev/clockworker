@@ -1,5 +1,5 @@
 import { FC } from 'basic-utility-types';
-import React, { createContext, useContext } from 'react';
+import { createContext, useContext } from 'react';
 import { RootStore } from './store';
 
 const RootStoreContext = createContext<RootStore | null>( null );

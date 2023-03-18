@@ -3,7 +3,6 @@ import { PixelatedButton } from 'components/pixelated/pixelated-components';
 import { Popup } from 'components/popup/popup-template';
 import { colors, theme } from 'lib/theme';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { Callback, NonNullableProperties } from 'shared/types/basic-utility-types';
 import { UpdateStore } from 'stores/update.store';
 import styled from 'styled-components';

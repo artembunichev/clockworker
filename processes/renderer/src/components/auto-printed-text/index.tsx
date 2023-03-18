@@ -1,7 +1,7 @@
 import { FC } from 'basic-utility-types';
 import { observer } from 'mobx-react-lite';
 import { nanoid } from 'nanoid';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Callback } from 'shared/types/basic-utility-types';
 import styled from 'styled-components';
 

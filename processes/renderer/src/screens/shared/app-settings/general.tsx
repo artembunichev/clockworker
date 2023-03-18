@@ -1,6 +1,5 @@
 import { FlagSetting } from 'components/settings/flag-setting';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { useStore } from 'stores/root-store/context';
 import styled from 'styled-components';
 

@@ -2,7 +2,6 @@ import { FC } from 'basic-utility-types';
 import { PixelatedButton } from 'components/pixelated/pixelated-components';
 import { colors } from 'lib/theme';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { closeGamePopup, GamePopup, GamePopupProps } from 'screens/shared/popups/game-popup-template';
 import styled from 'styled-components';
 
