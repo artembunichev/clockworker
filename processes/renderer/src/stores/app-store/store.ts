@@ -1,9 +1,6 @@
 import { makeAutoObservable } from 'mobx';
-
 import { isElectron } from 'shared/lib/is-electron';
-
 import { AppSettingsStore } from 'stores/app-settings/store';
-
 import { closeAllUnclosedPopups } from '../lib/popups';
 import { PopupHistory } from '../popup-history';
 import { AppPopups } from './popups';

@@ -1,22 +1,17 @@
-import { observer } from 'mobx-react-lite';
-import React from 'react';
-import styled from 'styled-components';
-
 import { FC } from 'basic-utility-types';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { doubleBorderStyle } from 'shared-styles';
-import { isLetter, isNumber } from 'shared/lib/strings';
-
-import { PreGameFormFields } from 'stores/game/pre-game-form';
-
-import { colors } from 'lib/theme';
-
 import {
   PixelatedButton,
   PixelatedDiv,
-  PixelatedInput,
+  PixelatedInput
 } from 'components/pixelated/pixelated-components';
-
+import { colors } from 'lib/theme';
+import { observer } from 'mobx-react-lite';
+import React from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { doubleBorderStyle } from 'shared-styles';
+import { isLetter, isNumber } from 'shared/lib/strings';
+import { PreGameFormFields } from 'stores/game/pre-game-form';
+import styled from 'styled-components';
 import { useGameStore } from '../screen';
 import { FieldErrorMessages } from './errors/field-error-messages';
 import { getFormErrors } from './errors/get-errors';
@@ -52,42 +47,42 @@ export const PreGameForm: FC = observer( () => {
 
   return (
     <FormBlock>
-      <Form onSubmit={handleSubmit( startGame )}>
+      <Form onSubmit={ handleSubmit( startGame ) }>
         <InputContainer>
           <Input
-            {...register( 'playerCharacterName', {
+            { ...register( 'playerCharacterName', {
               required: true,
               validate: validateNoSpecialSymbols,
               onBlur: trimPlayerCharacterName,
               minLength: 2,
-            } )}
-            maxLength={20}
-            placeholder={'Имя персонажа'}
+            } ) }
+            maxLength={ 20 }
+            placeholder={ 'Имя персонажа' }
           />
-          {errors.playerCharacterName.isError && (
+          { errors.playerCharacterName.isError && (
             <ExclamationMarkContainer>
               <ExclamationMark>!</ExclamationMark>
             </ExclamationMarkContainer>
-          )}
-          <FieldErrorMessages errors={errors.playerCharacterName} />
+          ) }
+          <FieldErrorMessages errors={ errors.playerCharacterName } />
         </InputContainer>
         <InputContainer>
           <Input
-            {...register( 'marketName', {
+            { ...register( 'marketName', {
               required: true,
               validate: validateNoSpecialSymbols,
               onBlur: trimMarketName,
               minLength: 2,
-            } )}
-            maxLength={20}
-            placeholder={'Название магазина'}
+            } ) }
+            maxLength={ 20 }
+            placeholder={ 'Название магазина' }
           />
-          {errors.marketName.isError && (
+          { errors.marketName.isError && (
             <ExclamationMarkContainer>
               <ExclamationMark>!</ExclamationMark>
             </ExclamationMarkContainer>
-          )}
-          <FieldErrorMessages errors={errors.marketName} />
+          ) }
+          <FieldErrorMessages errors={ errors.marketName } />
         </InputContainer>
         <StartGameButtonContainer>
           <StartGameButton type='submit'>Начать игру</StartGameButton>
@@ -102,9 +97,9 @@ const FormBlock = styled.div`
   width: 640px;
   height: 700px;
   padding: 15px 22px;
-  background: ${colors.mainLight};
-  box-shadow: 0px 0px 25px 7px ${colors.shadow};
-  ${doubleBorderStyle}
+  background: ${ colors.mainLight };
+  box-shadow: 0px 0px 25px 7px ${ colors.shadow };
+  ${ doubleBorderStyle }
 `;
 const Form = styled.form`
   position: relative;

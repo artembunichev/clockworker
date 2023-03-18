@@ -1,9 +1,7 @@
+import { colors } from 'lib/theme';
+import { Side } from 'project-utility-types/plane';
 import React, { ButtonHTMLAttributes, CSSProperties, InputHTMLAttributes, useState } from 'react';
 import styled from 'styled-components';
-
-import { Side } from 'project-utility-types/plane';
-
-import { colors } from 'lib/theme';
 
 type PixelsSize = 'small' | 'medium' | 'large';
 
@@ -12,14 +10,14 @@ type PixelatedElementProps = {
   backgroundColor: string;
 };
 
-const pixelsScales: { [_ in PixelsSize]: number } = {
+const pixelsScales: { [ _ in PixelsSize ]: number } = {
   small: 0.8,
   medium: 1,
   large: 2.5,
 };
 
 const getPixelsScale = ( pixelsSize: PixelsSize ): number => {
-  return pixelsScales[pixelsSize];
+  return pixelsScales[ pixelsSize ];
 };
 const getPixelsOffset = ( pixelsSize: PixelsSize, pixelsCount: number ): number => {
   return pixelsCount * getPixelsScale( pixelsSize );
@@ -41,41 +39,41 @@ const getPixelatedPseudoElementStyles = ( {
   content: '';
   position: absolute;
   z-index: -1;
-  bottom:  ${getPixelsOffset( pixelsSize, bottom )}px;
-  right:  ${getPixelsOffset( pixelsSize, right )}px;
-  top: ${getPixelsOffset( pixelsSize, top )}px;
-  left:  ${getPixelsOffset( pixelsSize, left )}px;
-  background-color: ${backgroundColor};
+  bottom:  ${ getPixelsOffset( pixelsSize, bottom ) }px;
+  right:  ${ getPixelsOffset( pixelsSize, right ) }px;
+  top: ${ getPixelsOffset( pixelsSize, top ) }px;
+  left:  ${ getPixelsOffset( pixelsSize, left ) }px;
+  background-color: ${ backgroundColor };
   `;
 };
 
 export const PixelatedDiv = styled.div<PixelatedElementProps>`
   position: relative;
   z-index: 3;
-  background-color: ${( props ) => props.backgroundColor};
+  background-color: ${ ( props ) => props.backgroundColor };
 
   &:before {
-    ${( { pixelsSize, backgroundColor } ) => {
-      return getPixelatedPseudoElementStyles( {
-        pixelsSize,
-        backgroundColor,
-        offsets: { bottom: 10, right: -10, top: 10, left: -10 },
-      } );
-    }}
+    ${ ( { pixelsSize, backgroundColor } ) => {
+    return getPixelatedPseudoElementStyles( {
+      pixelsSize,
+      backgroundColor,
+      offsets: { bottom: 10, right: -10, top: 10, left: -10 },
+    } );
+  } }
   }
 
   &:after {
-    ${( { pixelsSize, backgroundColor } ) => {
-      return getPixelatedPseudoElementStyles( {
-        pixelsSize,
-        backgroundColor,
-        offsets: { bottom: 4, right: -6, top: 4, left: -6 },
-      } );
-    }}
+    ${ ( { pixelsSize, backgroundColor } ) => {
+    return getPixelatedPseudoElementStyles( {
+      pixelsSize,
+      backgroundColor,
+      offsets: { bottom: 4, right: -6, top: 4, left: -6 },
+    } );
+  } }
   }
 `;
 
-type PixelatedButtonProps = PixelatedElementProps & { hoverColor?: string } & {
+type PixelatedButtonProps = PixelatedElementProps & { hoverColor?: string; } & {
   className?: string;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
@@ -87,16 +85,16 @@ export const PixelatedButton = React.forwardRef<HTMLButtonElement, PixelatedButt
 
     return (
       <PixelatedDiv
-        ref={ref}
-        as={'button'}
-        onMouseEnter={() => setIsHover( true )}
-        onMouseLeave={() => setIsHover( false )}
-        pixelsSize={pixelsSize}
-        backgroundColor={background}
-        className={className}
-        {...buttonProps}
+        ref={ ref }
+        as={ 'button' }
+        onMouseEnter={ () => setIsHover( true ) }
+        onMouseLeave={ () => setIsHover( false ) }
+        pixelsSize={ pixelsSize }
+        backgroundColor={ background }
+        className={ className }
+        { ...buttonProps }
       >
-        {children}
+        { children }
       </PixelatedDiv>
     );
   },
@@ -106,23 +104,23 @@ PixelatedButton.displayName = 'PixelatedButton';
 // для инпута не работают :before и :after
 export const PixelatedInput = React.forwardRef<
   HTMLInputElement,
-  PixelatedElementProps & { className?: string } & {
+  PixelatedElementProps & { className?: string; } & {
     containerStyles?: CSSProperties;
   } & InputHTMLAttributes<HTMLInputElement>
 >( ( { pixelsSize, backgroundColor, className, containerStyles, ...inputProps }, ref ) => {
   return (
     <DivForPixelatedInput
-      pixelsSize={pixelsSize}
-      backgroundColor={backgroundColor}
-      style={containerStyles}
+      pixelsSize={ pixelsSize }
+      backgroundColor={ backgroundColor }
+      style={ containerStyles }
     >
-      <StyledInput ref={ref} backgroundColor={backgroundColor} className={className} {...inputProps} />
+      <StyledInput ref={ ref } backgroundColor={ backgroundColor } className={ className } { ...inputProps } />
     </DivForPixelatedInput>
   );
 } );
 PixelatedInput.displayName = 'PixelatedInput';
 
 const DivForPixelatedInput = styled( PixelatedDiv )``;
-const StyledInput = styled.input<{ backgroundColor: string }>`
-  background-color: ${( props ) => props.backgroundColor};
+const StyledInput = styled.input<{ backgroundColor: string; }>`
+  background-color: ${ ( props ) => props.backgroundColor };
 `;

@@ -1,13 +1,10 @@
+import { CheckMarkIcon } from 'assets/icons/check-mark';
+import { FC } from 'basic-utility-types';
+import { PixelatedDiv } from 'components/pixelated/pixelated-components';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import styled from 'styled-components';
-
-import { FC } from 'basic-utility-types';
 import { Callback } from 'shared/types/basic-utility-types';
-
-import { PixelatedDiv } from 'components/pixelated/pixelated-components';
-
-import { CheckMarkIcon } from 'assets/icons/check-mark';
+import styled from 'styled-components';
 
 export type PixelatedCheckboxProps = {
   size: number;
@@ -33,12 +30,12 @@ export const PixelatedCheckbox: FC<PixelatedCheckboxProps> = observer(
     const checkMarkSize = size + 4;
 
     return (
-      <StyledPixelatedCheckbox size={size} onClick={onClick} backgroundColor={background}>
-        {checked && (
+      <StyledPixelatedCheckbox size={ size } onClick={ onClick } backgroundColor={ background }>
+        { checked && (
           <CheckMarkContainer>
-            <CheckMarkIcon size={checkMarkSize} />
+            <CheckMarkIcon size={ checkMarkSize } />
           </CheckMarkContainer>
-        )}
+        ) }
       </StyledPixelatedCheckbox>
     );
   },
@@ -46,9 +43,9 @@ export const PixelatedCheckbox: FC<PixelatedCheckboxProps> = observer(
 
 export const StyledPixelatedCheckbox = styled( PixelatedDiv ).attrs( {
   pixelsSize: 'small',
-} )<{ size: number }>`
-  width: ${( props ) => props.size}px;
-  height: ${( props ) => props.size}px;
+} ) <{ size: number; }>`
+  width: ${ ( props ) => props.size }px;
+  height: ${ ( props ) => props.size }px;
   display: flex;
   justify-content: center;
   align-items: center;

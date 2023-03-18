@@ -1,14 +1,11 @@
 import { makeAutoObservable } from 'mobx';
-
 import { isElectron } from 'shared/lib/is-electron';
 import { isEqual } from 'shared/lib/is-equal';
 import { objectEntries } from 'shared/lib/objects';
-
 import { CheckboxSetting } from 'stores/entities/editable-settings/checkbox-setting';
 import { RadioSetting } from 'stores/entities/editable-settings/radio-setting';
 import { SingleValueSetting } from 'stores/entities/editable-settings/single-value-setting';
 import { getConvertedEditableSettings } from 'stores/lib/settings';
-
 import { EditableAppSettings } from './editable-settings';
 
 export type AppSettingsValues = {
@@ -60,7 +57,7 @@ export class AppSettingsStore {
     const values = this.getSettingsFromFile();
 
     objectEntries( values ).forEach( ( [ name, value ] ) => {
-      const thisEditableSetting = this.editable[name];
+      const thisEditableSetting = this.editable[ name ];
 
       if ( thisEditableSetting instanceof SingleValueSetting ) {
         thisEditableSetting.setValue( value );

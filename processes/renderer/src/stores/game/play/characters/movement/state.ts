@@ -1,16 +1,15 @@
 import { isEqual } from 'shared/lib/is-equal';
-
 import { Regulators } from '../../entities/regulators';
 import {
   characterMovementRegulatorList,
-  characterMovementRegulatorTargetsInitialValues,
+  characterMovementRegulatorTargetsInitialValues
 } from './regulators';
 
 export type CharacterMovementStateValue = {
   stepSize: number;
 };
 
-export type CharacterMovementStateConfig = { baseStepSize: number };
+export type CharacterMovementStateConfig = { baseStepSize: number; };
 
 export class CharacterMovementState {
   baseStepSize: number;

@@ -1,16 +1,12 @@
-import { observer } from 'mobx-react-lite';
-import React from 'react';
-import styled from 'styled-components';
-
 import { FC } from 'basic-utility-types';
-import { Callback, NonNullableProperties } from 'shared/types/basic-utility-types';
-
-import { UpdateStore } from 'stores/update.store';
-
-import { colors, theme } from 'lib/theme';
-
 import { PixelatedButton } from 'components/pixelated/pixelated-components';
 import { Popup } from 'components/popup/popup-template';
+import { colors, theme } from 'lib/theme';
+import { observer } from 'mobx-react-lite';
+import React from 'react';
+import { Callback, NonNullableProperties } from 'shared/types/basic-utility-types';
+import { UpdateStore } from 'stores/update.store';
+import styled from 'styled-components';
 
 type Props = NonNullableProperties<Pick<UpdateStore, 'version' | 'releaseNotes' | 'updateGame'>> & {
   isOpened: boolean;
@@ -26,22 +22,22 @@ export const UpdateNotification: FC<Props> = observer(
 
     return (
       <Popup
-        width={'630px'}
-        height={'auto'}
-        isOpened={isOpened}
-        withCloseButton={true}
-        title={'Доступно обновление!'}
-        styles={{
+        width={ '630px' }
+        height={ 'auto' }
+        isOpened={ isOpened }
+        withCloseButton={ true }
+        title={ 'Доступно обновление!' }
+        styles={ {
           backgroundColor: colors.mainLight,
-        }}
-        fnForClosing={fnForClosing}
+        } }
+        fnForClosing={ fnForClosing }
       >
-        <Version>Clockworker v{version}</Version>
+        <Version>Clockworker v{ version }</Version>
         <ReleaseNotesContainer>
-          <ReleaseNotes dangerouslySetInnerHTML={{ __html: releaseNotes }} />
+          <ReleaseNotes dangerouslySetInnerHTML={ { __html: releaseNotes } } />
         </ReleaseNotesContainer>
         <UpdateGameButtonContainer>
-          <UpdateGameButton onClick={update}>Обновить игру</UpdateGameButton>
+          <UpdateGameButton onClick={ update }>Обновить игру</UpdateGameButton>
         </UpdateGameButtonContainer>
       </Popup>
     );
@@ -61,8 +57,8 @@ const ReleaseNotesContainer = styled.div`
   margin-bottom: 16px;
   font-size: 28px;
   font-weight: bold;
-  background-color: ${colors.mainMediumWell};
-  border-radius: ${theme.borderRadius}px;
+  background-color: ${ colors.mainMediumWell };
+  border-radius: ${ theme.borderRadius }px;
   overflow-y: auto;
 
   ::-webkit-scrollbar-track {

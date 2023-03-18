@@ -1,8 +1,6 @@
 import { makeAutoObservable } from 'mobx';
-
 import { Popup } from 'stores/entities/popup';
 import { PopupHistory } from 'stores/popup-history';
-
 import { GamePauseController } from './pause-controller';
 
 type Config = {

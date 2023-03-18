@@ -1,7 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-
 import { countOf, last } from 'shared/lib/arrays';
-
 import { Popup } from './entities/popup';
 
 export type OpenHistoryNote = {

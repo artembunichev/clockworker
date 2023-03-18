@@ -1,7 +1,5 @@
 import { PointPair } from 'project-utility-types/plane';
-
 import { List } from 'stores/entities/list-controller';
-
 import { Body } from '../../body';
 import { AnyCharacter } from '../../characters/character';
 import { PlayerCharacter } from '../../characters/list/player/character';
@@ -16,7 +14,7 @@ export const isCharacter = ( body: ColliderBody ): body is AnyCharacter => {
   return ( body as AnyCharacter ).movement !== undefined;
 };
 
-export type HitboxWithId = { hitbox: PointPair; id: string };
+export type HitboxWithId = { hitbox: PointPair; id: string; };
 export type ObstacleList = List<HitboxWithId, 'id'>;
 export type Obstacles = Array<HitboxWithId>;
 
@@ -26,7 +24,7 @@ export class BodiesPrevHitboxes {
   list: BodiesPrevHitboxesList = {};
 
   saveBodyHitbox = ( body: ColliderBody ): void => {
-    this.list[body.id] = body.hitbox;
+    this.list[ body.id ] = body.hitbox;
   };
 }
 
@@ -42,15 +40,15 @@ export class Stucks {
   }
 
   add = ( bodyId: string, stuckPlace: string ): void => {
-    if ( !this.list[bodyId] ) {
-      this.list[bodyId] = [];
+    if ( !this.list[ bodyId ] ) {
+      this.list[ bodyId ] = [];
     }
-    if ( !this.list[bodyId].includes( stuckPlace ) ) {
-      this.list[bodyId].push( stuckPlace );
+    if ( !this.list[ bodyId ].includes( stuckPlace ) ) {
+      this.list[ bodyId ].push( stuckPlace );
     }
   };
   remove = ( bodyId: string ): void => {
-    this.list[bodyId] = [];
+    this.list[ bodyId ] = [];
   };
 }
 

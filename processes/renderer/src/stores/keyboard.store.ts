@@ -22,6 +22,6 @@ export class KeyboardStore {
     return Array.from( this.pressedKeys );
   }
   get lastPressedKey(): string | null {
-    return this.pressedKeysArray[this.pressedKeysArray.length - 1] ?? null;
+    return this.pressedKeysArray[ this.pressedKeysArray.length - 1 ] ?? null;
   }
 }

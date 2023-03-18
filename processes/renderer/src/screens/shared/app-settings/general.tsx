@@ -1,10 +1,8 @@
+import { FlagSetting } from 'components/settings/flag-setting';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import styled from 'styled-components';
-
 import { useStore } from 'stores/root-store/context';
-
-import { FlagSetting } from 'components/settings/flag-setting';
+import styled from 'styled-components';
 
 export const GeneralAppSettings = observer( () => {
   const { appSettingsStore } = useStore();
@@ -15,7 +13,7 @@ export const GeneralAppSettings = observer( () => {
     <Container>
       <Setting>
         <SettingTitle>Уведомления о новых версиях игры</SettingTitle>
-        <FlagSetting setting={isGetUpdateNotifications} checkboxSize={31} />
+        <FlagSetting setting={ isGetUpdateNotifications } checkboxSize={ 31 } />
       </Setting>
     </Container>
   );

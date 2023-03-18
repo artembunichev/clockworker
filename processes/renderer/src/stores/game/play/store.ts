@@ -1,10 +1,7 @@
+import { GameScript, getParsedGameScript } from 'content/text/game-script';
 import { makeAutoObservable } from 'mobx';
-
 import { KeyboardStore } from 'stores/keyboard.store';
 import { PopupHistory } from 'stores/popup-history';
-
-import { GameScript, getParsedGameScript } from 'content/text/game-script';
-
 import { PreGameForm } from '../pre-game-form';
 import { CharacterController, CharacterName } from './characters/controller';
 import { PlayerCharacterConfig } from './characters/list/player/character';
@@ -108,11 +105,11 @@ export class GamePlayStore {
 
   addActiveCharacter = ( characterName: CharacterName ): void => {
     this.characterController.addActiveCharacter( characterName );
-    const character = this.characterController.characters[characterName];
+    const character = this.characterController.characters[ characterName ];
     this.collider.collision.bodyList.addOne( character );
   };
   removeActiveCharacter = ( characterName: CharacterName ): void => {
-    const character = this.characterController.characters[characterName];
+    const character = this.characterController.characters[ characterName ];
     this.collider.collision.bodyList.removeOne( character.id );
     this.characterController.removeActiveCharacter( characterName );
   };

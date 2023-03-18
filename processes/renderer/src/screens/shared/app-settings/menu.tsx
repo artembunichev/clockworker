@@ -1,12 +1,8 @@
+import { FC } from 'basic-utility-types';
+import { SettingsMenuTemplate } from 'components/settings/settings-menu-template';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-
-import { FC } from 'basic-utility-types';
-
 import { useStore } from 'stores/root-store/context';
-
-import { SettingsMenuTemplate } from 'components/settings/settings-menu-template';
-
 import { GeneralAppSettings } from './general';
 
 export const AppSettingsMenu: FC = observer( () => {
@@ -15,7 +11,7 @@ export const AppSettingsMenu: FC = observer( () => {
   const { settingsMenu } = appStore.popups;
 
   return (
-    <SettingsMenuTemplate popup={settingsMenu}>
+    <SettingsMenuTemplate popup={ settingsMenu }>
       <GeneralAppSettings />
     </SettingsMenuTemplate>
   );

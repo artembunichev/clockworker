@@ -1,7 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-
 import { delay } from 'shared/lib/async';
-
 import { SharedPlayMethods } from './shared-methods';
 
 export type TransitionScreenConfig = {

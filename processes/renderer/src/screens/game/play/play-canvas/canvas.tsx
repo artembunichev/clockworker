@@ -1,11 +1,8 @@
+import { FC } from 'basic-utility-types';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useRef } from 'react';
-import styled from 'styled-components';
-
-import { FC } from 'basic-utility-types';
-
 import { useGamePlayStore } from 'screens/game/screen';
-
+import styled from 'styled-components';
 import { PlayCanvasOverlay } from './overlay';
 
 export const PlayCanvas: FC = observer( () => {
@@ -21,7 +18,7 @@ export const PlayCanvas: FC = observer( () => {
 
   return (
     <>
-      <Container ref={containerRef}>
+      <Container ref={ containerRef }>
         <PlayCanvasOverlay />
       </Container>
     </>

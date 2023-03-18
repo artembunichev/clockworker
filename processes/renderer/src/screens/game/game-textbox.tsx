@@ -1,7 +1,6 @@
+import { Textbox } from 'components/textbox';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-
-import { Textbox } from 'components/textbox';
 import { useGamePlayStore } from 'screens/game/screen';
 
 export const GameTextbox = observer( () => {
@@ -10,5 +9,5 @@ export const GameTextbox = observer( () => {
 
   const text = textboxController.currentTextbox?.text;
 
-  return <Textbox isOpened={textboxController.isTextboxOpened} text={text} />;
+  return <Textbox isOpened={ textboxController.isTextboxOpened } text={ text } />;
 } );

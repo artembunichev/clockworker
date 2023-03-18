@@ -1,4 +1,4 @@
-import { BodiesPrevHitboxes, BodyList, ColliderBody, ObstacleList, Stucks, isCharacter } from '.';
+import { BodiesPrevHitboxes, BodyList, ColliderBody, isCharacter, ObstacleList, Stucks } from '.';
 import { ColliderCollisionCore, IntersectionPoint } from './core';
 import { ColliderCollisionHelpers } from './helpers';
 
@@ -35,7 +35,7 @@ export class ColliderCollisionWork {
   ): Array<IntersectionPoint> | null => {
     const bodyPrevToCurrentIntersectionPointsWithObstacles =
       this.core.getIntersectionPointsOfBodyAndObstacles( {
-        from: this.bodiesPrevHitboxes.list[body.id],
+        from: this.bodiesPrevHitboxes.list[ body.id ],
         to: body.hitbox,
         obstacles: this.obstacleList.elements,
       } );
@@ -50,7 +50,7 @@ export class ColliderCollisionWork {
   };
 
   private handleBodyStuckPlacesWithStaticObstacles = ( body: ColliderBody ): Array<string> => {
-    const prevBodyHitbox = this.bodiesPrevHitboxes.list[body.id];
+    const prevBodyHitbox = this.bodiesPrevHitboxes.list[ body.id ];
 
     var bodyStuckPlaces: Array<string> = [];
     if ( prevBodyHitbox ) {
@@ -109,7 +109,7 @@ export class ColliderCollisionWork {
   };
 
   private handleBodyCollision = ( body: ColliderBody ): void => {
-    const prevBodyHitbox = this.bodiesPrevHitboxes.list[body.id];
+    const prevBodyHitbox = this.bodiesPrevHitboxes.list[ body.id ];
     const bodyMovementDirection = this.helpers.getMovementDirectionByHitbox(
       prevBodyHitbox,
       body.hitbox,
@@ -129,7 +129,7 @@ export class ColliderCollisionWork {
 
   private checkBodyForSliding = ( body: ColliderBody ): void => {
     if ( isCharacter( body ) ) {
-      const prevBodyHitbox = this.bodiesPrevHitboxes.list[body.id];
+      const prevBodyHitbox = this.bodiesPrevHitboxes.list[ body.id ];
 
       const isXChanged = this.helpers.isXChanged( prevBodyHitbox, body.hitbox );
       const isYChanged = this.helpers.isYChanged( prevBodyHitbox, body.hitbox );
@@ -144,7 +144,7 @@ export class ColliderCollisionWork {
   };
 
   private savePrevBodiesHitboxesIfNoPrevHitboxes = ( body: ColliderBody ): void => {
-    if ( this.bodiesPrevHitboxes.list[body.id] === undefined ) {
+    if ( this.bodiesPrevHitboxes.list[ body.id ] === undefined ) {
       this.bodiesPrevHitboxes.saveBodyHitbox( body );
     }
   };

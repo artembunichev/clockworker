@@ -1,9 +1,8 @@
 import { Size } from 'project-utility-types/abstract';
 import { XY } from 'project-utility-types/plane';
-
 import { CharacterName, Characters } from '../characters/controller';
 
-type PositionOnScene = { x: 'right' | 'left' | 'center'; y: 'down' | 'top' | 'center' };
+type PositionOnScene = { x: 'right' | 'left' | 'center'; y: 'down' | 'top' | 'center'; };
 
 type CharacterPositionOnMap = Partial<XY> | Partial<PositionOnScene>;
 const isPositionOnScene = ( position: CharacterPositionOnMap ): position is Partial<PositionOnScene> => {
@@ -27,7 +26,7 @@ export class SceneCharactersManipulator {
   }
 
   positionCharacter = ( characterName: CharacterName, position: CharacterPositionOnMap ): void => {
-    const character = this.characterList[characterName];
+    const character = this.characterList[ characterName ];
 
     var x = character.position.x;
     var y = character.position.y;

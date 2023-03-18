@@ -3,7 +3,7 @@ export type Size = {
   height: number;
 };
 
-export type Indexes = [number, number];
+export type Indexes = [ number, number ];
 
 export type Reducer<T> = ( prevValue: T ) => T;
 

@@ -1,7 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-
 import { isEqual } from 'shared/lib/is-equal';
-
 import { EditableSettingVariants } from './types';
 
 export const getVariantsWithInitialValues = <T>(

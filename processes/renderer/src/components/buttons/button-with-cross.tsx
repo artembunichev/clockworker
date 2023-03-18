@@ -1,21 +1,17 @@
+import { CrossIcon } from 'assets/icons/cross';
+import { FC } from 'basic-utility-types';
+import { PixelatedButton } from 'components/pixelated/pixelated-components';
+import { colors } from 'lib/theme';
 import { observer } from 'mobx-react-lite';
 import React, { ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-import { FC } from 'basic-utility-types';
-
-import { colors } from 'lib/theme';
-
-import { PixelatedButton } from 'components/pixelated/pixelated-components';
-
-import { CrossIcon } from 'assets/icons/cross';
-
-type Props = ButtonHTMLAttributes<HTMLButtonElement> & { className?: string };
+type Props = ButtonHTMLAttributes<HTMLButtonElement> & { className?: string; };
 
 export const ButtonWithCross: FC<Props> = observer( ( { className, ...buttonProps } ) => {
   return (
-    <Button className={className} {...buttonProps}>
-      <CrossIcon size={17.5} />
+    <Button className={ className } { ...buttonProps }>
+      <CrossIcon size={ 17.5 } />
     </Button>
   );
 } );

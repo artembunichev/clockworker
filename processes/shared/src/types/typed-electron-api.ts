@@ -5,7 +5,7 @@ import {
   IpcMainInvokeEvent,
   IpcRenderer,
   IpcRendererEvent,
-  WebContents,
+  WebContents
 } from 'electron';
 
 export interface TypedIpcMain<EventName extends string> extends IpcMain {

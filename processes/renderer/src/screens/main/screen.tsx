@@ -1,16 +1,11 @@
+import { FC } from 'basic-utility-types';
+import { PixelatedButton } from 'components/pixelated/pixelated-components';
+import { colors } from 'lib/theme';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import styled from 'styled-components';
-
-import { FC } from 'basic-utility-types';
-
-import { useStore } from 'stores/root-store/context';
-
-import { colors } from 'lib/theme';
-
-import { PixelatedButton } from 'components/pixelated/pixelated-components';
 import { QuitGameConfirm } from 'screens/shared/popups/confirms/quit-game-confirm';
-
+import { useStore } from 'stores/root-store/context';
+import styled from 'styled-components';
 import { version as gameVersion } from '../../../../../package.json';
 import { MainMenu } from './main-menu';
 import { UpdateChecker } from './update-notification/update-checker';
@@ -35,8 +30,8 @@ export const MainScreen: FC = observer( () => {
         <Body>
           <MainMenu />
         </Body>
-        <QuitGameButton onClick={openQuitGameConfirm}>Выйти из игры</QuitGameButton>
-        <GameVersion>v{gameVersion}</GameVersion>
+        <QuitGameButton onClick={ openQuitGameConfirm }>Выйти из игры</QuitGameButton>
+        <GameVersion>v{ gameVersion }</GameVersion>
       </Container>
     </>
   );
@@ -53,7 +48,7 @@ const Container = styled.div`
 `;
 const Title = styled.div`
   font-size: 72px;
-  color: ${colors.mainMedium};
+  color: ${ colors.mainMedium };
 `;
 const Body = styled.div`
   flex: 1 0 auto;

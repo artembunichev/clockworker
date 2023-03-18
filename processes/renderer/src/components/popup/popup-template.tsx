@@ -1,15 +1,12 @@
-import { observer } from 'mobx-react-lite';
-import React, { CSSProperties, useEffect } from 'react';
-import styled from 'styled-components';
-
 import { FC } from 'basic-utility-types';
-import { doubleBorderStyle } from 'shared-styles';
-import { Callback, RequiredBy } from 'shared/types/basic-utility-types';
-
-import { colors } from 'lib/theme';
-
 import { ButtonWithCross } from 'components/buttons/button-with-cross';
 import { PortalToBody } from 'components/utility/portal-to-body';
+import { colors } from 'lib/theme';
+import { observer } from 'mobx-react-lite';
+import React, { CSSProperties, useEffect } from 'react';
+import { doubleBorderStyle } from 'shared-styles';
+import { Callback, RequiredBy } from 'shared/types/basic-utility-types';
+import styled from 'styled-components';
 
 export type PopupProps = {
   width: string;
@@ -52,14 +49,14 @@ export const Popup: FC<PopupProps> = observer(
     return (
       <PortalToBody>
         <Container>
-          <Block width={width} height={height} style={styles}>
-            {( withCloseButton || title ) && (
+          <Block width={ width } height={ height } style={ styles }>
+            { ( withCloseButton || title ) && (
               <Heading>
-                {title && <Title style={titleStyles}>{title}</Title>}
-                {withCloseButton && <CloseButton onClick={fnForClosing} />}
+                { title && <Title style={ titleStyles }>{ title }</Title> }
+                { withCloseButton && <CloseButton onClick={ fnForClosing } /> }
               </Heading>
-            )}
-            <Body>{children}</Body>
+            ) }
+            <Body>{ children }</Body>
           </Block>
         </Container>
       </PortalToBody>
@@ -79,16 +76,16 @@ const Container = styled.div`
   align-items: center;
   background-color: #00000083;
 `;
-const Block = styled.div<{ width: string; height: string; color?: string }>`
+const Block = styled.div<{ width: string; height: string; color?: string; }>`
   display: flex;
   flex-direction: column;
-  width: ${( props ) => props.width};
-  height: ${( props ) => props.height};
+  width: ${ ( props ) => props.width };
+  height: ${ ( props ) => props.height };
   position: relative;
   padding: 20px;
   margin: 30px;
-  box-shadow: 0px 0px 25px 8px ${colors.shadow};
-  ${doubleBorderStyle}
+  box-shadow: 0px 0px 25px 8px ${ colors.shadow };
+  ${ doubleBorderStyle }
 `;
 const Heading = styled.div`
   min-height: 32px;

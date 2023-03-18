@@ -5,7 +5,7 @@ const isEqualObjects = ( object1: object, object2: object ): boolean => {
   const length2 = objectKeys( object2 ).length;
 
   if ( length1 === length2 ) {
-    return objectKeys( object1 ).every( ( key ) => isEqual( object1[key], object2[key] ) );
+    return objectKeys( object1 ).every( ( key ) => isEqual( object1[ key ], object2[ key ] ) );
   }
 
   return false;

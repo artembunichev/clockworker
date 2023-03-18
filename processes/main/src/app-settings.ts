@@ -1,11 +1,10 @@
 import { app } from 'electron';
 import * as fs from 'fs';
-
 import { appSettingsFilename } from './filenames';
 import { ipcMain } from './ipc-main';
 
 const userDataPath = app.getPath( 'userData' );
-const pathToAppSettings = `${userDataPath}/${appSettingsFilename}`;
+const pathToAppSettings = `${ userDataPath }/${ appSettingsFilename }`;
 
 export const handleAppSettings = (): void => {
   ipcMain.on( 'checkIfAppSettingsFileExists', ( event ) => {

@@ -3,9 +3,7 @@ import { Size } from 'project-utility-types/abstract';
 import { PointPair, XY } from 'project-utility-types/plane';
 import { SheetPosition } from 'project-utility-types/sheet';
 import { TiledMap } from 'tiled-types';
-
 import { ImageContainer } from 'stores/entities/image-container';
-
 import { Characters } from '../characters/controller';
 import { HitboxWithId } from '../collider/collision';
 import { Sprite } from '../entities/sprite';

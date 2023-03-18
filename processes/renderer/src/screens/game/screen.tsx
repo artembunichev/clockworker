@@ -1,14 +1,11 @@
-import { observer } from 'mobx-react-lite';
-import React, { createContext, useContext, useState } from 'react';
-import styled from 'styled-components';
-
 import { animated, useTransition } from '@react-spring/web';
 import { FC } from 'basic-utility-types';
-
+import { observer } from 'mobx-react-lite';
+import React, { createContext, useContext, useState } from 'react';
 import { GamePlayStore } from 'stores/game/play/store';
 import { GameStore } from 'stores/game/store';
 import { useStore } from 'stores/root-store/context';
-
+import styled from 'styled-components';
 import { GamePlayScreen } from './play/screen';
 import { PreGameFormScreen } from './pre-game-form/screen';
 
@@ -49,27 +46,27 @@ export const GameScreen: FC = observer( () => {
   } );
 
   return (
-    <GameStoreContext.Provider value={gameStore}>
-      {gameTransition( ( styles, item ) => {
+    <GameStoreContext.Provider value={ gameStore }>
+      { gameTransition( ( styles, item ) => {
         return item === 'preGameForm' ? (
           <GamePageContainer
-            style={{
+            style={ {
               ...styles,
               opacity: 1,
-            }}
+            } }
           >
             <PreGameFormScreen />
           </GamePageContainer>
         ) : (
           gameStore.playStore && (
-            <GamePageContainer style={styles}>
-              <GamePlayStoreContext.Provider value={playStore}>
+            <GamePageContainer style={ styles }>
+              <GamePlayStoreContext.Provider value={ playStore }>
                 <GamePlayScreen />
               </GamePlayStoreContext.Provider>
             </GamePageContainer>
           )
         );
-      } )}
+      } ) }
     </GameStoreContext.Provider>
   );
 } );

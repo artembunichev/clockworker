@@ -1,8 +1,6 @@
 import {
   DefaultCharacterAnimationName,
-  DefaultCharacterAnimationRegulatorName,
-  ShortCharacterMovementAnimationConfig,
-  getCharacterMovementAnimationConfigsForController,
+  DefaultCharacterAnimationRegulatorName, getCharacterMovementAnimationConfigsForController, ShortCharacterMovementAnimationConfig
 } from '../../animation';
 
 export type PlayerCharacterAnimationName = DefaultCharacterAnimationName;

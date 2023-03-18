@@ -1,16 +1,11 @@
+import { FC } from 'basic-utility-types';
+import { PixelatedButton } from 'components/pixelated/pixelated-components';
+import { colors } from 'lib/theme';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import styled from 'styled-components';
-
-import { FC } from 'basic-utility-types';
-
-import { useStore } from 'stores/root-store/context';
-
-import { colors } from 'lib/theme';
-
-import { PixelatedButton } from 'components/pixelated/pixelated-components';
 import { QuitInMainMenuConfirm } from 'screens/shared/popups/confirms/quit-in-main-menu-confirm';
-
+import { useStore } from 'stores/root-store/context';
+import styled from 'styled-components';
 import { useGameStore } from '../screen';
 import { PreGameForm } from './form';
 import { usePreGameFormScreenEsc } from './use-esc';
@@ -28,11 +23,11 @@ export const PreGameFormScreen: FC = observer( () => {
 
   return (
     <Container>
-      <QuitInMainMenuConfirm question={'Вернуться в главное меню?'} />
+      <QuitInMainMenuConfirm question={ 'Вернуться в главное меню?' } />
 
       <Title>Создайте персонажа</Title>
       <Body>
-        <BackButton onClick={goBack}>Назад</BackButton>
+        <BackButton onClick={ goBack }>Назад</BackButton>
         <PreGameForm />
       </Body>
     </Container>
@@ -60,7 +55,7 @@ const Title = styled.div`
   font-size: 50px;
   text-align: center;
   margin-top: 35px;
-  color: ${colors.mainMedium};
+  color: ${ colors.mainMedium };
 `;
 const Body = styled.div`
   flex: 1 0 auto;

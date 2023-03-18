@@ -1,7 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-
 import { DownloadProgressInfo, UpdateInfo } from 'shared/types';
-
 import { AppSettingsValues } from './app-settings/store';
 import { SettingType } from './lib/settings';
 

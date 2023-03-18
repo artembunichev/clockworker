@@ -1,13 +1,10 @@
+import { FC } from 'basic-utility-types';
+import { PixelatedButton } from 'components/pixelated/pixelated-components';
 import { observer } from 'mobx-react-lite';
 import React, { CSSProperties } from 'react';
-import styled from 'styled-components';
-
-import { FC } from 'basic-utility-types';
 import { Callback, RequiredBy } from 'shared/types/basic-utility-types';
-
-import { PixelatedButton } from 'components/pixelated/pixelated-components';
-
-import { GamePopup, GamePopupProps, closeGamePopup } from './game-popup-template';
+import styled from 'styled-components';
+import { closeGamePopup, GamePopup, GamePopupProps } from './game-popup-template';
 
 type ExtraProps = {
   question: string;
@@ -55,30 +52,30 @@ export const GameConfirmPopup: FC<GameConfirmPopupProps> = observer(
 
     return (
       <GamePopup
-        popup={popup}
-        width={width}
-        height={height}
-        styles={styles}
-        title={title}
-        titleStyles={titleStyles}
-        withCloseButton={false}
+        popup={ popup }
+        width={ width }
+        height={ height }
+        styles={ styles }
+        title={ title }
+        titleStyles={ titleStyles }
+        withCloseButton={ false }
       >
         <Container>
-          <Question style={questionStyles}>{question}</Question>
+          <Question style={ questionStyles }>{ question }</Question>
           <Buttons>
             <Button
-              onClick={accept}
-              style={buttonsStylesWithoutBackgroundColor}
-              backgroundColor={backgroundColor}
+              onClick={ accept }
+              style={ buttonsStylesWithoutBackgroundColor }
+              backgroundColor={ backgroundColor }
             >
-              {acceptText}
+              { acceptText }
             </Button>
             <Button
-              onClick={reject}
-              style={buttonsStylesWithoutBackgroundColor}
-              backgroundColor={backgroundColor}
+              onClick={ reject }
+              style={ buttonsStylesWithoutBackgroundColor }
+              backgroundColor={ backgroundColor }
             >
-              {rejectText}
+              { rejectText }
             </Button>
           </Buttons>
         </Container>

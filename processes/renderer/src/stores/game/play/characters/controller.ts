@@ -1,13 +1,11 @@
 import { computed, makeObservable, observable } from 'mobx';
-
 import { remove } from 'shared/lib/arrays';
 import { objectValues } from 'shared/lib/objects';
 import { PropertyOf } from 'shared/types/basic-utility-types';
-
 import { PlayerCharacter } from './list/player/character';
 
-export type CharacterName = keyof CharacterController['refList'];
-type Character = InstanceType<PropertyOf<CharacterController['refList']>>;
+export type CharacterName = keyof CharacterController[ 'refList' ];
+type Character = InstanceType<PropertyOf<CharacterController[ 'refList' ]>>;
 export type Characters = Record<CharacterName, Character>;
 
 export class CharacterController {
@@ -27,14 +25,14 @@ export class CharacterController {
 
   createCharacter = async <
     T extends CharacterName,
-    CharacterConfig extends ConstructorParameters<CharacterController['refList'][T]>[number],
+    CharacterConfig extends ConstructorParameters<CharacterController[ 'refList' ][ T ]>[ number ],
   >(
     name: T,
-    ...args: CharacterConfig extends never ? [undefined] : [CharacterConfig]
+    ...args: CharacterConfig extends never ? [ undefined ] : [ CharacterConfig ]
   ): Promise<void> => {
-    const characterConfig = args[0];
-    this.characters[name] = new this.refList[name]( characterConfig );
-    await this.characters[name].imageContainer.loadAll();
+    const characterConfig = args[ 0 ];
+    this.characters[ name ] = new this.refList[ name ]( characterConfig );
+    await this.characters[ name ].imageContainer.loadAll();
   };
 
   addActiveCharacter = ( characterName: CharacterName ): void => {
@@ -61,7 +59,7 @@ export class CharacterController {
 
   get activeCharacters(): Array<Character> {
     return this.activeCharactersNames.map( ( characterName ) => {
-      return this.characters[characterName];
+      return this.characters[ characterName ];
     } );
   }
 

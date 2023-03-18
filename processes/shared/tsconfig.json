@@ -6,9 +6,16 @@
     "emitDeclarationOnly": true,
     "baseUrl": "src",
     "paths": {
-      "shared/*": ["*"]
+      "shared/*": [
+        "*"
+      ]
     },
-    "typeRoots": ["@types"]
+    "typeRoots": [
+      "@types"
+    ]
   },
-  "include": [".", "./**/*.json"]
+  "include": [
+    ".",
+    "./**/*.json"
+  ]
 }

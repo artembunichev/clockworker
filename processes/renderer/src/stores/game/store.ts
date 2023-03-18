@@ -1,9 +1,7 @@
 import { makeAutoObservable } from 'mobx';
-
 import { KeyboardStore } from 'stores/keyboard.store';
 import { closeAllUnclosedPopups } from 'stores/lib/popups';
 import { PopupHistory } from 'stores/popup-history';
-
 import { DataFromPreGameForm, GamePlayStore } from './play/store';
 import { PreGameForm } from './pre-game-form';
 

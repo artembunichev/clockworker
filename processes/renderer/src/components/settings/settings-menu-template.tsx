@@ -1,13 +1,10 @@
+import { FC } from 'basic-utility-types';
+import { PixelatedButton } from 'components/pixelated/pixelated-components';
+import { colors } from 'lib/theme';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
+import { closeGamePopup, GamePopup, GamePopupProps } from 'screens/shared/popups/game-popup-template';
 import styled from 'styled-components';
-
-import { FC } from 'basic-utility-types';
-
-import { colors } from 'lib/theme';
-
-import { PixelatedButton } from 'components/pixelated/pixelated-components';
-import { GamePopup, GamePopupProps, closeGamePopup } from 'screens/shared/popups/game-popup-template';
 
 export type SettingsMenuTemplateProps = Omit<
   GamePopupProps,
@@ -23,20 +20,20 @@ export const SettingsMenuTemplate: FC<SettingsMenuTemplateProps> = observer(
 
     return (
       <GamePopup
-        popup={popup}
-        width={'600px'}
-        height={'550px'}
-        styles={{
+        popup={ popup }
+        width={ '600px' }
+        height={ '550px' }
+        styles={ {
           backgroundColor: colors.mainLight,
-        }}
-        title={'Настройки'}
-        withCloseButton={false}
-        onClose={onClose}
+        } }
+        title={ 'Настройки' }
+        withCloseButton={ false }
+        onClose={ onClose }
       >
         <Container>
-          <List>{children}</List>
+          <List>{ children }</List>
           <OKButtonContainer>
-            <OKButton onClick={close}>ОК</OKButton>
+            <OKButton onClick={ close }>ОК</OKButton>
           </OKButtonContainer>
         </Container>
       </GamePopup>

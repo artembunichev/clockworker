@@ -1,7 +1,5 @@
 import { merge } from 'shared/lib/objects';
-
 import { ImageContainer, ImageContainerOptions, ImageSrcs } from 'stores/entities/image-container';
-
 import { Body, BodyConfig } from '../body';
 import { AnimationRegulatorsType } from '../entities/animation';
 import { AnimationConfigsForController, AnimationController } from '../entities/animation-controller';
@@ -14,16 +12,16 @@ import {
   CharacterAnimationRegulatorList,
   CharacterAnimationRegulatorName,
   DefaultCharacterAnimationController,
-  defaultCharacterAnimationRegulatorList,
+  defaultCharacterAnimationRegulatorList
 } from './animation';
 import { CharacterMovement, ConfigForCharacterMovement } from './movement';
 
 export type AnyCharacter = Character<any, any, any>;
 export type AnyCharacterConfig = CharacterConfig<any, any, any>;
 
-type BaseCharacterConfig = BodyConfig & { name: string; screen: GameScreen };
+type BaseCharacterConfig = BodyConfig & { name: string; screen: GameScreen; };
 
-type CharacterImageSrcs = ImageSrcs & { spriteSheet: string };
+type CharacterImageSrcs = ImageSrcs & { spriteSheet: string; };
 type ImageContainerCharacterConfig<Srcs extends CharacterImageSrcs> = {
   srcs: Srcs;
   options?: ImageContainerOptions;

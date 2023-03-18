@@ -1,16 +1,11 @@
+import { FC } from 'basic-utility-types';
+import { PixelatedButton } from 'components/pixelated/pixelated-components';
+import { colors } from 'lib/theme';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import styled from 'styled-components';
-
-import { FC } from 'basic-utility-types';
-
-import { useStore } from 'stores/root-store/context';
-
-import { colors } from 'lib/theme';
-
-import { PixelatedButton } from 'components/pixelated/pixelated-components';
 import { GamePopup } from 'screens/shared/popups/game-popup-template';
-
+import { useStore } from 'stores/root-store/context';
+import styled from 'styled-components';
 import { useGamePlayStore } from '../screen';
 
 export const GamePauseMenu: FC = observer( () => {
@@ -38,24 +33,24 @@ export const GamePauseMenu: FC = observer( () => {
 
   return (
     <GamePopup
-      popup={pauseMenu}
-      width={'600px'}
-      height={'550px'}
-      styles={{
+      popup={ pauseMenu }
+      width={ '600px' }
+      height={ '550px' }
+      styles={ {
         backgroundColor: colors.mainLight,
-      }}
-      withCloseButton={false}
-      title={'Пауза'}
+      } }
+      withCloseButton={ false }
+      title={ 'Пауза' }
     >
       <List>
         <Sections>
           <Section>
-            <Item onClick={resumeGame}>Продолжить игру</Item>
-            <Item onClick={openSettings}>Настройки</Item>
+            <Item onClick={ resumeGame }>Продолжить игру</Item>
+            <Item onClick={ openSettings }>Настройки</Item>
           </Section>
           <Section>
-            <Item onClick={openQuitInMainMenuConfirm}>Выйти в главное меню</Item>
-            <Item onClick={openQuitGameConfirm}>Выйти из игры</Item>
+            <Item onClick={ openQuitInMainMenuConfirm }>Выйти в главное меню</Item>
+            <Item onClick={ openQuitGameConfirm }>Выйти из игры</Item>
           </Section>
         </Sections>
       </List>

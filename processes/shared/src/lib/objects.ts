@@ -4,9 +4,8 @@ import {
   Merge,
   OverwriteProperties,
   Properties,
-  PropertyOf,
+  PropertyOf
 } from 'shared/types/basic-utility-types';
-
 import { deepClone } from './deep-clone';
 
 export const isObject = ( value: any ): value is object => {
@@ -32,18 +31,18 @@ export const merge = <T1 extends object, T2 extends object>(
   const merged = {} as Merge<T1, T2>;
 
   const overwrite = <T extends object>( object: T, key: keyof T, value: any ): void => {
-    object[key] = deepClone( value );
+    object[ key ] = deepClone( value );
   };
 
   const copyValues = ( source: object, target: object ): void => {
     objectKeys( source ).forEach( ( key ) => {
-      if ( target[key] === undefined ) {
-        overwrite( target, key, source[key] );
+      if ( target[ key ] === undefined ) {
+        overwrite( target, key, source[ key ] );
       } else {
-        if ( isObject( target[key] ) && isObject( source[key] ) ) {
-          copyValues( source[key], target[key] );
+        if ( isObject( target[ key ] ) && isObject( source[ key ] ) ) {
+          copyValues( source[ key ], target[ key ] );
         } else {
-          overwrite( target, key, source[key] );
+          overwrite( target, key, source[ key ] );
         }
       }
     } );
@@ -63,7 +62,7 @@ export const objectMapAll = <T extends object, R>(
   callback: ObjectMapCallback<T, R>,
 ): OverwriteProperties<T, R> => {
   return objectKeys( object ).reduce( ( result, key ) => {
-    result[key] = callback( object[key] );
+    result[ key ] = callback( object[ key ] );
     return result;
   }, {} as OverwriteProperties<T, R> );
 };

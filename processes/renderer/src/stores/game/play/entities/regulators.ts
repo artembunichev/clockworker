@@ -5,7 +5,7 @@ import { Callback } from 'shared/types/basic-utility-types';
 
 export type Regulator<SO extends object, Target extends keyof SO> = Record<
   Target,
-  Modifier<SO[Target]>
+  Modifier<SO[ Target ]>
 >;
 export type RegulatorList<SO extends object, Name extends string, Target extends keyof SO> = Record<
   Name,
@@ -53,19 +53,19 @@ export class Regulators<SO extends object, Name extends string, Target extends k
 
   private getInitialTargetValue = ( target: Target ): any => {
     const { sourceObject, targetsInitialValues } = this.config;
-    return sourceObject[targetsInitialValues[target]];
+    return sourceObject[ targetsInitialValues[ target ] ];
   };
 
   private modifyTarget = ( target: Target, value: any ): void => {
     const { sourceObject } = this.config;
-    sourceObject[target] = value;
+    sourceObject[ target ] = value;
   };
 
   private getNewTargetValue = <T>( target: Target ): T => {
     const initialTargetValue = this.getInitialTargetValue( target );
     const newValue = this.activeRegulatorNames.reduce( ( acc: T, regulatorName ) => {
-      const regulator = this.list[regulatorName];
-      const targetModifier = regulator[target];
+      const regulator = this.list[ regulatorName ];
+      const targetModifier = regulator[ target ];
       if ( targetModifier instanceof Function ) {
         return targetModifier( acc );
       } else {
@@ -76,7 +76,7 @@ export class Regulators<SO extends object, Name extends string, Target extends k
   };
 
   private modifyRegulatorTargets = ( regulatorName: Name, modifiedTargets: Array<Target> ): void => {
-    const targets = objectKeys( this.list[regulatorName] ) as Array<Target>;
+    const targets = objectKeys( this.list[ regulatorName ] ) as Array<Target>;
     targets.forEach( ( target ) => {
       if ( !modifiedTargets.includes( target ) ) {
         const newTargetValue = this.getNewTargetValue( target );

@@ -1,14 +1,12 @@
-import React, { createContext, useContext } from 'react';
-
 import { FC } from 'basic-utility-types';
-
+import React, { createContext, useContext } from 'react';
 import { RootStore } from './store';
 
 const RootStoreContext = createContext<RootStore | null>( null );
 
 export const RootStoreProvider: FC = ( { children } ) => {
   const rootStore = new RootStore();
-  return <RootStoreContext.Provider value={rootStore}>{children}</RootStoreContext.Provider>;
+  return <RootStoreContext.Provider value={ rootStore }>{ children }</RootStoreContext.Provider>;
 };
 
 export const useStore = (): RootStore => {

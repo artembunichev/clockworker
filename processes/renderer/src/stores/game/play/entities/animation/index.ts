@@ -1,13 +1,12 @@
 import { Indexes } from 'project-utility-types/abstract';
 import { Callback } from 'shared/types/basic-utility-types';
-
 import { Regulators } from '../regulators';
 import { Sprite } from '../sprite';
 import { SpriteSheet } from '../sprite-sheet';
 import {
   AnimationRegulatorList,
   AnimationRegulatorTarget,
-  regulatorTargetsInitialValues,
+  regulatorTargetsInitialValues
 } from './regulators';
 
 export type AnimationSequence = Array<Indexes>;
@@ -147,7 +146,7 @@ export class Animation<RegulatorName extends string = never> {
   };
 
   get currentSprite(): Sprite {
-    const [ row, column ] = this.sequence[this.currentSpriteIndex];
+    const [ row, column ] = this.sequence[ this.currentSpriteIndex ];
     return this.spriteSheet.getSprite( row, column, { scale: this.scale } );
   }
 }

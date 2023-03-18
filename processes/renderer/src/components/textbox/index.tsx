@@ -1,17 +1,13 @@
-import { observer } from 'mobx-react-lite';
-import React, { useEffect, useRef, useState } from 'react';
-import styled, { css, keyframes } from 'styled-components';
-
 import { FC } from 'basic-utility-types';
-import { doubleBorderStyle } from 'shared-styles';
-
-import { useWindowClick } from 'hooks/use-window-click';
-
-import { colors } from 'lib/theme';
-
 import { AutoPrintedText } from 'components/auto-printed-text';
 import { ButtonWithCross } from 'components/buttons/button-with-cross';
+import { useWindowClick } from 'hooks/use-window-click';
+import { colors } from 'lib/theme';
+import { observer } from 'mobx-react-lite';
+import React, { useEffect, useRef, useState } from 'react';
 import { useGamePlayStore } from 'screens/game/screen';
+import { doubleBorderStyle } from 'shared-styles';
+import styled, { css, keyframes } from 'styled-components';
 
 type AutoprintStatus = 'none' | 'inProgress' | 'end';
 
@@ -70,24 +66,24 @@ export const Textbox: FC<Props> = observer( ( { isOpened, text } ) => {
   return (
     <Wrapper>
       <Container
-        ref={containerRef}
-        isOpened={isOpened}
-        isOpeningAnimationSkipped={isOpeningAnimationSkipped}
+        ref={ containerRef }
+        isOpened={ isOpened }
+        isOpeningAnimationSkipped={ isOpeningAnimationSkipped }
       >
-        {isOpened && (
+        { isOpened && (
           <Box>
-            {autoprintStatus !== 'none' ? (
+            { autoprintStatus !== 'none' ? (
               <AutoPrintedText
-                text={text ?? ''}
-                onPrintEnd={onAutoprintEnd}
-                isPrintSkipped={isAutoprintSkipped}
+                text={ text ?? '' }
+                onPrintEnd={ onAutoprintEnd }
+                isPrintSkipped={ isAutoprintSkipped }
               />
             ) : (
-              <InvisibleText>{text}</InvisibleText>
-            )}
-            {autoprintStatus === 'end' && <CloseButton onClick={close}></CloseButton>}
+              <InvisibleText>{ text }</InvisibleText>
+            ) }
+            { autoprintStatus === 'end' && <CloseButton onClick={ close }></CloseButton> }
           </Box>
-        )}
+        ) }
       </Container>
     </Wrapper>
   );
@@ -106,7 +102,7 @@ const textboxOpening = keyframes`
     transform:scale(1)
   }
 `;
-const Container = styled.div<{ isOpened: boolean; isOpeningAnimationSkipped: boolean }>`
+const Container = styled.div<{ isOpened: boolean; isOpeningAnimationSkipped: boolean; }>`
   width: 100%;
   position: absolute;
   z-index: 999;
@@ -115,11 +111,11 @@ const Container = styled.div<{ isOpened: boolean; isOpeningAnimationSkipped: boo
   display: flex;
   justify-content: center;
   margin: 0 auto;
-  pointer-events: ${( props ) => ( props.isOpened ? 'all' : 'none' )};
-  animation: ${( props ) =>
+  pointer-events: ${ ( props ) => ( props.isOpened ? 'all' : 'none' ) };
+  animation: ${ ( props ) =>
     props.isOpened &&
     css`
-      ${textboxOpening} ${props.isOpeningAnimationSkipped ? 0 : 230}ms forwards
+      ${ textboxOpening } ${ props.isOpeningAnimationSkipped ? 0 : 230 }ms forwards
     `};
 `;
 const CloseButton = styled( ButtonWithCross )`
@@ -132,8 +128,8 @@ const Box = styled.div`
   max-width: 680px;
   padding: 18px 60px 18px 18px;
   font-size: 24px;
-  background-color: ${colors.mainLight};
-  ${doubleBorderStyle}
+  background-color: ${ colors.mainLight };
+  ${ doubleBorderStyle }
 `;
 const InvisibleText = styled.div`
   opacity: 0;

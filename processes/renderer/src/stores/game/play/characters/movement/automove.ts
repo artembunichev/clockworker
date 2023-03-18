@@ -1,7 +1,6 @@
 import { XY } from 'project-utility-types/plane';
 import { isEqual } from 'shared/lib/is-equal';
 import { Callback } from 'shared/types/basic-utility-types';
-
 import { MoveConfig, MoveFn } from '.';
 import { Position } from '../../entities/position';
 import { ProhibitorsController } from '../../entities/prohibitors-controller';
@@ -11,9 +10,9 @@ import { CharacterMovementState } from './state';
 
 type BaseRunAutomoveConfig = Pick<MoveConfig, 'stateConfig'>;
 
-type RunAutomoveFromTo = BaseRunAutomoveConfig & { from?: XY; to: XY };
-type RunAutomoveDeltaX = BaseRunAutomoveConfig & { deltaX: number };
-type RunAutomoveDeltaY = BaseRunAutomoveConfig & { deltaY: number };
+type RunAutomoveFromTo = BaseRunAutomoveConfig & { from?: XY; to: XY; };
+type RunAutomoveDeltaX = BaseRunAutomoveConfig & { deltaX: number; };
+type RunAutomoveDeltaY = BaseRunAutomoveConfig & { deltaY: number; };
 
 export type RunAutomove = {
   ( config: RunAutomoveFromTo ): Promise<boolean>;

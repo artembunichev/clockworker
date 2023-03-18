@@ -1,6 +1,5 @@
 import { ExpandedDirection, PointPair, XY } from 'project-utility-types/plane';
 import { isEqual } from 'shared/lib/is-equal';
-
 import { ColliderBody, HitboxWithId, ObstacleList, Stucks } from '.';
 import { getMovementDirection } from '../../lib/movement';
 import { GameScreen } from '../../screen';
@@ -70,7 +69,7 @@ export class ColliderCollisionHelpers {
   };
 
   isBodyStucked = ( bodyId: string ): boolean => {
-    return this.stucks.list[bodyId]?.length > 0;
+    return this.stucks.list[ bodyId ]?.length > 0;
   };
 
   getMovementDirectionByHitbox = (

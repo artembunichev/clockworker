@@ -1,15 +1,11 @@
+import { FC } from 'basic-utility-types';
+import { colors } from 'lib/theme';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
-
-import { FC } from 'basic-utility-types';
-
-import { useStore } from 'stores/root-store/context';
-
-import { colors } from 'lib/theme';
-
 import { GameScreen } from 'screens/game/screen';
 import { MainScreen } from 'screens/main/screen';
+import { useStore } from 'stores/root-store/context';
+import styled, { createGlobalStyle } from 'styled-components';
 
 export const App: FC = observer( () => {
   const { appStore } = useStore();
@@ -27,8 +23,8 @@ export const App: FC = observer( () => {
       <GlobalStyles />
 
       <Container>
-        {appStore.screen === 'main' && <MainScreen />}
-        {appStore.screen === 'game' && <GameScreen />}
+        { appStore.screen === 'main' && <MainScreen /> }
+        { appStore.screen === 'game' && <GameScreen /> }
       </Container>
     </>
   );
@@ -75,7 +71,7 @@ const GlobalStyles = createGlobalStyle`
   }
   ::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background-color:${colors.mainDark}
+    background-color:${ colors.mainDark }
   }
 `;
 const Container = styled.div`

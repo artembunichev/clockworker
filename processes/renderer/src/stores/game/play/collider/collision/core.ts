@@ -1,12 +1,10 @@
-import { ExpandedDirection, PointPair, Side, XY } from 'project-utility-types/plane';
-
 import { checkIntersection, getDistanceBetweenPoints } from 'lib/plane';
-
+import { ExpandedDirection, PointPair, Side, XY } from 'project-utility-types/plane';
 import { BodiesPrevHitboxesList, ColliderBody, HitboxWithId, ObstacleList, Obstacles } from '.';
 import { ColliderCollisionHelpers } from './helpers';
 
-export type IntersectionPoint = { obstacleId: string; side: Side; point: XY };
-export type IntersectionPointWithDeltaLineLength = IntersectionPoint & { deltaLineLength: number };
+export type IntersectionPoint = { obstacleId: string; side: Side; point: XY; };
+export type IntersectionPointWithDeltaLineLength = IntersectionPoint & { deltaLineLength: number; };
 
 type SetBodyToObstacleFn = ( body: ColliderBody, obstacle: PointPair ) => void;
 
@@ -157,24 +155,24 @@ export class ColliderCollisionCore {
       } ) );
 
     intersectionPointsWithDeltaLineLength.sort( ( a, b ) => a.deltaLineLength - b.deltaLineLength );
-    return intersectionPointsWithDeltaLineLength[0];
+    return intersectionPointsWithDeltaLineLength[ 0 ];
   };
 
   private getDownmostIntersectionPoints = ( points: Array<IntersectionPoint> ): IntersectionPoint => {
     return points
       .filter( ( { side } ) => side === 'bottom' || side === 'top' )
-      .sort( ( a, b ) => b.point.y - a.point.y )[0];
+      .sort( ( a, b ) => b.point.y - a.point.y )[ 0 ];
   };
   private getRightmostIntersectionPoint = ( points: Array<IntersectionPoint> ): IntersectionPoint => {
-    return points.filter( ( { side } ) => side === 'right' ).sort( ( a, b ) => b.point.x - a.point.x )[0];
+    return points.filter( ( { side } ) => side === 'right' ).sort( ( a, b ) => b.point.x - a.point.x )[ 0 ];
   };
   private getTopmostIntersectionPoint = ( points: Array<IntersectionPoint> ): IntersectionPoint => {
     return points
       .filter( ( { side } ) => side === 'top' || side === 'bottom' )
-      .sort( ( a, b ) => a.point.y - b.point.y )[0];
+      .sort( ( a, b ) => a.point.y - b.point.y )[ 0 ];
   };
   private getLeftmostIntersectionPoint = ( points: Array<IntersectionPoint> ): IntersectionPoint => {
-    return points.filter( ( { side } ) => side === 'left' ).sort( ( a, b ) => a.point.x - b.point.x )[0];
+    return points.filter( ( { side } ) => side === 'left' ).sort( ( a, b ) => a.point.x - b.point.x )[ 0 ];
   };
 
   private getClosestPointsToBody = ( {
@@ -220,7 +218,7 @@ export class ColliderCollisionCore {
         }
       }
     } else {
-      closestPoints.push( intersectionPoints[0] );
+      closestPoints.push( intersectionPoints[ 0 ] );
     }
     return closestPoints;
   };
@@ -257,7 +255,7 @@ export class ColliderCollisionCore {
             intersectionPointsWithObstacles,
           );
         } else {
-          closestPoint = intersectionPointsWithObstacles[0];
+          closestPoint = intersectionPointsWithObstacles[ 0 ];
         }
 
         // угловые точки игнорируются, т.к они не относятся ни к одной из 4 сторон однозначно
@@ -309,7 +307,7 @@ export class ColliderCollisionCore {
       } );
       return intersectionPointsOfBodyDeltaLinesAndObstacles;
     } else {
-      return [ closestIntersectionPoints[0] ];
+      return [ closestIntersectionPoints[ 0 ] ];
     }
   };
 
@@ -331,7 +329,7 @@ export class ColliderCollisionCore {
     obstacle: PointPair,
     actionToChangeBodyPosition: SetBodyToObstacleFn,
   ): void => {
-    const prevBodyHitbox = this.bodiesPrevHitboxesList[body.id];
+    const prevBodyHitbox = this.bodiesPrevHitboxesList[ body.id ];
     const currentBodyHitbox = body.hitbox;
 
     const deltaXHitbox = this.helpers.getDeltaXHitbox( prevBodyHitbox, currentBodyHitbox );
@@ -343,7 +341,7 @@ export class ColliderCollisionCore {
     } );
 
     if ( intersectionPointsOfXObstacles ) {
-      const intersectionPoint = intersectionPointsOfXObstacles[0];
+      const intersectionPoint = intersectionPointsOfXObstacles[ 0 ];
       const intersectedObstacleHitbox = this.helpers.getObstacleById(
         intersectionPoint.obstacleId,
       ).hitbox;
@@ -361,7 +359,7 @@ export class ColliderCollisionCore {
     obstacle: PointPair,
     actionToChangeBodyPosition: SetBodyToObstacleFn,
   ): void => {
-    const prevBodyHitbox = this.bodiesPrevHitboxesList[body.id];
+    const prevBodyHitbox = this.bodiesPrevHitboxesList[ body.id ];
     const currentBodyHitbox = body.hitbox;
 
     const deltaYHitbox = this.helpers.getDeltaYHitbox( prevBodyHitbox, currentBodyHitbox );
@@ -373,7 +371,7 @@ export class ColliderCollisionCore {
     } );
 
     if ( intersectionPointsOfYObstacles ) {
-      const intersectionPoint = intersectionPointsOfYObstacles[0];
+      const intersectionPoint = intersectionPointsOfYObstacles[ 0 ];
       const intersectedObstacleHitbox = this.helpers.getObstacleById(
         intersectionPoint.obstacleId,
       ).hitbox;

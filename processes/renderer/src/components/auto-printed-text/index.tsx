@@ -1,10 +1,9 @@
-import { observer } from 'mobx-react-lite';
-import React, { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
-
 import { FC } from 'basic-utility-types';
+import { observer } from 'mobx-react-lite';
 import { nanoid } from 'nanoid';
+import React, { useEffect, useRef, useState } from 'react';
 import { Callback } from 'shared/types/basic-utility-types';
+import styled from 'styled-components';
 
 type Props = {
   text: string;
@@ -13,7 +12,7 @@ type Props = {
   isPrintSkipped?: boolean;
 };
 
-type TextSymbol = { id: string; value: string; isVisible: boolean };
+type TextSymbol = { id: string; value: string; isVisible: boolean; };
 type TextSymbols = Array<TextSymbol>;
 
 export const AutoPrintedText: FC<Props> = observer(
@@ -68,19 +67,19 @@ export const AutoPrintedText: FC<Props> = observer(
 
     return (
       <Text>
-        {textSymbols.map( ( textSymbol ) => {
+        { textSymbols.map( ( textSymbol ) => {
           return (
-            <TextSymbol key={textSymbol.id} isVisible={textSymbol.isVisible}>
-              {textSymbol.value}
+            <TextSymbol key={ textSymbol.id } isVisible={ textSymbol.isVisible }>
+              { textSymbol.value }
             </TextSymbol>
           );
-        } )}
+        } ) }
       </Text>
     );
   },
 );
 
 const Text = styled.div``;
-const TextSymbol = styled.span<{ isVisible: boolean }>`
-  opacity: ${( props ) => ( props.isVisible ? 1 : 0 )};
+const TextSymbol = styled.span<{ isVisible: boolean; }>`
+  opacity: ${ ( props ) => ( props.isVisible ? 1 : 0 ) };
 `;

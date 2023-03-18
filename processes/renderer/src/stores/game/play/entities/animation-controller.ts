@@ -1,5 +1,4 @@
 import { objectEntries, objectValues } from 'shared/lib/objects';
-
 import { Animation, AnimationConfig, RunAnimationOptions } from './animation';
 import { AnimationRegulatorList } from './animation/regulators';
 import { Sprite } from './sprite';
@@ -60,12 +59,12 @@ export class AnimationController<AnimationName extends string, RegulatorName ext
 
     this.createAnimations();
 
-    this.currentAnimation = this.list[initialValue];
+    this.currentAnimation = this.list[ initialValue ];
   }
 
   private createAnimations = (): void => {
     objectEntries( this.configs ).forEach( ( [ animationName, animationConfig ] ) => {
-      this.list[animationName] = new Animation<RegulatorName>( {
+      this.list[ animationName ] = new Animation<RegulatorName>( {
         name: animationName,
         spriteSheet: this.spriteSheet,
         regulators: this.regulators ?? undefined,
@@ -81,7 +80,7 @@ export class AnimationController<AnimationName extends string, RegulatorName ext
   };
 
   setAnimation = ( animationName: AnimationName ): void => {
-    this.currentAnimation = this.list[animationName];
+    this.currentAnimation = this.list[ animationName ];
   };
 
   start = ( options?: RunAnimationOptions ): void => {

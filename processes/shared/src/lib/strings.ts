@@ -9,7 +9,7 @@ export const isNumber = ( symbol: string ): boolean => {
 };
 
 export const capitalizeFirstSymbol = ( string: string ): string => {
-  const capitalFirstSymbol = string[0].toUpperCase();
+  const capitalFirstSymbol = string[ 0 ].toUpperCase();
   const restString = string.slice( 1 );
   return capitalFirstSymbol + restString;
 };

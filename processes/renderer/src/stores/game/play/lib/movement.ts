@@ -1,6 +1,5 @@
 import { ExpandedDirection, PrimitiveDirection, XY } from 'project-utility-types/plane';
 import { isEqual } from 'shared/lib/is-equal';
-
 import { ViewDirections } from '../entities/animation-controller';
 
 export const getMovementDirection = ( start: XY, end: XY ): ExpandedDirection | null => {
@@ -42,10 +41,10 @@ export const convertMovementDirectionToViewDirection = (
   return direction.includes( 'right' )
     ? ViewDirections.RIGHT
     : direction.includes( 'left' )
-    ? ViewDirections.LEFT
-    : direction.includes( 'down' )
-    ? ViewDirections.DOWN
-    : ViewDirections.UP;
+      ? ViewDirections.LEFT
+      : direction.includes( 'down' )
+        ? ViewDirections.DOWN
+        : ViewDirections.UP;
 };
 
 export const convertExpandedDirectionToPrimitiveDirection = (
@@ -54,10 +53,10 @@ export const convertExpandedDirectionToPrimitiveDirection = (
   return direction.includes( 'right' )
     ? 'right'
     : direction.includes( 'left' )
-    ? 'left'
-    : direction.includes( 'down' )
-    ? 'down'
-    : 'up';
+      ? 'left'
+      : direction.includes( 'down' )
+        ? 'down'
+        : 'up';
 };
 
 // убирает направления, компенсирующие друг друга (пример: вверх-вниз)

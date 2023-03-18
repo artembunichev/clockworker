@@ -1,5 +1,4 @@
 import { GameScript } from 'content/text/game-script';
-
 import { Textbox } from '..';
 
 type Config = {

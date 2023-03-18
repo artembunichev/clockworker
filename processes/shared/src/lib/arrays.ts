@@ -1,5 +1,5 @@
 export const last = <T>( array: Array<T> ): T => {
-  return array[array.length - 1];
+  return array[ array.length - 1 ];
 };
 
 export type Remover<T> = ( value: T ) => boolean;

@@ -1,15 +1,11 @@
+import { FC } from 'basic-utility-types';
+import { PixelatedButton } from 'components/pixelated/pixelated-components';
+import { colors } from 'lib/theme';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import styled from 'styled-components';
-
-import { FC } from 'basic-utility-types';
-
-import { useStore } from 'stores/root-store/context';
-
-import { colors } from 'lib/theme';
-
-import { PixelatedButton } from 'components/pixelated/pixelated-components';
 import { AppSettingsMenu } from 'screens/shared/app-settings/menu';
+import { useStore } from 'stores/root-store/context';
+import styled from 'styled-components';
 
 export const MainMenu: FC = observer( () => {
   const { appStore } = useStore();
@@ -27,8 +23,8 @@ export const MainMenu: FC = observer( () => {
     <MainMenuButtons>
       <AppSettingsMenu />
 
-      <Button onClick={createNewGame}>Новая игра</Button>
-      <Button onClick={openAppSettings}>Настройки</Button>
+      <Button onClick={ createNewGame }>Новая игра</Button>
+      <Button onClick={ openAppSettings }>Настройки</Button>
     </MainMenuButtons>
   );
 } );

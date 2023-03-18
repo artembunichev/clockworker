@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-
 import { Callback } from 'shared/types/basic-utility-types';
 
 export const useWindowClick = ( fn: Callback ): void => {

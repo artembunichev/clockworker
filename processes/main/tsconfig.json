@@ -5,10 +5,20 @@
     "outDir": "../../dist/main",
     "baseUrl": "src",
     "paths": {
-      "shared/*": ["../../shared/src/*"]
+      "shared/*": [
+        "../../shared/src/*"
+      ]
     },
-    "typeRoots": ["../shared/@types"]
+    "typeRoots": [
+      "../shared/@types"
+    ]
   },
-  "include": ["."],
-  "references": [{ "path": "../shared" }]
+  "include": [
+    "."
+  ],
+  "references": [
+    {
+      "path": "../shared"
+    }
+  ]
 }

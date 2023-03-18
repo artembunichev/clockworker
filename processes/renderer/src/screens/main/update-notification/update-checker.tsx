@@ -1,10 +1,7 @@
+import { FC } from 'basic-utility-types';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-
-import { FC } from 'basic-utility-types';
-
 import { useStore } from 'stores/root-store/context';
-
 import { UpdatePopup } from './update-popup';
 
 export const UpdateChecker: FC = observer( () => {
@@ -14,5 +11,5 @@ export const UpdateChecker: FC = observer( () => {
     return null;
   }
 
-  return <UpdatePopup updateStore={updateStore} />;
+  return <UpdatePopup updateStore={ updateStore } />;
 } );

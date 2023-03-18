@@ -1,7 +1,7 @@
-import { Remover, remove } from 'shared/lib/arrays';
+import { remove, Remover } from 'shared/lib/arrays';
 
-type RemoveOneArg<T, Id extends keyof T> = Id extends null ? T : T[Id];
-type RemoverManyArg<T, Id extends keyof T> = Id extends null ? Array<T> : Array<T[Id]>;
+type RemoveOneArg<T, Id extends keyof T> = Id extends null ? T : T[ Id ];
+type RemoverManyArg<T, Id extends keyof T> = Id extends null ? Array<T> : Array<T[ Id ]>;
 
 type Config<T, Id extends keyof T> = {
   identifier?: Id;
@@ -31,7 +31,7 @@ export class List<T, Id extends keyof T> {
     var remover: T | Remover<T>;
     if ( this.identifier !== null ) {
       remover = ( element: T ) => {
-        return element[this.identifier as keyof T] === arg;
+        return element[ this.identifier as keyof T ] === arg;
       };
     } else {
       remover = arg as T;

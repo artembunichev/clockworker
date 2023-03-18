@@ -1,12 +1,9 @@
+import { animated, useSpring } from '@react-spring/web';
+import { FC } from 'basic-utility-types';
+import { colors } from 'lib/theme';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import styled from 'styled-components';
-
-import { animated, useSpring } from '@react-spring/web';
-import { FC } from 'basic-utility-types';
-
-import { colors } from 'lib/theme';
-
 import { useGamePlayStore } from './screen';
 
 export const GameOpening: FC = observer( () => {
@@ -35,23 +32,23 @@ export const GameOpening: FC = observer( () => {
 
   return (
     <>
-      {opening.isOpened && (
-        <Container background={opening.background} style={containerStyles}>
-          <Content style={contentStyles}>clockworker</Content>
+      { opening.isOpened && (
+        <Container background={ opening.background } style={ containerStyles }>
+          <Content style={ contentStyles }>clockworker</Content>
         </Container>
-      )}
+      ) }
     </>
   );
 } );
 
-const Container = styled( animated.div )<{ background: string }>`
+const Container = styled( animated.div ) <{ background: string; }>`
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 9999;
-  background-color: ${( props ) => props.background};
+  background-color: ${ ( props ) => props.background };
 
   display: flex;
   justify-content: center;
@@ -59,5 +56,5 @@ const Container = styled( animated.div )<{ background: string }>`
 `;
 const Content = styled( animated.div )`
   font-size: 110px;
-  color: ${colors.mainMedium};
+  color: ${ colors.mainMedium };
 `;

@@ -7,8 +7,8 @@ export const getDistanceBetweenPoints = ( point1: XY, point2: XY ): number => {
 
 // http://www.paulbourke.net/geometry/pointlineplane/
 type IntersectionCheckResult =
-  | { type: 'none' | 'parallel' | 'collinear' }
-  | { type: 'intersecting'; point: XY };
+  | { type: 'none' | 'parallel' | 'collinear'; }
+  | { type: 'intersecting'; point: XY; };
 export const checkIntersection = ( line1: PointPair, line2: PointPair ): IntersectionCheckResult => {
   const x1 = line1.x1;
   const x2 = line1.x2;

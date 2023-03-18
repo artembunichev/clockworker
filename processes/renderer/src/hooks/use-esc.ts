@@ -1,9 +1,7 @@
 import { Rename } from 'shared/types/basic-utility-types';
-
 import { closeLastUnclosedPopup } from 'stores/lib/popups';
 import { useStore } from 'stores/root-store/context';
-
-import { UseKeyConfig, UseKeyVariant, useKey } from './use-key';
+import { useKey, UseKeyConfig, UseKeyVariant } from './use-key';
 
 export type UseEscConfig = Rename<Omit<UseKeyConfig, 'key'>, 'defaultFn', 'fn'>;
 

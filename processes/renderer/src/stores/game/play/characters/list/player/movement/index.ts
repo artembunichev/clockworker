@@ -2,7 +2,6 @@ import { getSingleMovementDirection } from 'stores/game/play/lib/movement';
 import { GameSettingsValues } from 'stores/game/play/settings';
 import { KeyboardStore } from 'stores/keyboard.store';
 import { SettingType } from 'stores/lib/settings';
-
 import { CharacterMovement, ConfigForCharacterMovement } from '../../../movement';
 import { RunAutomove } from '../../../movement/automove';
 import { CharacterMovementStateConfig } from '../../../movement/state';

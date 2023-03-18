@@ -1,8 +1,6 @@
 import { makeAutoObservable } from 'mobx';
-
 import { SingleValueSetting } from 'stores/entities/editable-settings/single-value-setting';
 import { EditableSettings } from 'stores/lib/settings';
-
 import { AppSettingsValues } from './store';
 
 export type EditableAppSettingsType = EditableSettings<AppSettingsValues>;

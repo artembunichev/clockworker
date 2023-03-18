@@ -3,7 +3,7 @@ import {
   AnimationConfigForController,
   AnimationConfigsForController,
   AnimationController,
-  ViewDirections,
+  ViewDirections
 } from '../entities/animation-controller';
 import { AnimationRegulatorList } from '../entities/animation/regulators';
 import { getRowSequence } from '../lib/animation';

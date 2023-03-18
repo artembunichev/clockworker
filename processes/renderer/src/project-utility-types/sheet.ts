@@ -1,1 +1,1 @@
-export type SheetPosition = { row: number; column: number };
+export type SheetPosition = { row: number; column: number; };

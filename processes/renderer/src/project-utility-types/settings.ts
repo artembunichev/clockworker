@@ -1,1 +1,1 @@
-export type SettingValue<T> = { value: T };
+export type SettingValue<T> = { value: T; };

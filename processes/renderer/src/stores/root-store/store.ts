@@ -1,5 +1,4 @@
 import { isElectron } from 'shared/lib/is-electron';
-
 import { AppSettingsStore } from 'stores/app-settings/store';
 import { AppStore } from 'stores/app-store/store';
 import { GameStore } from 'stores/game/store';

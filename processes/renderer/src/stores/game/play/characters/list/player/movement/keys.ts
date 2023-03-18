@@ -1,11 +1,9 @@
 import { PrimitiveDirection } from 'project-utility-types/plane';
 import { last } from 'shared/lib/arrays';
 import { objectValues } from 'shared/lib/objects';
-
 import { ProhibitorsController } from 'stores/game/play/entities/prohibitors-controller';
 import { MovementControllersKeys, MovementRegulatorsKeys } from 'stores/game/play/settings';
 import { KeyboardStore } from 'stores/keyboard.store';
-
 import { PlayerCharacterMovementSettings } from '.';
 
 type Config = {
@@ -51,10 +49,10 @@ export class PlayerCharacterMovementKeys {
       controller === this.controllerKeys.down
         ? 'down'
         : controller === this.controllerKeys.right
-        ? 'right'
-        : controller === this.controllerKeys.up
-        ? 'up'
-        : 'left',
+          ? 'right'
+          : controller === this.controllerKeys.up
+            ? 'up'
+            : 'left',
     );
   }
 

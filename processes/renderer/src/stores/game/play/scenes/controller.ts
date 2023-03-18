@@ -1,7 +1,5 @@
 import { computed, makeObservable, observable } from 'mobx';
-
 import { resolvedPromise } from 'shared/lib/async';
-
 import { Characters } from '../characters/controller';
 import { GameScreen } from '../screen';
 import { marketMainSceneConfig } from './list/market';
@@ -13,7 +11,7 @@ export type ControllerSceneConfig<T extends string> = Omit<
   keyof SceneCreatorConfig
 >;
 
-export type SceneName = GameSceneController['sceneConfigs'][number]['name'];
+export type SceneName = GameSceneController[ 'sceneConfigs' ][ number ][ 'name' ];
 type Scene = GameScene<SceneName>;
 type Scenes = Record<SceneName, Scene>;
 
@@ -49,15 +47,15 @@ export class GameSceneController {
 
   createScene = ( name: SceneName ): void => {
     const mapConfig = this.getSceneConfig( name ).map;
-    this.scenes[name] = this.sceneCreator.createScene( name, mapConfig );
+    this.scenes[ name ] = this.sceneCreator.createScene( name, mapConfig );
   };
 
   setScene = ( sceneName: SceneName ): Promise<void> => {
-    if ( !this.scenes[sceneName] ) {
+    if ( !this.scenes[ sceneName ] ) {
       this.createScene( sceneName );
     }
 
-    this.currentScene = this.scenes[sceneName];
+    this.currentScene = this.scenes[ sceneName ];
 
     const createAndDrawMap = (): void => {
       this.currentScene.createMap();

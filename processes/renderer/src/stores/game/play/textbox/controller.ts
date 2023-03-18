@@ -1,14 +1,11 @@
-import { computed, makeObservable, observable } from 'mobx';
-
-import { Callback, PropertyOf } from 'shared/types/basic-utility-types';
-
 import { GameScript } from 'content/text/game-script';
-
+import { computed, makeObservable, observable } from 'mobx';
+import { Callback, PropertyOf } from 'shared/types/basic-utility-types';
 import { GamePauseController } from '../pause-controller';
 import { WelcomeTextbox } from './list/welcome';
 
-type TextboxInController = InstanceType<PropertyOf<TextboxController['refList']>>;
-type TextboxName = keyof TextboxController['refList'];
+type TextboxInController = InstanceType<PropertyOf<TextboxController[ 'refList' ]>>;
+type TextboxName = keyof TextboxController[ 'refList' ];
 type Textboxes = Record<TextboxName, TextboxInController>;
 
 type SetTextboxConfig = {
@@ -51,15 +48,15 @@ export class TextboxController {
   }
 
   createTextbox = ( name: TextboxName ): void => {
-    this.textboxes[name] = new this.refList[name]( { gameScript: this.gameScript } );
+    this.textboxes[ name ] = new this.refList[ name ]( { gameScript: this.gameScript } );
   };
 
   setCurrentTextbox = ( { name, onOpen, onClose }: SetTextboxConfig ): void => {
-    if ( !this.textboxes[name] ) {
+    if ( !this.textboxes[ name ] ) {
       this.createTextbox( name );
     }
 
-    this.currentTextbox = this.textboxes[name];
+    this.currentTextbox = this.textboxes[ name ];
     this.internalOnOpen();
     this.currentTextbox.setCallbacks( { onOpen, onClose } );
     this.currentTextbox.onOpen?.();

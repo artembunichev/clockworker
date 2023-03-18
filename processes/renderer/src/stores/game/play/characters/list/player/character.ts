@@ -1,22 +1,18 @@
-import { KeyboardStore } from 'stores/keyboard.store';
-
 import playerCharacterSpriteSheetSrc from 'content/sprites/characters/Player.png';
-
+import { KeyboardStore } from 'stores/keyboard.store';
 import { AnyCharacterConfig, Character } from '../../character';
 import {
-  PlayerCharacterAnimationName,
-  PlayerCharacterAnimationRegulatorName,
-  playerCharacterAnimationConfigs,
+  playerCharacterAnimationConfigs, PlayerCharacterAnimationName,
+  PlayerCharacterAnimationRegulatorName
 } from './animation';
 import {
-  PlayerCharacterMovement,
-  PlayerCharacterMovementSettings,
-  initialPlayerCharacterMovementStateConfig,
+  initialPlayerCharacterMovementStateConfig, PlayerCharacterMovement,
+  PlayerCharacterMovementSettings
 } from './movement';
 
 type PlayerCharacterSettings = PlayerCharacterMovementSettings;
 
-type ImageSrcs = { spriteSheet: typeof playerCharacterSpriteSheetSrc };
+type ImageSrcs = { spriteSheet: typeof playerCharacterSpriteSheetSrc; };
 
 export type PlayerCharacterConfig = Pick<AnyCharacterConfig, 'name' | 'screen'> & {
   settings: PlayerCharacterSettings;

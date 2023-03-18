@@ -1,6 +1,5 @@
 import { app } from 'electron';
 import { autoUpdater } from 'electron-updater';
-
 import { createWindow, mainWindow } from './main-window';
 
 export const handleAppEvents = (): void => {

@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-
 import { predicate } from 'shared/lib/boolean';
 import { Callback } from 'shared/types/basic-utility-types';
 

@@ -1,5 +1,4 @@
 import { useEsc } from 'hooks/use-esc';
-
 import { useGamePlayStore } from '../screen';
 
 export const useGamePlayScreenEsc = (): void => {

@@ -1,5 +1,4 @@
 import { DeepRequired, FieldErrorsImpl } from 'react-hook-form';
-
 import { PreGameFormFields } from 'stores/game/pre-game-form';
 
 type FieldError = {
@@ -15,7 +14,7 @@ export type FieldErrors = {
 };
 
 type GetFormErrorsReturn = {
-  [_ in keyof PreGameFormFields]: FieldErrors;
+  [ _ in keyof PreGameFormFields ]: FieldErrors;
 };
 
 export const getFormErrors = (

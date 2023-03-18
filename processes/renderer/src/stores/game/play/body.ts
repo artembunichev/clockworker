@@ -1,7 +1,6 @@
 import { nanoid } from 'nanoid';
 import { Size } from 'project-utility-types/abstract';
 import { PointPair } from 'project-utility-types/plane';
-
 import { Position } from './entities/position';
 
 export type BodyConfig = {
