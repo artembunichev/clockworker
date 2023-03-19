@@ -2,7 +2,7 @@ import { computed, makeObservable, observable } from 'mobx';
 import { resolvedPromise } from 'shared/lib/async';
 import { Characters } from '../characters/controller';
 import { GameScreen } from '../screen';
-import { marketMainSceneConfig } from './list/market';
+import { marketMainSceneConfig } from './list/market-main';
 import { GameScene, GameSceneConfig } from './scene';
 import { GameSceneCreator, SceneCreatorConfig } from './scene-creator';
 
