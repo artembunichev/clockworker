@@ -28,5 +28,5 @@ const FormErrorMessage = styled.div`
   margin-right: auto;
   margin-top: 6px;
   color: ${ colors.error };
-  text-align: center;
+  text-align: left;
 `;
