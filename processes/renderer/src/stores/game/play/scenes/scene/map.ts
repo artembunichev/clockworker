@@ -63,8 +63,8 @@ export class SceneMap {
   private getHitbox = (): PointPair => {
     const w = this.size.width;
     const h = this.size.height;
-    const screenW = this.screen.width;
-    const screenH = this.screen.height;
+    const screenW = this.screen.size.width;
+    const screenH = this.screen.size.height;
 
     var offsetX = 0;
     var offsetY = 0;

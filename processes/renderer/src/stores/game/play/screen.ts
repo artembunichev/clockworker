@@ -1,3 +1,4 @@
+import { Size } from 'project-utility-types/abstract';
 import { XY } from 'project-utility-types/plane';
 import { Canvas, Ctx } from 'project-utility-types/screen';
 import { Sprite } from './entities/sprite';
@@ -8,8 +9,7 @@ type GameScreenConfig = {
 };
 
 export class GameScreen {
-  width: number;
-  height: number;
+  size: Size;
   canvas: Canvas;
   ctx: Ctx;
 
@@ -18,16 +18,18 @@ export class GameScreen {
   constructor( config: GameScreenConfig ) {
     const { width, height } = config;
 
-    this.width = width;
-    this.height = height;
+    this.size = {
+      width,
+      height
+    };
 
     this.initializeCanvasAndCtx();
   }
 
   initializeCanvasAndCtx = (): void => {
     const canvas = document.createElement( 'canvas' );
-    canvas.width = this.width;
-    canvas.height = this.height;
+    canvas.width = this.size.width;
+    canvas.height = this.size.height;
 
     this.canvas = canvas;
     this.ctx = this.canvas.getContext( '2d' )!;
@@ -39,11 +41,11 @@ export class GameScreen {
 
   fill = (): void => {
     this.ctx.fillStyle = this.background;
-    this.ctx.fillRect( 0, 0, this.width, this.height );
+    this.ctx.fillRect( 0, 0, this.size.width, this.size.height );
   };
 
   clear = (): void => {
-    this.ctx.clearRect( 0, 0, this.width, this.height );
+    this.ctx.clearRect( 0, 0, this.size.width, this.size.height );
   };
 
   drawSprite = ( sprite: Sprite, position: XY ): void => {
