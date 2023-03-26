@@ -3,7 +3,7 @@ import { List } from 'stores/entities/list-controller';
 import { Body } from '../../body';
 import { AnyCharacter } from '../../characters/character';
 import { PlayerCharacter } from '../../characters/list/player/character';
-import { GameScreen } from '../../screen';
+import { SceneMap } from '../../scenes/scene/map';
 import { ColliderCollisionCore } from './core';
 import { ColliderCollisionHelpers } from './helpers';
 import { ColliderCollisionWork } from './work';
@@ -54,11 +54,11 @@ export class Stucks {
 
 // main
 type Config = {
-  screen: GameScreen;
+  sceneMap: SceneMap;
 };
 
 export class ColliderCollision {
-  private screen: GameScreen;
+  private sceneMap: SceneMap;
   core: ColliderCollisionCore;
   work: ColliderCollisionWork;
   helpers: ColliderCollisionHelpers;
@@ -69,14 +69,14 @@ export class ColliderCollision {
   bodiesPrevHitboxes = new BodiesPrevHitboxes();
 
   constructor( config: Config ) {
-    const { screen } = config;
+    const { sceneMap } = config;
 
-    this.screen = screen;
+    this.sceneMap = sceneMap;
 
     this.helpers = new ColliderCollisionHelpers( {
       obstacleList: this.staticObstacleList,
       stucks: this.stucks,
-      screen: this.screen,
+      sceneMap: this.sceneMap,
     } );
 
     this.core = new ColliderCollisionCore( {
@@ -94,6 +94,11 @@ export class ColliderCollision {
       helpers: this.helpers,
     } );
   }
+
+  setSceneMap = ( sceneMap: SceneMap ): void => {
+    this.sceneMap = sceneMap;
+    this.helpers.setSceneMap( this.sceneMap );
+  };
 
   clear = (): void => {
     this.bodyList.clear();

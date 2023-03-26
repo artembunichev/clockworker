@@ -1,21 +1,26 @@
-import { GameScreen } from '../screen';
+import { SceneMap } from '../scenes/scene/map';
 import { ColliderCollision } from './collision';
 
 type Config = {
-  screen: GameScreen;
+  sceneMap: SceneMap;
 };
 
 export class Collider {
-  private screen: GameScreen;
+  private sceneMap: SceneMap;
   collision: ColliderCollision;
 
   constructor( config: Config ) {
-    const { screen } = config;
+    const { sceneMap } = config;
 
-    this.screen = screen;
+    this.sceneMap = sceneMap;
 
-    this.collision = new ColliderCollision( { screen: this.screen } );
+    this.collision = new ColliderCollision( { sceneMap: this.sceneMap } );
   }
+
+  setSceneMap = ( sceneMap: SceneMap ): void => {
+    this.sceneMap = sceneMap;
+    this.collision.setSceneMap( this.sceneMap );
+  };
 
   clear = (): void => {
     this.collision.clear();

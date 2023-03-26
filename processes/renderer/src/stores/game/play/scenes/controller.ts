@@ -11,9 +11,11 @@ export type ControllerSceneConfig<T extends string> = Omit<
   keyof SceneCreatorConfig
 >;
 
-export type SceneName = GameSceneController[ 'sceneConfigs' ][ number ][ 'name' ];
+type SceneName = GameSceneController[ 'sceneConfigs' ][ number ][ 'name' ];
 type Scene = GameScene<SceneName>;
 type Scenes = Record<SceneName, Scene>;
+
+export type SetSceneFn = ( sceneName: SceneName ) => Promise<void>;
 
 type GameSceneControllerConfig = {
   screen: GameScreen;
@@ -50,35 +52,25 @@ export class GameSceneController {
     this.scenes[ name ] = this.sceneCreator.createScene( name, mapConfig );
   };
 
-  setScene = ( sceneName: SceneName ): Promise<void> => {
-    if ( !this.scenes[ sceneName ] ) {
-      this.createScene( sceneName );
-    }
-
+  setScene: SetSceneFn = ( sceneName ) => {
+    this.createScene( sceneName );
     this.currentScene = this.scenes[ sceneName ];
 
-    const createAndDrawMap = (): void => {
-      this.currentScene.createMap();
-      this.currentScene.drawMap();
-    };
-
     if ( !this.isAllCurrentSceneImagesLoaded ) {
-      return this.loadAllCurrentSceneImages().then( () => createAndDrawMap() );
-    } else {
-      createAndDrawMap();
-      return resolvedPromise;
+      return this.loadAllCurrentSceneImages();
     }
+    return resolvedPromise;
   };
 
   loadAllCurrentSceneImages = (): Promise<void> => {
-    return this.currentScene.imageContainer.loadAll();
+    return this.currentScene.loadAllImages();
   };
 
   updateCurrentScene = (): void => {
-    this.currentScene.drawMap();
+    this.currentScene.update();
   };
 
   get isAllCurrentSceneImagesLoaded(): boolean {
-    return this.currentScene.imageContainer.isAllImagesLoaded;
+    return this.currentScene.isAllImagesLoaded;
   }
 }

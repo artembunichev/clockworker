@@ -1,6 +1,6 @@
-import { Size } from 'project-utility-types/abstract';
 import { XY } from 'project-utility-types/plane';
 import { CharacterName, Characters } from '../characters/controller';
+import { SceneMap } from './scene/map';
 
 type PositionOnScene = { x: 'right' | 'left' | 'center'; y: 'down' | 'top' | 'center'; };
 
@@ -10,34 +10,34 @@ const isPositionOnScene = ( position: CharacterPositionOnMap ): position is Part
 };
 
 type SceneCharactersManipulatorConfig = {
-  mapSize: Size;
+  map: SceneMap;
   characterList: Characters;
 };
 
 export class SceneCharactersManipulator {
-  private mapSize: Size;
   private characterList: Characters;
+  private map: SceneMap;
 
   constructor( config: SceneCharactersManipulatorConfig ) {
-    const { mapSize, characterList } = config;
+    const { map, characterList } = config;
 
-    this.mapSize = mapSize;
+    this.map = map;
     this.characterList = characterList;
   }
 
   positionCharacter = ( characterName: CharacterName, position: CharacterPositionOnMap ): void => {
     const character = this.characterList[ characterName ];
 
-    var x = character.position.x;
-    var y = character.position.y;
+    var x = this.map.startDrawPoint.x + character.position.x;
+    var y = this.map.startDrawPoint.y + character.position.y;
 
     if ( isPositionOnScene( position ) ) {
-      const rightmostX = this.mapSize.width - character.size.width;
-      const leftmostX = 0;
-      const downmostY = this.mapSize.height - character.size.height;
-      const topmostY = 0;
-      const centerX = ( rightmostX - leftmostX ) / 2;
-      const centerY = ( downmostY - topmostY ) / 2;
+      const rightmostX = this.map.startDrawPoint.x + ( this.map.size.width - character.size.width );
+      const leftmostX = this.map.startDrawPoint.x;
+      const downmostY = this.map.startDrawPoint.y + ( this.map.size.height - character.size.height );
+      const topmostY = this.map.startDrawPoint.y;
+      const centerX = leftmostX + ( ( rightmostX - leftmostX ) / 2 );
+      const centerY = topmostY + ( ( downmostY - topmostY ) / 2 );
 
       if ( position.x ) {
         if ( position.x === 'right' ) {

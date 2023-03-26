@@ -2,7 +2,7 @@ import { ExpandedDirection, PointPair, XY } from 'project-utility-types/plane';
 import { isEqual } from 'shared/lib/is-equal';
 import { ColliderBody, HitboxWithId, ObstacleList, Stucks } from '.';
 import { getMovementDirection } from '../../lib/movement';
-import { GameScreen } from '../../screen';
+import { SceneMap } from '../../scenes/scene/map';
 
 type BodyExtremeCoords = {
   bottomY: number;
@@ -21,28 +21,34 @@ type BodyOutOfMapState = {
 type Config = {
   obstacleList: ObstacleList;
   stucks: Stucks;
-  screen: GameScreen;
+  sceneMap: SceneMap;
 };
 
 export class ColliderCollisionHelpers {
   private obstacleList: ObstacleList;
   private stucks: Stucks;
-  private screen: GameScreen;
+  private sceneMap: SceneMap;
 
   constructor( config: Config ) {
-    const { obstacleList, stucks, screen } = config;
+    const { obstacleList, stucks, sceneMap } = config;
 
     this.obstacleList = obstacleList;
     this.stucks = stucks;
-    this.screen = screen;
+    this.sceneMap = sceneMap;
   }
 
+  setSceneMap = ( sceneMap: SceneMap ): void => {
+    this.sceneMap = sceneMap;
+  };
+
   getBodyExtremeCoords = ( body: ColliderBody ): BodyExtremeCoords => {
+    const { x1, x2, y1, y2 } = this.sceneMap.hitbox;
+
     return {
-      bottomY: this.screen.height - body.size.height,
-      rightX: this.screen.width - body.size.width,
-      topY: 0,
-      leftX: 0,
+      bottomY: y2 - body.size.height,
+      rightX: x2 - body.size.width,
+      topY: y1,
+      leftX: x1,
     };
   };
 

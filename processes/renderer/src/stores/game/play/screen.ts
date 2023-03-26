@@ -13,6 +13,8 @@ export class GameScreen {
   canvas: Canvas;
   ctx: Ctx;
 
+  background = '#ffffff';
+
   constructor( config: GameScreenConfig ) {
     const { width, height } = config;
 
@@ -31,6 +33,15 @@ export class GameScreen {
     this.ctx = this.canvas.getContext( '2d' )!;
   };
 
+  setBackground = ( background: string ): void => {
+    this.background = background;
+  };
+
+  fill = (): void => {
+    this.ctx.fillStyle = this.background;
+    this.ctx.fillRect( 0, 0, this.width, this.height );
+  };
+
   clear = (): void => {
     this.ctx.clearRect( 0, 0, this.width, this.height );
   };
@@ -38,4 +49,10 @@ export class GameScreen {
   drawSprite = ( sprite: Sprite, position: XY ): void => {
     sprite.draw( this.ctx, position );
   };
+
+  update = (): void => {
+    this.clear();
+    this.fill();
+  };
+
 }

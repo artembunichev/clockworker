@@ -1,4 +1,5 @@
-import { GameScene, GameSceneConfig, GameSceneMapConfig } from './scene';
+import { GameScene, GameSceneConfig } from './scene';
+import { SceneMapConfig } from './scene/map';
 
 export type SceneCreatorConfig = Pick<GameSceneConfig<any>, 'screen' | 'characterList'>;
 
@@ -9,7 +10,7 @@ export class GameSceneCreator {
     this.config = config;
   }
 
-  createScene = <Name extends string>( name: Name, map: GameSceneMapConfig ): GameScene<Name> => {
+  createScene = <Name extends string>( name: Name, map: Omit<SceneMapConfig, 'screen'> ): GameScene<Name> => {
     return new GameScene( {
       name,
       map,

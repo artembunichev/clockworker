@@ -10,7 +10,7 @@ import { Market } from './market';
 import { GamePauseController } from './pause-controller';
 import { Player } from './player';
 import { GamePopups } from './popups';
-import { GameSceneController, SceneName } from './scenes/controller';
+import { GameSceneController, SetSceneFn } from './scenes/controller';
 import { GameScreen } from './screen';
 import { GameSettings } from './settings';
 import { SharedPlayMethods } from './shared-methods';
@@ -48,7 +48,7 @@ export class GamePlayStore {
     characterController: this.characterController,
     sharedMethods: this.sharedMethods,
   } );
-  collider = new Collider( { screen: this.screen } );
+  collider = new Collider( { sceneMap: this.sceneController.currentScene.map } );
   isGameInitialized = false;
   opening = new TransitionScreen( {
     sharedPlayMethods: this.sharedMethods,
@@ -114,12 +114,13 @@ export class GamePlayStore {
     this.characterController.removeActiveCharacter( characterName );
   };
 
-  setScene = ( sceneName: SceneName ): Promise<void> => {
+  setScene: SetSceneFn = ( sceneName ): Promise<void> => {
     return this.sceneController.setScene( sceneName ).then( () => {
+      this.collider.setSceneMap( this.sceneController.currentScene.map );
       this.characterController.clearActiveCharacters();
       this.collider.clear();
       this.collider.collision.staticObstacleList.addMany(
-        this.sceneController.currentScene.map.hitboxes,
+        this.sceneController.currentScene.map.obstacleHitboxes,
       );
     } );
   };
@@ -151,7 +152,7 @@ export class GamePlayStore {
   };
 
   update = (): void => {
-    this.screen.clear();
+    this.screen.update();
     this.collider.update();
     this.sceneController.updateCurrentScene();
     this.updateActiveCharacters();
