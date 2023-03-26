@@ -114,34 +114,34 @@ export class GamePlayStore {
     this.characterController.removeActiveCharacter( characterName );
   };
 
-  setScene: SetSceneFn = ( sceneName ): Promise<void> => {
-    return this.sceneController.setScene( sceneName ).then( () => {
-      this.collider.setSceneMap( this.sceneController.currentScene.map );
-      this.characterController.clearActiveCharacters();
-      this.collider.clear();
-      this.collider.collision.staticObstacleList.addMany(
-        this.sceneController.currentScene.map.obstacleHitboxes,
-      );
-    } );
+  setScene: SetSceneFn = async ( sceneName ): Promise<void> => {
+    await this.sceneController.setScene( sceneName );
+
+    this.collider.setSceneMap( this.sceneController.currentScene.map );
+    this.characterController.clearActiveCharacters();
+    this.collider.clear();
+    this.collider.collision.staticObstacleList.addMany(
+      this.sceneController.currentScene.map.obstacleHitboxes,
+    );
   };
 
   setIsGameInitialized = ( value: boolean ): void => {
     this.isGameInitialized = value;
   };
-  initializeGame = (): Promise<void> => {
-    return this.setScene( 'marketMain' ).then( () => {
-      return this.createPlayerCharacter().then( () => {
-        if ( this.player.character ) {
-          this.sharedMethods.playerCharacter.setPlayerCharacter( this.player.character );
-          this.addActiveCharacter( 'player' );
-          this.sceneController.currentScene.charactersManipulator.positionCharacter( 'player', {
-            x: 'center',
-            y: 'center',
-          } );
-          this.setIsGameInitialized( true );
-        }
+  initializeGame = async (): Promise<void> => {
+    await this.setScene( 'marketMain' );
+
+    await this.createPlayerCharacter();
+
+    if ( this.player.character ) {
+      this.sharedMethods.playerCharacter.setPlayerCharacter( this.player.character );
+      this.addActiveCharacter( 'player' );
+      this.sceneController.currentScene.charactersManipulator.positionCharacter( 'player', {
+        x: 'center',
+        y: 'center',
       } );
-    } );
+      this.setIsGameInitialized( true );
+    }
   };
 
   // игровые циклы
@@ -170,12 +170,13 @@ export class GamePlayStore {
     }
   };
 
-  run = (): void => {
-    this.initializeGame().then( () => {
-      this.mainLoop();
-      this.opening.run().then( () => {
-        this.textboxController.setCurrentTextbox( { name: 'welcome' } );
-      } );
-    } );
+  run = async (): Promise<void> => {
+    await this.initializeGame();
+
+    this.mainLoop();
+
+    await this.opening.run();
+
+    this.textboxController.setCurrentTextbox( { name: 'welcome' } );
   };
 }

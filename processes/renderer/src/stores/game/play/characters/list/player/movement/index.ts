@@ -40,12 +40,11 @@ export class PlayerCharacterMovement extends CharacterMovement {
     this.keys = new PlayerCharacterMovementKeys( { keyboard: this.keyboard, settings: this.settings } );
 
     const superAutomoveRun = this.automove.run;
-    const runAutomove: RunAutomove = ( config: any ) => {
+    const runAutomove: RunAutomove = async ( config: any ) => {
       this.keys.prohibitorsController.add( 'automove' );
-      return superAutomoveRun( config ).then( ( response ) => {
-        this.keys.prohibitorsController.remove( 'automove' );
-        return response;
-      } );
+      const response = await superAutomoveRun( config );
+      this.keys.prohibitorsController.remove( 'automove' );
+      return response;
     };
 
     this.automove.run = runAutomove;
