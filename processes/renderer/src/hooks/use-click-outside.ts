@@ -1,27 +1,27 @@
-import { useEffect } from 'react';
-import { Callback } from 'shared/types/basic-utility-types';
+import { useEffect } from 'react'
+import { Callback } from 'shared/types/basic-utility-types'
 
 export const useClickOutside = (
   ref: React.MutableRefObject<HTMLElement | null>,
   fn: Callback,
 ): void => {
   useEffect( () => {
-    const element = ref.current;
+    const element = ref.current
 
     const checkIsClickOutside = ( e: MouseEvent ): boolean => {
-      return !element?.contains( e.target as Node );
-    };
+      return !element?.contains( e.target as Node )
+    }
 
     const handleClick = ( e: MouseEvent ): void => {
       if ( checkIsClickOutside( e ) ) {
-        fn();
+        fn()
       }
-    };
-
-    if ( element ) {
-      document.addEventListener( 'click', handleClick, true );
     }
 
-    return () => document.removeEventListener( 'click', handleClick, true );
-  } );
-};
+    if ( element ) {
+      document.addEventListener( 'click', handleClick, true )
+    }
+
+    return () => document.removeEventListener( 'click', handleClick, true )
+  } )
+}

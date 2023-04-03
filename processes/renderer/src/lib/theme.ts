@@ -6,8 +6,8 @@ export const colors = {
   mainDarkWell: '#946a00',
   error: '#ff7575',
   shadow: '#223c5033',
-};
+}
 
 export const theme = {
   borderRadius: 15,
-};
+}

@@ -1,35 +1,37 @@
-import playerCharacterSpriteSheetSrc from 'content/sprites/characters/Player.png';
-import { KeyboardStore } from 'stores/keyboard.store';
-import { AnyCharacterConfig, Character } from '../../character';
+import playerCharacterSpriteSheetSrc from 'content/sprites/characters/Player.png'
+import { KeyboardStore } from 'stores/keyboard.store'
+import { AnyCharacterConfig, Character } from '../../character'
 import {
-  playerCharacterAnimationConfigs, PlayerCharacterAnimationName,
-  PlayerCharacterAnimationRegulatorName
-} from './animation';
+  PlayerCharacterAnimationName,
+  PlayerCharacterAnimationRegulatorName,
+  playerCharacterAnimationConfigs
+} from './animation'
 import {
-  initialPlayerCharacterMovementStateConfig, PlayerCharacterMovement,
-  PlayerCharacterMovementSettings
-} from './movement';
+  PlayerCharacterMovement,
+  PlayerCharacterMovementSettings,
+  initialPlayerCharacterMovementStateConfig
+} from './movement'
 
-type PlayerCharacterSettings = PlayerCharacterMovementSettings;
+type PlayerCharacterSettings = PlayerCharacterMovementSettings
 
-type ImageSrcs = { spriteSheet: typeof playerCharacterSpriteSheetSrc; };
+type ImageSrcs = { spriteSheet: typeof playerCharacterSpriteSheetSrc }
 
 export type PlayerCharacterConfig = Pick<AnyCharacterConfig, 'name' | 'screen'> & {
-  settings: PlayerCharacterSettings;
-  keyboard: KeyboardStore;
-};
+  settings: PlayerCharacterSettings
+  keyboard: KeyboardStore
+}
 
 export class PlayerCharacter extends Character<
   ImageSrcs,
   PlayerCharacterAnimationName,
   PlayerCharacterAnimationRegulatorName
 > {
-  private settings: PlayerCharacterSettings;
-  private keyboard: KeyboardStore;
-  movement: PlayerCharacterMovement;
+  private settings: PlayerCharacterSettings
+  private keyboard: KeyboardStore
+  movement: PlayerCharacterMovement
 
   constructor( config: PlayerCharacterConfig ) {
-    const { name, screen, settings, keyboard } = config;
+    const { name, screen, settings, keyboard } = config
 
     super( {
       is: 'player',
@@ -55,10 +57,10 @@ export class PlayerCharacter extends Character<
         configs: playerCharacterAnimationConfigs,
       },
       movement: { initialMovementStateConfig: initialPlayerCharacterMovementStateConfig },
-    } );
+    } )
 
-    this.settings = settings;
-    this.keyboard = keyboard;
+    this.settings = settings
+    this.keyboard = keyboard
 
     this.movement = new PlayerCharacterMovement( {
       position: this.position,
@@ -66,12 +68,12 @@ export class PlayerCharacter extends Character<
       animationController: this.animationController,
       initialMovementStateConfig: initialPlayerCharacterMovementStateConfig,
       keyboard: this.keyboard,
-    } );
+    } )
 
-    const superUpdate = this.update;
+    const superUpdate = this.update
     this.update = (): void => {
-      superUpdate();
-      this.movement.update();
-    };
+      superUpdate()
+      this.movement.update()
+    }
   }
 }

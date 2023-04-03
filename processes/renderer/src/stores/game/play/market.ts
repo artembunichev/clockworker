@@ -1,12 +1,12 @@
 type MarketConfig = {
-  name: string;
-};
+  name: string
+}
 
 export class Market {
-  name: string;
+  name: string
 
   constructor( config: MarketConfig ) {
-    const { name } = config;
-    this.name = name;
+    const { name } = config
+    this.name = name
   }
 }

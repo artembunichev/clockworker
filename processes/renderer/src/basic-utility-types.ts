@@ -1,3 +1,3 @@
-import { FC as ReactFC, PropsWithChildren } from 'react';
+import { PropsWithChildren, FC as ReactFC } from 'react'
 
-export type FC<T = unknown> = ReactFC<PropsWithChildren<T>>;
+export type FC<T = unknown> = ReactFC<PropsWithChildren<T>>

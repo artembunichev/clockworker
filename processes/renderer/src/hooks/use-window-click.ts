@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
-import { Callback } from 'shared/types/basic-utility-types';
+import { useEffect } from 'react'
+import { Callback } from 'shared/types/basic-utility-types'
 
 export const useWindowClick = ( fn: Callback ): void => {
   useEffect( () => {
-    window.addEventListener( 'click', fn, true );
-    return () => window.removeEventListener( 'click', fn, true );
-  }, [ fn ] );
-};
+    window.addEventListener( 'click', fn, true )
+    return () => window.removeEventListener( 'click', fn, true )
+  }, [ fn ] )
+}

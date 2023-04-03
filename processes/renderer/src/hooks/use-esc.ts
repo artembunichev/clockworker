@@ -1,20 +1,20 @@
-import { Rename } from 'shared/types/basic-utility-types';
-import { closeLastUnclosedPopup } from 'stores/lib/popups';
-import { useStore } from 'stores/root-store/context';
-import { useKey, UseKeyConfig, UseKeyVariant } from './use-key';
+import { Rename } from 'shared/types/basic-utility-types'
+import { closeLastUnclosedPopup } from 'stores/lib/popups'
+import { useStore } from 'stores/root-store/context'
+import { useKey, UseKeyConfig, UseKeyVariant } from './use-key'
 
-export type UseEscConfig = Rename<Omit<UseKeyConfig, 'key'>, 'defaultFn', 'fn'>;
+export type UseEscConfig = Rename<Omit<UseKeyConfig, 'key'>, 'defaultFn', 'fn'>
 
 export const useEsc = (
   { fn, variants, ignoreWhen, element }: UseEscConfig,
   deps?: Array<any>,
 ): void => {
-  const { popupHistory } = useStore();
+  const { popupHistory } = useStore()
 
   const appPopupOpenedVariant: UseKeyVariant = {
     when: popupHistory.isOpenedPopups,
     fn: () => closeLastUnclosedPopup( popupHistory ),
-  };
+  }
 
   useKey(
     {
@@ -25,5 +25,5 @@ export const useEsc = (
       ignoreWhen,
     },
     deps,
-  );
-};
+  )
+}

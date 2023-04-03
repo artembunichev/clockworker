@@ -1,1 +1,1 @@
-export const appSettingsFilename = 'app-settings.json';
+export const appSettingsFilename = 'app-settings.json'

@@ -1,10 +1,10 @@
-import { isElectron } from 'shared/lib/is-electron';
-import { AppSettingsStore } from 'stores/app-settings/store';
-import { AppStore } from 'stores/app-store/store';
-import { GameStore } from 'stores/game/store';
-import { KeyboardStore } from 'stores/keyboard.store';
-import { PopupHistory } from 'stores/popup-history';
-import { UpdateStore } from 'stores/update.store';
+import { isElectron } from 'shared/lib/is-electron'
+import { AppSettingsStore } from 'stores/app-settings/store'
+import { AppStore } from 'stores/app-store/store'
+import { GameStore } from 'stores/game/store'
+import { KeyboardStore } from 'stores/keyboard.store'
+import { PopupHistory } from 'stores/popup-history'
+import { UpdateStore } from 'stores/update.store'
 
 export class RootStore {
   appSettingsStore = new AppSettingsStore();
@@ -18,6 +18,6 @@ export class RootStore {
     return new GameStore( {
       popupHistory: this.popupHistory,
       keyboard: this.keyboardStore,
-    } );
+    } )
   };
 }

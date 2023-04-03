@@ -1,4 +1,4 @@
-import { PlayerCharacterSharedMethods } from './player-character';
+import { PlayerCharacterSharedMethods } from './player-character'
 
 export class SharedPlayMethods {
   playerCharacter = new PlayerCharacterSharedMethods();
