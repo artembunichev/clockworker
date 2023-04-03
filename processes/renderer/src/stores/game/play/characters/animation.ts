@@ -1,9 +1,9 @@
 import { AnimationSequence } from '../entities/animation'
 import {
-  AnimationConfigForController,
-  AnimationConfigsForController,
-  AnimationController,
-  ViewDirections
+	AnimationConfigForController,
+	AnimationConfigsForController,
+	AnimationController,
+	ViewDirections
 } from '../entities/animation-controller'
 import { AnimationRegulatorList } from '../entities/animation/regulators'
 import { getRowSequence } from '../lib/animation'
@@ -14,73 +14,73 @@ export type CharacterAnimationName<Name extends string> = DefaultCharacterAnimat
 
 export type DefaultCharacterAnimationRegulatorName = 'speedup' | 'slowdown'
 export type CharacterAnimationRegulatorName<Name extends string> =
-  | DefaultCharacterAnimationRegulatorName
-  | Name
+	| DefaultCharacterAnimationRegulatorName
+	| Name
 
 type DefaultCharacterAnimationRL = AnimationRegulatorList<DefaultCharacterAnimationRegulatorName>
 
 export type CharacterAnimationRegulatorList<RegulatorName extends string> = RegulatorName extends never
-  ? DefaultCharacterAnimationRL
-  : AnimationRegulatorList<DefaultCharacterAnimationRegulatorName | RegulatorName>
+	? DefaultCharacterAnimationRL
+	: AnimationRegulatorList<DefaultCharacterAnimationRegulatorName | RegulatorName>
 
 export const defaultCharacterAnimationRegulatorList: DefaultCharacterAnimationRL = {
-  speedup: {
-    framesPerSprite: ( prev ) => Math.round( prev * 0.55 ),
-  },
-  slowdown: {
-    framesPerSprite: ( prev ) => Math.round( prev * 1.3 ),
-  },
+	speedup: {
+		framesPerSprite: ( prev ) => Math.round( prev * 0.55 ),
+	},
+	slowdown: {
+		framesPerSprite: ( prev ) => Math.round( prev * 1.3 ),
+	},
 }
 
 export type ShortCharacterMovementAnimationConfig = Omit<
-  AnimationConfigForController,
-  'sequence' | 'startFrom'
+	AnimationConfigForController,
+	'sequence' | 'startFrom'
 >
 
 const getCharacterMovementAnimationSequence = ( direction: ViewDirections ): AnimationSequence => {
-  return getRowSequence( direction, 4 )
+	return getRowSequence( direction, 4 )
 }
 
 const getCharacterMovementAnimationConfigForController = (
-  direction: ViewDirections,
-  shortConfig: ShortCharacterMovementAnimationConfig,
+	direction: ViewDirections,
+	shortConfig: ShortCharacterMovementAnimationConfig,
 ): AnimationConfigForController => {
-  const sequence: AnimationSequence = getCharacterMovementAnimationSequence( direction )
+	const sequence: AnimationSequence = getCharacterMovementAnimationSequence( direction )
 
-  const configForController: AnimationConfigForController = {
-    ...shortConfig,
-    sequence,
-    // начинаем со 2-го спрайта, чтобы сразу после начала движения была анимация шага
-    startFrom: 1,
-  }
+	const configForController: AnimationConfigForController = {
+		...shortConfig,
+		sequence,
+		// начинаем со 2-го спрайта, чтобы сразу после начала движения была анимация шага
+		startFrom: 1,
+	}
 
-  return configForController
+	return configForController
 }
 
 export type CharacterAnimationConfigsForController =
-  AnimationConfigsForController<CharacterMovementAnimationName>
+	AnimationConfigsForController<CharacterMovementAnimationName>
 
 // возвращает список с анимациями движения, одинаковыми для всех персонажей
 export const getCharacterMovementAnimationConfigsForController = (
-  config: ShortCharacterMovementAnimationConfig,
+	config: ShortCharacterMovementAnimationConfig,
 ): CharacterAnimationConfigsForController => {
-  return {
-    walkDown: getCharacterMovementAnimationConfigForController( ViewDirections.DOWN, config ),
-    walkRight: getCharacterMovementAnimationConfigForController( ViewDirections.RIGHT, config ),
-    walkUp: getCharacterMovementAnimationConfigForController( ViewDirections.UP, config ),
-    walkLeft: getCharacterMovementAnimationConfigForController( ViewDirections.LEFT, config ),
-  }
+	return {
+		walkDown: getCharacterMovementAnimationConfigForController( ViewDirections.DOWN, config ),
+		walkRight: getCharacterMovementAnimationConfigForController( ViewDirections.RIGHT, config ),
+		walkUp: getCharacterMovementAnimationConfigForController( ViewDirections.UP, config ),
+		walkLeft: getCharacterMovementAnimationConfigForController( ViewDirections.LEFT, config ),
+	}
 }
 
 export type CharacterAnimationController<
-  AnimationName extends string,
-  RegulatorName extends string = never,
+	AnimationName extends string,
+	RegulatorName extends string = never,
 > = AnimationController<
-  CharacterAnimationName<AnimationName>,
-  CharacterAnimationRegulatorName<RegulatorName>
+	CharacterAnimationName<AnimationName>,
+	CharacterAnimationRegulatorName<RegulatorName>
 >
 
 export type DefaultCharacterAnimationController = AnimationController<
-  DefaultCharacterAnimationName,
-  DefaultCharacterAnimationRegulatorName
+	DefaultCharacterAnimationName,
+	DefaultCharacterAnimationRegulatorName
 >

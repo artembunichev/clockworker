@@ -8,57 +8,57 @@ import { PreGameForm } from './pre-game-form'
 type GameScreen = 'preGameForm' | 'play'
 
 type GameStoreConfig = {
-  popupHistory: PopupHistory
-  keyboard: KeyboardStore
+	popupHistory: PopupHistory
+	keyboard: KeyboardStore
 }
 
 export class GameStore {
-  private popupHistory: PopupHistory
-  protected keyboard: KeyboardStore
+	private popupHistory: PopupHistory
+	protected keyboard: KeyboardStore
 
-  screen: GameScreen = 'preGameForm';
-  preGameForm = new PreGameForm();
-  playStore: GamePlayStore | null = null;
+	screen: GameScreen = 'preGameForm';
+	preGameForm = new PreGameForm();
+	playStore: GamePlayStore | null = null;
 
-  constructor( config: GameStoreConfig ) {
-    const { popupHistory, keyboard } = config
+	constructor( config: GameStoreConfig ) {
+		const { popupHistory, keyboard } = config
 
-    this.popupHistory = popupHistory
-    this.keyboard = keyboard
+		this.popupHistory = popupHistory
+		this.keyboard = keyboard
 
-    makeAutoObservable( this )
-  }
+		makeAutoObservable( this )
+	}
 
-  setScreen = ( screen: GameScreen ): void => {
-    this.screen = screen
-  };
+	setScreen = ( screen: GameScreen ): void => {
+		this.screen = screen
+	};
 
-  createGamePlayStore = (): void => {
-    const dataFromPreGameForm: DataFromPreGameForm = {
-      playerCharacterName: this.preGameForm.playerCharacterName,
-      marketName: this.preGameForm.marketName,
-    }
+	createGamePlayStore = (): void => {
+		const dataFromPreGameForm: DataFromPreGameForm = {
+			playerCharacterName: this.preGameForm.playerCharacterName,
+			marketName: this.preGameForm.marketName,
+		}
 
-    const gamePlayStore = new GamePlayStore( {
-      popupHistory: this.popupHistory,
-      keyboard: this.keyboard,
-      dataFromPreGameForm,
-    } )
+		const gamePlayStore = new GamePlayStore( {
+			popupHistory: this.popupHistory,
+			keyboard: this.keyboard,
+			dataFromPreGameForm,
+		} )
 
-    this.playStore = gamePlayStore
-  };
+		this.playStore = gamePlayStore
+	};
 
-  startGame = async (): Promise<void> => {
-    this.createGamePlayStore()
-    if ( this.playStore ) {
-      this.playStore.run()
-      this.setScreen( 'play' )
-    }
-  };
+	startGame = async (): Promise<void> => {
+		this.createGamePlayStore()
+		if ( this.playStore ) {
+			this.playStore.run()
+			this.setScreen( 'play' )
+		}
+	};
 
-  endGame = (): void => {
-    closeAllUnclosedPopups( this.popupHistory )
-    this.playStore?.setIsPlay( false )
-    this.playStore = null
-  };
+	endGame = (): void => {
+		closeAllUnclosedPopups( this.popupHistory )
+		this.playStore?.setIsPlay( false )
+		this.playStore = null
+	};
 }

@@ -6,9 +6,9 @@ import { AppSettingsValues } from './store'
 export type EditableAppSettingsType = EditableSettings<AppSettingsValues>
 
 export class EditableAppSettings implements EditableAppSettingsType {
-  isGetUpdateNotifications = new SingleValueSetting( 'isGetUpdateNotifications', true );
+	isGetUpdateNotifications = new SingleValueSetting( 'isGetUpdateNotifications', true );
 
-  constructor() {
-    makeAutoObservable( this )
-  }
+	constructor() {
+		makeAutoObservable( this )
+	}
 }

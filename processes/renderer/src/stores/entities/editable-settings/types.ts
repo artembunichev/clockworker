@@ -7,10 +7,10 @@ export type EditableSetting<T> = CheckboxSetting<T> | RadioSetting<T> | SingleVa
 export type AnyEditableSetting = CheckboxSetting<any> | RadioSetting<any> | SingleValueSetting<any>
 
 export type EditableSettingVariant<T> = {
-  id: string
-  label: string
-  value: T
-  isSelected: boolean
+	id: string
+	label: string
+	value: T
+	isSelected: boolean
 }
 
 export type EditableSettingVariants<T> = Array<EditableSettingVariant<T>>

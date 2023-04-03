@@ -1,38 +1,38 @@
 {
-  "extends": "../../tsconfig-base.json",
-  "compilerOptions": {
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
-    "module": "ESNext",
-    "noEmit": true,
-    "strictPropertyInitialization": false,
-    "jsx": "react-jsx",
-    "baseUrl": "src",
-    "paths": {
-      "shared/*": [
-        "../../shared/src/*"
-      ],
-      "content/*": [
-        "../../shared/src/content/*"
-      ]
-    },
-    "typeRoots": [
-      "../../node_modules/@types",
-      "../shared/@types"
-    ]
-  },
-  "include": [
-    "src"
-  ],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    },
-    {
-      "path": "../shared"
-    }
-  ]
+	"extends": "../../tsconfig-base.json",
+	"compilerOptions": {
+		"lib": [
+			"DOM",
+			"DOM.Iterable",
+			"ESNext"
+		],
+		"module": "ESNext",
+		"noEmit": true,
+		"strictPropertyInitialization": false,
+		"jsx": "react-jsx",
+		"baseUrl": "src",
+		"paths": {
+			"shared/*": [
+				"../../shared/src/*"
+			],
+			"content/*": [
+				"../../shared/src/content/*"
+			]
+		},
+		"typeRoots": [
+			"../../node_modules/@types",
+			"../shared/@types"
+		]
+	},
+	"include": [
+		"src"
+	],
+	"references": [
+		{
+			"path": "./tsconfig.node.json"
+		},
+		{
+			"path": "../shared"
+		}
+	]
 }

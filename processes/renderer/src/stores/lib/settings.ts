@@ -6,10 +6,10 @@ export type SettingType<T> = { values: T }
 export type EditableSettings<T extends object> = { [ K in keyof T ]: AnyEditableSetting }
 
 export const getConvertedEditableSettings = <
-  K extends keyof T,
-  T extends Record<K, EditableSettingVariant<any>>,
+	K extends keyof T,
+	T extends Record<K, EditableSettingVariant<any>>,
 >(
-  editableSettings: T,
+	editableSettings: T,
 ): { [ K in keyof T ]: T[ K ][ 'value' ] } => {
-  return objectMapAll( editableSettings, ( { value } ) => value )
+	return objectMapAll( editableSettings, ( { value } ) => value )
 }

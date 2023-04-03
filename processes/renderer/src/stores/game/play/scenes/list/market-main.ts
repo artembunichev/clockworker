@@ -4,9 +4,9 @@ import TiledMap from 'tiled-types/types'
 import { ControllerSceneConfig } from '../controller'
 
 export const marketMainSceneConfig: ControllerSceneConfig<'marketMain'> = {
-  name: 'marketMain',
-  map: {
-    scheme: mapScheme as TiledMap,
-    tilesetSrc,
-  },
+	name: 'marketMain',
+	map: {
+		scheme: mapScheme as TiledMap,
+		tilesetSrc,
+	},
 }

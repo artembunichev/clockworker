@@ -6,24 +6,24 @@ import { useKey, UseKeyConfig, UseKeyVariant } from './use-key'
 export type UseEscConfig = Rename<Omit<UseKeyConfig, 'key'>, 'defaultFn', 'fn'>
 
 export const useEsc = (
-  { fn, variants, ignoreWhen, element }: UseEscConfig,
-  deps?: Array<any>,
+	{ fn, variants, ignoreWhen, element }: UseEscConfig,
+	deps?: Array<any>,
 ): void => {
-  const { popupHistory } = useStore()
+	const { popupHistory } = useStore()
 
-  const appPopupOpenedVariant: UseKeyVariant = {
-    when: popupHistory.isOpenedPopups,
-    fn: () => closeLastUnclosedPopup( popupHistory ),
-  }
+	const appPopupOpenedVariant: UseKeyVariant = {
+		when: popupHistory.isOpenedPopups,
+		fn: () => closeLastUnclosedPopup( popupHistory ),
+	}
 
-  useKey(
-    {
-      element,
-      key: 'Escape',
-      defaultFn: fn,
-      variants: [ appPopupOpenedVariant, ...( variants ?? [] ) ],
-      ignoreWhen,
-    },
-    deps,
-  )
+	useKey(
+		{
+			element,
+			key: 'Escape',
+			defaultFn: fn,
+			variants: [ appPopupOpenedVariant, ...( variants ?? [] ) ],
+			ignoreWhen,
+		},
+		deps,
+	)
 }

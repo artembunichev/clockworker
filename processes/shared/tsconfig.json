@@ -1,21 +1,21 @@
 {
-  "extends": "../../tsconfig-base.json",
-  "compilerOptions": {
-    "composite": true,
-    "declaration": true,
-    "emitDeclarationOnly": true,
-    "baseUrl": "src",
-    "paths": {
-      "shared/*": [
-        "*"
-      ]
-    },
-    "typeRoots": [
-      "@types"
-    ]
-  },
-  "include": [
-    ".",
-    "./**/*.json"
-  ]
+	"extends": "../../tsconfig-base.json",
+	"compilerOptions": {
+		"composite": true,
+		"declaration": true,
+		"emitDeclarationOnly": true,
+		"baseUrl": "src",
+		"paths": {
+			"shared/*": [
+				"*"
+			]
+		},
+		"typeRoots": [
+			"@types"
+		]
+	},
+	"include": [
+		".",
+		"./**/*.json"
+	]
 }

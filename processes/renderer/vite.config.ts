@@ -4,23 +4,23 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 
 /* eslint-disable import/no-default-export */
 export default defineConfig( {
-  build: {
-    outDir: '../../dist',
-    rollupOptions: {
-      output: { assetFileNames: `assets/[name][extname]` },
-    },
-    emptyOutDir: true,
-  },
-  plugins: [
-    react( {
-      babel: {
-        babelrc: true,
-      },
-    } ),
-    tsconfigPaths(),
-  ],
-  server: {
-    host: true,
-    port: 3000,
-  },
+	build: {
+		outDir: '../../dist',
+		rollupOptions: {
+			output: { assetFileNames: `assets/[name][extname]` },
+		},
+		emptyOutDir: true,
+	},
+	plugins: [
+		react( {
+			babel: {
+				babelrc: true,
+			},
+		} ),
+		tsconfigPaths(),
+	],
+	server: {
+		host: true,
+		port: 3000,
+	},
 } )
